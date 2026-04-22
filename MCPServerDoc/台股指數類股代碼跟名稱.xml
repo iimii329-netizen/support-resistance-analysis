@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Result>
+<Data>
+<Group V1='上市19類'>
+<Item V1='TSE11.TW' V2='上市19類水泥'/>
+<Item V1='TSE12.TW' V2='上市19類食品'/>
+<Item V1='TSE13.TW' V2='上市19類塑膠'/>
+<Item V1='TSE14.TW' V2='上市19類紡織'/>
+<Item V1='TSE15.TW' V2='上市19類電機'/>
+<Item V1='TSE16.TW' V2='上市19類電器'/>
+<Item V1='TSE17.TW' V2='上市19類化學'/>
+<Item V1='TSE18.TW' V2='上市19類玻璃'/>
+<Item V1='TSE19.TW' V2='上市19類造紙'/>
+<Item V1='TSE20.TW' V2='上市19類鋼鐵'/>
+<Item V1='TSE21.TW' V2='上市19類橡膠'/>
+<Item V1='TSE22.TW' V2='上市19類汽車'/>
+<Item V1='TSE23.TW' V2='上市19類電子'/>
+<Item V1='TSE25.TW' V2='上市19類建材'/>
+<Item V1='TSE26.TW' V2='上市19類航運'/>
+<Item V1='TSE27.TW' V2='上市19類觀光'/>
+<Item V1='TSE28.TW' V2='上市19類金融'/>
+<Item V1='TSE29.TW' V2='上市19類貿易'/>
+<Item V1='TSE99.TW' V2='上市19類其他'/>
+</Group>
+<Group V1='上市類股'>
+<Item V1='TSE11.TW' V2='上市類股水泥'/>
+<Item V1='TSE12.TW' V2='上市類股食品'/>
+<Item V1='TSE13.TW' V2='上市類股塑膠'/>
+<Item V1='TSE14.TW' V2='上市類股紡織'/>
+<Item V1='TSE15.TW' V2='上市類股電機'/>
+<Item V1='TSE16.TW' V2='上市類股電器'/>
+<Item V1='TSE17.TW' V2='上市類股化學'/>
+<Item V1='TSE18.TW' V2='上市類股玻璃'/>
+<Item V1='TSE19.TW' V2='上市類股造紙'/>
+<Item V1='TSE20.TW' V2='上市類股鋼鐵'/>
+<Item V1='TSE21.TW' V2='上市類股橡膠'/>
+<Item V1='TSE22.TW' V2='上市類股汽車'/>
+<Item V1='TSE23.TW' V2='上市類股電子'/>
+<Item V1='TSE25.TW' V2='上市類股建材'/>
+<Item V1='TSE26.TW' V2='上市類股航運'/>
+<Item V1='TSE27.TW' V2='上市類股觀光'/>
+<Item V1='TSE28.TW' V2='上市類股金融'/>
+<Item V1='TSE29.TW' V2='上市類股貿易'/>
+<Item V1='TSE30.TW' V2='上市類股化工'/>
+<Item V1='TSE31.TW' V2='上市類股生技醫療'/>
+<Item V1='TSE32.TW' V2='上市類股半導體'/>
+<Item V1='TSE33.TW' V2='上市類股電腦及週邊設備'/>
+<Item V1='TSE34.TW' V2='上市類股光電'/>
+<Item V1='TSE35.TW' V2='上市類股通信網路'/>
+<Item V1='TSE36.TW' V2='上市類股電子零組件'/>
+<Item V1='TSE37.TW' V2='上市類股電子通路'/>
+<Item V1='TSE38.TW' V2='上市類股資訊服務'/>
+<Item V1='TSE39.TW' V2='上市類股其他電子'/>
+<Item V1='TSE40.TW' V2='上市類股油電燃氣'/>
+<Item V1='TSE41.TW' V2='上市類股綠能環保'/>
+<Item V1='TSE42.TW' V2='上市類股數位雲端'/>
+<Item V1='TSE43.TW' V2='上市類股運動休閒'/>
+<Item V1='TSE44.TW' V2='上市類股居家生活'/>
+<Item V1='TSE99.TW' V2='上市類股其他'/>
+</Group>
+<Group V1='上市8大類'>
+<Item V1='TSEX1.TW' V2='上市8大類水泥'/>
+<Item V1='TSEX2.TW' V2='上市8大類食品'/>
+<Item V1='TSEX3.TW' V2='上市8大類塑化'/>
+<Item V1='TSEX4.TW' V2='上市8大類紡織'/>
+<Item V1='TSEX5.TW' V2='上市8大類機電'/>
+<Item V1='TSEX6.TW' V2='上市8大類造紙'/>
+<Item V1='TSEX7.TW' V2='上市8大類建材'/>
+<Item V1='TSEX8.TW' V2='上市8大類金融'/>
+</Group>
+<Group V1='上櫃類股'>
+<Item V1='OTC41.TW' V2='上櫃類股生技'/>
+<Item V1='OTC42.TW' V2='上櫃類股食品'/>
+<Item V1='OTC43.TW' V2='上櫃類股塑膠'/>
+<Item V1='OTC44.TW' V2='上櫃類股紡織'/>
+<Item V1='OTC45.TW' V2='上櫃類股電機'/>
+<Item V1='OTC46.TW' V2='上櫃類股電器'/>
+<Item V1='OTC47.TW' V2='上櫃類股化工'/>
+<Item V1='OTC50.TW' V2='上櫃類股鋼鐵'/>
+<Item V1='OTC53.TW' V2='上櫃類股電子'/>
+<Item V1='OTC55.TW' V2='上櫃類股建材'/>
+<Item V1='OTC56.TW' V2='上櫃類股航運'/>
+<Item V1='OTC57.TW' V2='上櫃類股觀光'/>
+<Item V1='OTC58.TW' V2='上櫃類股金融'/>
+<Item V1='OTC61.TW' V2='上櫃類股油電燃氣'/>
+<Item V1='OTC62.TW' V2='上櫃類股半導體'/>
+<Item V1='OTC63.TW' V2='上櫃類股電腦及週邊設備'/>
+<Item V1='OTC64.TW' V2='上櫃類股光電'/>
+<Item V1='OTC65.TW' V2='上櫃類股通信網路'/>
+<Item V1='OTC66.TW' V2='上櫃類股電子零組件'/>
+<Item V1='OTC67.TW' V2='上櫃類股電子通路'/>
+<Item V1='OTC68.TW' V2='上櫃類股資訊服務'/>
+<Item V1='OTC69.TW' V2='上櫃類股其他電子'/>
+<Item V1='OTC70.TW' V2='上櫃類股文化創意'/>
+<Item V1='OTC73.TW' V2='上櫃類股綠能環保'/>
+<Item V1='OTC74.TW' V2='上櫃類股數位雲端'/>
+<Item V1='OTC76.TW' V2='上櫃類股居家生活'/>
+<Item V1='OTC89.TW' V2='上櫃類股其他'/>
+</Group>
+</Data>
+</Result>

@@ -1,0 +1,77 @@
+SysJustMCPServer installer
+
+PS: 此MCP Server 使用公司URL API 為內部使用，故請使用者務外流。
+    目前該公司URL API 是連結到公司的測試環境，故若有資料無法產生時請告知，以便修復。
+
+1. 相關檔案說明
+	\\j-nas01\部門-研發一部\ServerTeam\Component\SysJustMCPServer\Doc
+		prompt_XQ-TW.txt - prompt 的相關使用
+
+
+	\\j-nas01\部門-研發一部\ServerTeam\Component\SysJustMCPServer\Setting
+		claude_desktop_config.json - MCP Server 設定
+		
+		Claude Desk 檔案在
+			C:\Users\kevinlin02\AppData\Local\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Roaming\Claude\claude_desktop_config.json
+		
+	\\j-nas01\部門-研發一部\ServerTeam\Component\SysJustMCPServer\install
+		python-3.14.3-amd64.exe - python 3.14 版安裝程式(我用此版本)
+		Claude Setup.exe - Claude Desk 安裝檔		
+		
+2. install 方式
+
+	2.1. 到 C: 建立目錄 SysJustMCPServer, 產生 c:\SysJustMCPServer
+	
+	2.2. 複製
+		\\j-nas01\部門-研發一部\ServerTeam\Component
+		MCP_Main_XQ_TWStock.py
+		tools
+		到 c:\SysJustMCPServer 完成後該目錄下應有
+			MCP_Main_XQ_TWStock.py
+			tools
+
+	2.3. 執行 python-3.14.3-amd64.exe 安裝python 3.14，安裝目錄C:\Python314
+	
+	2.4. 以上是因為要對應claude_desktop_config.json到MCP Server 安裝路徑
+
+		"XQ-TWStock": {
+		  "command": "C:\\Python314\\python.exe",
+		  "args": [
+			"C:\\SysJustMCPServer\\MCP_Main_XQ_TWStock.py"
+		  ]
+
+
+	2.5. 另外因為有用到 python 以下的 package
+		from fastmcp import FastMCP
+		from typing import Annotated, List
+		from pydantic import BaseModel, Field
+		import requests
+		import xml.etree.ElementTree as ET
+
+		故到 C:\Python314\Scripts
+		dos commadn 執行方式
+		cd C:\Python314\Scripts>
+		pip install fastmcp 
+		pip install requests
+		
+		其它package應該已經有了，若有問題可下以下的 package
+		pip install typing
+		pip install pydantic
+		pip install xml
+		
+		
+3. Claude Desk 操作
+
+	3.1 執行 Claude Desk
+	
+	3.2 到 Customize/Connectors
+	    應可以看到
+			Connectors
+				Desktop
+					XQ-TWStock
+						Other tools
+							全部都勾選 允許
+							
+							
+		  
+		

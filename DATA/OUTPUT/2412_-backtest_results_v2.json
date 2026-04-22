@@ -1,0 +1,226 @@
+{
+  "symbol": "2412.TW",
+  "test_days": 150,
+  "overall": {
+    "valid": 231,
+    "total": 900,
+    "rate": 25.7
+  },
+  "stats_by_period": {
+    "5": {
+      "total": 300,
+      "valid": 98,
+      "rate": 32.7
+    },
+    "20": {
+      "total": 300,
+      "valid": 75,
+      "rate": 25.0
+    },
+    "60": {
+      "total": 300,
+      "valid": 58,
+      "rate": 19.3
+    }
+  },
+  "stats_by_layer": {
+    "L1": {
+      "total": 744,
+      "valid": 221,
+      "rate": 29.7
+    },
+    "L2": {
+      "total": 156,
+      "valid": 10,
+      "rate": 6.4
+    },
+    "L3": null
+  },
+  "stats_by_type": {
+    "support": {
+      "total": 450,
+      "valid": 229,
+      "rate": 50.9
+    },
+    "resistance": {
+      "total": 450,
+      "valid": 2,
+      "rate": 0.4
+    }
+  },
+  "stats_by_market_state": {
+    "TREND_UP": {
+      "total": 264,
+      "valid": 107,
+      "rate": 40.5,
+      "support": {
+        "total": 132,
+        "valid": 107,
+        "rate": 81.1
+      },
+      "resistance": {
+        "total": 132,
+        "valid": 0,
+        "rate": 0.0
+      }
+    },
+    "TREND_DOWN": {
+      "total": 24,
+      "valid": 3,
+      "rate": 12.5,
+      "support": {
+        "total": 12,
+        "valid": 1,
+        "rate": 8.3
+      },
+      "resistance": {
+        "total": 12,
+        "valid": 2,
+        "rate": 16.7
+      }
+    },
+    "RANGE": {
+      "total": 612,
+      "valid": 121,
+      "rate": 19.8,
+      "support": {
+        "total": 306,
+        "valid": 121,
+        "rate": 39.5
+      },
+      "resistance": {
+        "total": 306,
+        "valid": 0,
+        "rate": 0.0
+      }
+    }
+  },
+  "cross_stats": {
+    "5": {
+      "TREND_UP": {
+        "support": {
+          "total": 44,
+          "valid": 42,
+          "rate": 95.5
+        },
+        "resistance": {
+          "total": 44,
+          "valid": 0,
+          "rate": 0.0
+        }
+      },
+      "TREND_DOWN": {
+        "support": {
+          "total": 4,
+          "valid": 0,
+          "rate": 0.0
+        },
+        "resistance": {
+          "total": 4,
+          "valid": 2,
+          "rate": 50.0
+        }
+      },
+      "RANGE": {
+        "support": {
+          "total": 102,
+          "valid": 54,
+          "rate": 52.9
+        },
+        "resistance": {
+          "total": 102,
+          "valid": 0,
+          "rate": 0.0
+        }
+      },
+      "UNKNOWN": {
+        "support": null,
+        "resistance": null
+      }
+    },
+    "20": {
+      "TREND_UP": {
+        "support": {
+          "total": 44,
+          "valid": 37,
+          "rate": 84.1
+        },
+        "resistance": {
+          "total": 44,
+          "valid": 0,
+          "rate": 0.0
+        }
+      },
+      "TREND_DOWN": {
+        "support": {
+          "total": 4,
+          "valid": 0,
+          "rate": 0.0
+        },
+        "resistance": {
+          "total": 4,
+          "valid": 0,
+          "rate": 0.0
+        }
+      },
+      "RANGE": {
+        "support": {
+          "total": 102,
+          "valid": 38,
+          "rate": 37.3
+        },
+        "resistance": {
+          "total": 102,
+          "valid": 0,
+          "rate": 0.0
+        }
+      },
+      "UNKNOWN": {
+        "support": null,
+        "resistance": null
+      }
+    },
+    "60": {
+      "TREND_UP": {
+        "support": {
+          "total": 44,
+          "valid": 28,
+          "rate": 63.6
+        },
+        "resistance": {
+          "total": 44,
+          "valid": 0,
+          "rate": 0.0
+        }
+      },
+      "TREND_DOWN": {
+        "support": {
+          "total": 4,
+          "valid": 1,
+          "rate": 25.0
+        },
+        "resistance": {
+          "total": 4,
+          "valid": 0,
+          "rate": 0.0
+        }
+      },
+      "RANGE": {
+        "support": {
+          "total": 102,
+          "valid": 29,
+          "rate": 28.4
+        },
+        "resistance": {
+          "total": 102,
+          "valid": 0,
+          "rate": 0.0
+        }
+      },
+      "UNKNOWN": {
+        "support": null,
+        "resistance": null
+      }
+    }
+  }
+}

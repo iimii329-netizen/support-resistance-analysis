@@ -1,0 +1,230 @@
+{
+  "symbol": "2408.TW",
+  "test_days": 150,
+  "overall": {
+    "valid": 286,
+    "total": 900,
+    "rate": 31.8
+  },
+  "stats_by_period": {
+    "5": {
+      "total": 300,
+      "valid": 92,
+      "rate": 30.7
+    },
+    "20": {
+      "total": 300,
+      "valid": 84,
+      "rate": 28.0
+    },
+    "60": {
+      "total": 300,
+      "valid": 110,
+      "rate": 36.7
+    }
+  },
+  "stats_by_layer": {
+    "L1": {
+      "total": 492,
+      "valid": 161,
+      "rate": 32.7
+    },
+    "L2": {
+      "total": 261,
+      "valid": 83,
+      "rate": 31.8
+    },
+    "L3": {
+      "total": 147,
+      "valid": 42,
+      "rate": 28.6
+    }
+  },
+  "stats_by_type": {
+    "support": {
+      "total": 450,
+      "valid": 163,
+      "rate": 36.2
+    },
+    "resistance": {
+      "total": 450,
+      "valid": 123,
+      "rate": 27.3
+    }
+  },
+  "stats_by_market_state": {
+    "TREND_UP": {
+      "total": 150,
+      "valid": 58,
+      "rate": 38.7,
+      "support": {
+        "total": 75,
+        "valid": 54,
+        "rate": 72.0
+      },
+      "resistance": {
+        "total": 75,
+        "valid": 4,
+        "rate": 5.3
+      }
+    },
+    "TREND_DOWN": {
+      "total": 138,
+      "valid": 54,
+      "rate": 39.1,
+      "support": {
+        "total": 69,
+        "valid": 17,
+        "rate": 24.6
+      },
+      "resistance": {
+        "total": 69,
+        "valid": 37,
+        "rate": 53.6
+      }
+    },
+    "RANGE": {
+      "total": 612,
+      "valid": 174,
+      "rate": 28.4,
+      "support": {
+        "total": 306,
+        "valid": 92,
+        "rate": 30.1
+      },
+      "resistance": {
+        "total": 306,
+        "valid": 82,
+        "rate": 26.8
+      }
+    }
+  },
+  "cross_stats": {
+    "5": {
+      "TREND_UP": {
+        "support": {
+          "total": 25,
+          "valid": 19,
+          "rate": 76.0
+        },
+        "resistance": {
+          "total": 25,
+          "valid": 4,
+          "rate": 16.0
+        }
+      },
+      "TREND_DOWN": {
+        "support": {
+          "total": 23,
+          "valid": 4,
+          "rate": 17.4
+        },
+        "resistance": {
+          "total": 23,
+          "valid": 16,
+          "rate": 69.6
+        }
+      },
+      "RANGE": {
+        "support": {
+          "total": 102,
+          "valid": 24,
+          "rate": 23.5
+        },
+        "resistance": {
+          "total": 102,
+          "valid": 25,
+          "rate": 24.5
+        }
+      },
+      "UNKNOWN": {
+        "support": null,
+        "resistance": null
+      }
+    },
+    "20": {
+      "TREND_UP": {
+        "support": {
+          "total": 25,
+          "valid": 19,
+          "rate": 76.0
+        },
+        "resistance": {
+          "total": 25,
+          "valid": 0,
+          "rate": 0.0
+        }
+      },
+      "TREND_DOWN": {
+        "support": {
+          "total": 23,
+          "valid": 0,
+          "rate": 0.0
+        },
+        "resistance": {
+          "total": 23,
+          "valid": 10,
+          "rate": 43.5
+        }
+      },
+      "RANGE": {
+        "support": {
+          "total": 102,
+          "valid": 27,
+          "rate": 26.5
+        },
+        "resistance": {
+          "total": 102,
+          "valid": 28,
+          "rate": 27.5
+        }
+      },
+      "UNKNOWN": {
+        "support": null,
+        "resistance": null
+      }
+    },
+    "60": {
+      "TREND_UP": {
+        "support": {
+          "total": 25,
+          "valid": 16,
+          "rate": 64.0
+        },
+        "resistance": {
+          "total": 25,
+          "valid": 0,
+          "rate": 0.0
+        }
+      },
+      "TREND_DOWN": {
+        "support": {
+          "total": 23,
+          "valid": 13,
+          "rate": 56.5
+        },
+        "resistance": {
+          "total": 23,
+          "valid": 11,
+          "rate": 47.8
+        }
+      },
+      "RANGE": {
+        "support": {
+          "total": 102,
+          "valid": 41,
+          "rate": 40.2
+        },
+        "resistance": {
+          "total": 102,
+          "valid": 29,
+          "rate": 28.4
+        }
+      },
+      "UNKNOWN": {
+        "support": null,
+        "resistance": null
+      }
+    }
+  }
+}

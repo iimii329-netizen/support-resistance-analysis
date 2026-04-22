@@ -1,0 +1,191 @@
+{
+  "symbol": "2454.TW",
+  "test_days": 150,
+  "overall": {
+    "valid": 190,
+    "total": 900,
+    "rate": 21.1
+  },
+  "stats_by_period": {
+    "5": {
+      "total": 300,
+      "valid": 79,
+      "rate": 26.3
+    },
+    "20": {
+      "total": 300,
+      "valid": 64,
+      "rate": 21.3
+    },
+    "60": {
+      "total": 300,
+      "valid": 47,
+      "rate": 15.7
+    }
+  },
+  "stats_by_layer": {
+    "L1": {
+      "total": 787,
+      "valid": 166,
+      "rate": 21.1
+    },
+    "L2": {
+      "total": 77,
+      "valid": 12,
+      "rate": 15.6
+    },
+    "L3": {
+      "total": 36,
+      "valid": 12,
+      "rate": 33.3
+    }
+  },
+  "stats_by_type": {
+    "support": {
+      "total": 450,
+      "valid": 168,
+      "rate": 37.3
+    },
+    "resistance": {
+      "total": 450,
+      "valid": 22,
+      "rate": 4.9
+    }
+  },
+  "stats_by_market_state": {
+    "TREND_UP": {
+      "total": 42,
+      "valid": 19,
+      "rate": 45.2,
+      "support": {
+        "total": 21,
+        "valid": 18,
+        "rate": 85.7
+      },
+      "resistance": {
+        "total": 21,
+        "valid": 1,
+        "rate": 4.8
+      }
+    },
+    "RANGE": {
+      "total": 858,
+      "valid": 171,
+      "rate": 19.9,
+      "support": {
+        "total": 429,
+        "valid": 150,
+        "rate": 35.0
+      },
+      "resistance": {
+        "total": 429,
+        "valid": 21,
+        "rate": 4.9
+      }
+    }
+  },
+  "cross_stats": {
+    "5": {
+      "TREND_UP": {
+        "support": {
+          "total": 7,
+          "valid": 5,
+          "rate": 71.4
+        },
+        "resistance": {
+          "total": 7,
+          "valid": 0,
+          "rate": 0.0
+        }
+      },
+      "TREND_DOWN": {
+        "support": null,
+        "resistance": null
+      },
+      "RANGE": {
+        "support": {
+          "total": 143,
+          "valid": 68,
+          "rate": 47.6
+        },
+        "resistance": {
+          "total": 143,
+          "valid": 6,
+          "rate": 4.2
+        }
+      },
+      "UNKNOWN": {
+        "support": null,
+        "resistance": null
+      }
+    },
+    "20": {
+      "TREND_UP": {
+        "support": {
+          "total": 7,
+          "valid": 7,
+          "rate": 100.0
+        },
+        "resistance": {
+          "total": 7,
+          "valid": 0,
+          "rate": 0.0
+        }
+      },
+      "TREND_DOWN": {
+        "support": null,
+        "resistance": null
+      },
+      "RANGE": {
+        "support": {
+          "total": 143,
+          "valid": 52,
+          "rate": 36.4
+        },
+        "resistance": {
+          "total": 143,
+          "valid": 5,
+          "rate": 3.5
+        }
+      },
+      "UNKNOWN": {
+        "support": null,
+        "resistance": null
+      }
+    },
+    "60": {
+      "TREND_UP": {
+        "support": {
+          "total": 7,
+          "valid": 6,
+          "rate": 85.7
+        },
+        "resistance": {
+          "total": 7,
+          "valid": 1,
+          "rate": 14.3
+        }
+      },
+      "TREND_DOWN": {
+        "support": null,
+        "resistance": null
+      },
+      "RANGE": {
+        "support": {
+          "total": 143,
+          "valid": 30,
+          "rate": 21.0
+        },
+        "resistance": {
+          "total": 143,
+          "valid": 10,
+          "rate": 7.0
+        }
+      },
+      "UNKNOWN": {
+        "support": null,
+        "resistance": null
+      }
+    }
+  }
+}

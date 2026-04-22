@@ -1,0 +1,149 @@
+{
+  "symbol": "2330.TW",
+  "date": "20260417",
+  "profile": {
+    "period": 5,
+    "row_height": 4.1667,
+    "poc": 2081.2533,
+    "vah": 2093.7533,
+    "val": 2031.2533,
+    "total_volume": 178750,
+    "buckets": [
+      {
+        "price_low": 1975,
+        "price_high": 1979.1667,
+        "volume": 3945.83
+      },
+      {
+        "price_low": 1979.17,
+        "price_high": 1983.3367,
+        "volume": 3504.17
+      },
+      {
+        "price_low": 1983.33,
+        "price_high": 1987.4967,
+        "volume": 6863.25
+      },
+      {
+        "price_low": 1987.5,
+        "price_high": 1991.6667,
+        "volume": 13006.75
+      },
+      {
+        "price_low": 1991.67,
+        "price_high": 1995.8367,
+        "volume": 1532
+      },
+      {
+        "price_low": 2008.33,
+        "price_high": 2012.4967,
+        "volume": 1194.33
+      },
+      {
+        "price_low": 2012.5,
+        "price_high": 2016.6667,
+        "volume": 3530.56
+      },
+      {
+        "price_low": 2016.67,
+        "price_high": 2020.8367,
+        "volume": 5838.14
+      },
+      {
+        "price_low": 2020.83,
+        "price_high": 2024.9967,
+        "volume": 5828.47
+      },
+      {
+        "price_low": 2025,
+        "price_high": 2029.1667,
+        "volume": 1235.42
+      },
+      {
+        "price_low": 2029.17,
+        "price_high": 2033.3367,
+        "volume": 9126.75
+      },
+      {
+        "price_low": 2033.33,
+        "price_high": 2037.4967,
+        "volume": 7166
+      },
+      {
+        "price_low": 2037.5,
+        "price_high": 2041.6667,
+        "volume": 8932.28
+      },
+      {
+        "price_low": 2041.67,
+        "price_high": 2045.8367,
+        "volume": 8105.53
+      },
+      {
+        "price_low": 2045.83,
+        "price_high": 2049.9967,
+        "volume": 10701.53
+      },
+      {
+        "price_low": 2050,
+        "price_high": 2054.1667,
+        "volume": 7532.5
+      },
+      {
+        "price_low": 2054.17,
+        "price_high": 2058.3367,
+        "volume": 7896.83
+      },
+      {
+        "price_low": 2058.33,
+        "price_high": 2062.4967,
+        "volume": 3411.25
+      },
+      {
+        "price_low": 2062.5,
+        "price_high": 2066.6667,
+        "volume": 5726.72
+      },
+      {
+        "price_low": 2066.67,
+        "price_high": 2070.8367,
+        "volume": 8578.43
+      },
+      {
+        "price_low": 2070.83,
+        "price_high": 2074.9967,
+        "volume": 9670.76
+      },
+      {
+        "price_low": 2075,
+        "price_high": 2079.1667,
+        "volume": 8141.87
+      },
+      {
+        "price_low": 2079.17,
+        "price_high": 2083.3367,
+        "volume": 14384.21
+      },
+      {
+        "price_low": 2083.33,
+        "price_high": 2087.4967,
+        "volume": 11318.42
+      },
+      {
+        "price_low": 2087.5,
+        "price_high": 2091.6667,
+        "volume": 5169.17
+      },
+      {
+        "price_low": 2091.67,
+        "price_high": 2095.8367,
+        "volume": 4305.92
+      },
+      {
+        "price_low": 2095.83,
+        "price_high": 2099.9967,
+        "volume": 2102.92
+      }
+    ]
+  }
+}
