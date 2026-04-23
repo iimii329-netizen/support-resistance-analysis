@@ -1,6 +1,6 @@
 'use client';
 
-import { StockData, PeriodName, PeriodAnalysis, Band } from '../types';
+import { StockData, PeriodName, PeriodAnalysis } from '../types';
 
 interface Props {
   data: StockData;
@@ -9,6 +9,8 @@ interface Props {
   period: PeriodName;
   onToggle: () => void;
   onPeriodChange: (p: PeriodName) => void;
+  contentData?: any;
+  srData?: any;
 }
 
 const PERIOD_LABELS: Record<PeriodName, string> = {
@@ -17,153 +19,226 @@ const PERIOD_LABELS: Record<PeriodName, string> = {
   long:   '長期',
 };
 
-// 距離顯示（帶方向符號）
-function distLabel(pct: number): string {
-  const sign = pct >= 0 ? '▲' : '▼';
-  return `${sign}${Math.abs(pct).toFixed(1)}%`;
-}
-
-// 單條支撐/壓力卡片
-function BandCard({
-  band,
-  type,
-  currentPrice,
-}: {
-  band: Band;
-  type: 'support' | 'resistance';
-  currentPrice: number;
-}) {
-  const isSupport  = type === 'support';
-  const labelPrice = band.price;
-  const displayPrice = band.display || band.price.toString();
-
-  const priceDiff = Number((labelPrice - currentPrice).toFixed(4));
-
-  return (
-    <div className={[
-      'rounded border p-3 mb-2',
-      isSupport
-        ? 'border-blue-200 bg-blue-50'
-        : 'border-red-200 bg-red-50',
-    ].join(' ')}>
-
-      {/* 標題列 */}
-      <div className="flex items-center gap-2 mb-1">
-        <span className={[
-          'text-xs font-semibold px-1.5 py-0.5 rounded',
-          isSupport
-            ? 'bg-blue-600 text-white'
-            : 'bg-red-500 text-white',
-        ].join(' ')}>
-          {isSupport ? '支撐' : '壓力'}
-        </span>
-        <span className={[
-          'text-lg font-bold',
-          isSupport ? 'text-blue-700' : 'text-red-600',
-        ].join(' ')}>
-          {displayPrice}
-        </span>
-      </div>
-
-      {/* 差價 */}
-      <div className="text-xs text-gray-500 mb-2 font-medium">
-        距現價 {priceDiff >= 0 ? '+' : ''}{priceDiff} 元（{distLabel(band.distance_pct)}）
-      </div>
-
-      {/* AI 摘要 */}
-      {band.summary && (
-        <div className="text-xs text-gray-700 bg-white rounded px-2 py-1.5 mb-2 leading-relaxed border border-gray-100">
-          {band.summary}
+export default function SidePanel({ data, periodData, open, period, onToggle, onPeriodChange, contentData, srData }: Props) {
+  const renderContent = () => {
+    if (!periodData || !contentData || !data.periods) {
+      return (
+        <div className="text-xs text-gray-400 text-center py-4">
+          數據加載中…
         </div>
-      )}
+      );
+    }
 
-      {/* 成員指標 */}
-      <div className="flex flex-wrap items-center gap-1 mt-1">
-        <span className="text-xs text-gray-500 font-medium mr-1">
-          {band.members.length > 1 ? '共振指標' : '單一指標'}
-        </span>
-        {band.members.map((m) => (
-          <span
-            key={m}
-            className="text-xs px-1.5 py-0.5 rounded-full bg-white border border-gray-200 text-gray-600"
-          >
-            {m}
-          </span>
-        ))}
+    const currentPrice = data.current_price;
+    const allPeriods = data.periods as any;
+
+    // 使用 Map 儲存同價格的多個標籤
+    const levelMap: Map<number, Set<string>> = new Map();
+
+    // 記錄已添加的標籤名稱（避免重複添加 VAH、POC、VAL）
+    const usedLabels = new Set<string>();
+
+    // 添加該時間框架的support和resistance
+    if (periodData.support) {
+      const roundedPrice = parseFloat(periodData.support.price.toFixed(2));
+      if (!levelMap.has(roundedPrice)) levelMap.set(roundedPrice, new Set());
+      const label = periodData.support.members[0] || '支撐';
+      levelMap.get(roundedPrice)!.add(label);
+      usedLabels.add(label);
+    }
+    if (periodData.resistance) {
+      const roundedPrice = parseFloat(periodData.resistance.price.toFixed(2));
+      if (!levelMap.has(roundedPrice)) levelMap.set(roundedPrice, new Set());
+      const label = periodData.resistance.members[0] || '壓力';
+      levelMap.get(roundedPrice)!.add(label);
+      usedLabels.add(label);
+    }
+
+    const vp = allPeriods[period]?.vp;
+    const ma = contentData.moving_averages;
+    const bband = contentData.bollinger_bands;
+    const maChannel = contentData.ma_channel;
+    const calc = contentData.calculated;
+    const priceRange = contentData.price_range;
+
+    // ========== 短期指標 (日線/5日) ==========
+    if (period === 'short') {
+      const addLevel = (price: number, label: string) => {
+        if (usedLabels.has(label)) return;
+        const roundedPrice = parseFloat(price.toFixed(2));
+        if (!levelMap.has(roundedPrice)) levelMap.set(roundedPrice, new Set());
+        levelMap.get(roundedPrice)!.add(label);
+      };
+
+      const ma = contentData.moving_averages;
+      const bband = contentData.bollinger_bands;
+      const maChannel = contentData.ma_channel;
+      const calc = contentData.calculated;
+      const priceRange = contentData.price_range;
+
+      // 價格區間
+      if (priceRange?.high_5d) addLevel(priceRange.high_5d, '5日高點');
+      if (priceRange?.low_5d) addLevel(priceRange.low_5d, '5日低點');
+
+      // 移動平均線
+      if (ma?.ma5) addLevel(ma.ma5, 'MA5');
+      if (ma?.ma10) addLevel(ma.ma10, 'MA10');
+
+      // 布林帶
+      if (bband?.upper) addLevel(bband.upper, 'BBand上限');
+      if (bband?.lower) addLevel(bband.lower, 'BBand下限');
+
+      // CDP點位（日線級別）
+      if (calc?.upper_gate) addLevel(calc.upper_gate, '上關');
+      if (calc?.lower_gate) addLevel(calc.lower_gate, '下關');
+      if (calc?.cdp_chase_buy) addLevel(calc.cdp_chase_buy, 'CDP追買');
+      if (calc?.cdp_sell) addLevel(calc.cdp_sell, 'CDP賣出');
+      if (calc?.cdp_buy) addLevel(calc.cdp_buy, 'CDP買進');
+      if (calc?.cdp_chase_sell) addLevel(calc.cdp_chase_sell, 'CDP追賣');
+
+      // VP數據
+      if (vp?.poc) addLevel(vp.poc, 'POC');
+      if (vp?.vah) addLevel(vp.vah, 'VAH');
+      if (vp?.val) addLevel(vp.val, 'VAL');
+    }
+
+    // ========== 中期指標 (10-20日) ==========
+    else if (period === 'medium') {
+      const addLevel = (price: number, label: string) => {
+        if (usedLabels.has(label)) return;
+        const roundedPrice = parseFloat(price.toFixed(2));
+        if (!levelMap.has(roundedPrice)) levelMap.set(roundedPrice, new Set());
+        levelMap.get(roundedPrice)!.add(label);
+      };
+
+      const ma = contentData.moving_averages;
+      const bband = contentData.bollinger_bands;
+      const maChannel = contentData.ma_channel;
+      const calc = contentData.calculated;
+      const priceRange = contentData.price_range;
+
+      // 價格區間
+      if (priceRange?.high_10d) addLevel(priceRange.high_10d, '10日高點');
+      if (priceRange?.low_10d) addLevel(priceRange.low_10d, '10日低點');
+      if (priceRange?.high_20d) addLevel(priceRange.high_20d, '20日高點');
+      if (priceRange?.low_20d) addLevel(priceRange.low_20d, '20日低點');
+
+      // 移動平均線
+      if (ma?.ma20) addLevel(ma.ma20, 'MA20');
+      if (ma?.ma60) addLevel(ma.ma60, 'MA60');
+
+      // 布林帶
+      if (bband?.upper) addLevel(bband.upper, 'BBand上限');
+      if (bband?.lower) addLevel(bband.lower, 'BBand下限');
+
+      // MA軌道
+      if (maChannel?.upper) addLevel(maChannel.upper, 'MA軌道上限');
+      if (maChannel?.lower) addLevel(maChannel.lower, 'MA軌道下限');
+
+      // VP數據
+      if (vp?.poc) addLevel(vp.poc, 'POC');
+      if (vp?.vah) addLevel(vp.vah, 'VAH');
+      if (vp?.val) addLevel(vp.val, 'VAL');
+    }
+
+    // ========== 長期指標 (60日+) ==========
+    else if (period === 'long') {
+      const addLevel = (price: number, label: string) => {
+        if (usedLabels.has(label)) return;
+        const roundedPrice = parseFloat(price.toFixed(2));
+        if (!levelMap.has(roundedPrice)) levelMap.set(roundedPrice, new Set());
+        levelMap.get(roundedPrice)!.add(label);
+      };
+
+      const ma = contentData.moving_averages;
+      const bband = contentData.bollinger_bands;
+      const calc = contentData.calculated;
+      const priceRange = contentData.price_range;
+
+      // 價格區間
+      if (priceRange?.high_240d) addLevel(priceRange.high_240d, '240日高點');
+      if (priceRange?.low_240d) addLevel(priceRange.low_240d, '240日低點');
+
+      // 移動平均線
+      if (ma?.ma120) addLevel(ma.ma120, 'MA120');
+      if (ma?.ma240) addLevel(ma.ma240, 'MA240');
+
+      // VP數據
+      if (vp?.poc) addLevel(vp.poc, 'POC');
+      if (vp?.vah) addLevel(vp.vah, 'VAH');
+      if (vp?.val) addLevel(vp.val, 'VAL');
+    }
+
+    // 轉換 Map 為陣列並排序
+    const allLevels = Array.from(levelMap.entries())
+      .map(([price, labels]) => ({ price, labels: Array.from(labels) }))
+      .sort((a, b) => b.price - a.price);
+
+    // 分離壓力和支撐
+    const resistances = allLevels.filter((l) => l.price > currentPrice);
+    const supports = allLevels.filter((l) => l.price < currentPrice);
+
+    return (
+      <div className="space-y-3 h-full overflow-y-auto pr-2">
+        {/* 壓力 */}
+        {resistances.length > 0 && (
+          <>
+            <div className="font-bold text-red-600 text-base py-1 border-b-2 border-red-300">壓力</div>
+            <div className="space-y-1">
+              {resistances.map((item, idx) => (
+                <div key={idx} className="flex justify-between items-center hover:bg-red-50 px-1 py-1 rounded transition-colors">
+                  <span className="text-red-600 font-semibold">{item.price.toFixed(2)}</span>
+                  <span className="text-red-600 text-xs">{item.labels.join(', ')}</span>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* 支撐 */}
+        {supports.length > 0 && (
+          <>
+            <div className="font-bold text-blue-600 text-base py-1 border-b-2 border-blue-300 mt-3">支撐</div>
+            <div className="space-y-1">
+              {supports.map((item, idx) => (
+                <div key={idx} className="flex justify-between items-center hover:bg-blue-50 px-1 py-1 rounded transition-colors">
+                  <span className="text-blue-600 font-semibold">{item.price.toFixed(2)}</span>
+                  <span className="text-blue-600 text-xs">{item.labels.join(', ')}</span>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
-
-      {/* 區間說明（若有）*/}
-      {band.range_low !== undefined && band.range_high !== undefined
-        && band.range_low !== band.range_high && (
-        <div className="text-xs text-gray-400 mt-1.5">
-          共振區間 {band.range_low.toLocaleString()} ~ {band.range_high.toLocaleString()}
-        </div>
-      )}
-    </div>
-  );
-}
-
-// 全部候選關卡（收折區塊）
-function AllBandsSection({ bands, type }: { bands: Band[]; type: 'support' | 'resistance' }) {
-  if (bands.length <= 1) return null;
-  const isSupport = type === 'support';
-
-  return (
-    <details className="mt-1 mb-3">
-      <summary className={[
-        'text-xs cursor-pointer select-none',
-        isSupport ? 'text-blue-500' : 'text-red-400',
-      ].join(' ')}>
-        其他{isSupport ? '支撐' : '壓力'}關卡（{bands.length - 1} 個）
-      </summary>
-      <div className="mt-1 space-y-1 pl-2 border-l-2 border-gray-100">
-        {bands.slice(1).map((b, i) => (
-          <div key={i} className="flex items-start justify-between text-xs py-1 gap-2">
-            <span className="text-gray-700 font-medium whitespace-nowrap mt-0.5">
-              {b.display || b.price.toString()}
-            </span>
-            <span className="text-gray-500 text-left flex-1 break-words leading-relaxed">
-              {b.members.join('、')}
-            </span>
-          </div>
-        ))}
-      </div>
-    </details>
-  );
-}
-
-export default function SidePanel({ data, periodData, open, period, onToggle, onPeriodChange }: Props) {
-  const analysis: PeriodAnalysis = periodData;
+    );
+  };
 
   return (
     <div className="flex">
       {/* 收合切換按鈕 */}
       <button
         onClick={onToggle}
-        className="flex items-center justify-center w-5 bg-gray-100 hover:bg-gray-200
-                   border-l border-gray-200 transition-colors"
+        className="flex items-center justify-center w-5 bg-gray-100 hover:bg-gray-200 border-l border-gray-200 transition-colors"
         title={open ? '收合' : '展開'}
       >
-        <span className="text-gray-400 text-xs">{open ? '▶' : '◀'}</span>
+        <span className="text-gray-400 text-xs font-bold">{open ? '▶' : '◀'}</span>
       </button>
 
       {/* 面板本體 */}
       {open && (
-        <div className="w-64 flex flex-col border-l border-gray-200 bg-white overflow-y-auto"
-             style={{ maxHeight: '440px' }}>
+        <div className="w-72 flex flex-col border-l border-gray-200 bg-white overflow-hidden">
 
           {/* Period tabs */}
-          <div className="flex border-b border-gray-200">
-            {(Object.keys(PERIOD_LABELS) as PeriodName[]).map((p) => (
+          <div className="flex border-b-2 border-gray-300 bg-gray-50">
+            {(['short', 'medium', 'long'] as PeriodName[]).map((p) => (
               <button
                 key={p}
                 onClick={() => onPeriodChange(p)}
-                className={[
-                  'flex-1 py-2 text-xs font-medium transition-colors',
+                className={`flex-1 py-2.5 text-sm font-bold transition-all ${
                   period === p
-                    ? 'border-b-2 border-blue-600 text-blue-600'
-                    : 'text-gray-500 hover:text-gray-700',
-                ].join(' ')}
+                    ? 'bg-white border-b-2 border-blue-600 text-blue-600'
+                    : 'text-gray-600 hover:text-gray-800'
+                }`}
               >
                 {PERIOD_LABELS[p]}
               </button>
@@ -171,34 +246,8 @@ export default function SidePanel({ data, periodData, open, period, onToggle, on
           </div>
 
           {/* 內容 */}
-          <div className="flex-1 p-3">
-            {/* 壓力 */}
-            {analysis.resistance ? (
-              <BandCard
-                band={analysis.resistance}
-                type="resistance"
-                currentPrice={data.current_price}
-              />
-            ) : (
-              <div className="text-xs text-gray-400 text-center py-3">暫無明顯壓力位</div>
-            )}
-
-            {/* 其他候選 - 壓力 */}
-            <AllBandsSection bands={analysis.all_resistance} type="resistance" />
-
-            {/* 支撐 */}
-            {analysis.support ? (
-              <BandCard
-                band={analysis.support}
-                type="support"
-                currentPrice={data.current_price}
-              />
-            ) : (
-              <div className="text-xs text-gray-400 text-center py-3">暫無明顯支撐位</div>
-            )}
-
-            {/* 其他候選 - 支撐 */}
-            <AllBandsSection bands={analysis.all_support}    type="support"    />
+          <div className="flex-1 px-3 py-3 overflow-y-auto min-h-0">
+            {renderContent()}
           </div>
         </div>
       )}

@@ -1,0 +1,87 @@
+{
+  "2317.TW": {
+    "short": {
+      "support": { "value": 198.50, "source": "5日低點", "type": "首選" },
+      "resistance": { "value": 210.85, "source": "VAH", "type": "次選" },
+      "integer_level": { "support": 205, "resistance": 210 }
+    },
+    "medium": {
+      "support": { "value": 187.50, "source": "20日低點", "type": "首選" },
+      "resistance": { "value": 207.10, "source": "VAH", "type": "次選" },
+      "integer_level": { "support": 200, "resistance": 210 }
+    },
+    "long": {
+      "support": { "value": 201.80, "source": "VAL", "type": "次選" },
+      "resistance": { "value": 232.60, "source": "VAH", "type": "首選" },
+      "integer_level": { "support": 200, "resistance": 250 }
+    }
+  },
+  "2330.TW": {
+    "short": {
+      "support": { "value": 1975.00, "source": "5日低點", "type": "次選" },
+      "resistance": { "value": 2093.75, "source": "VAH", "type": "首選" },
+      "integer_level": { "support": 2000, "resistance": 2100 }
+    },
+    "medium": {
+      "support": { "value": 1765.67, "source": "VAL", "type": "首選" },
+      "resistance": { "value": 2100.00, "source": "20日高點", "type": "次選" },
+      "integer_level": { "support": 1800, "resistance": 2100 }
+    },
+    "long": {
+      "support": { "value": 1743.00, "source": "VAL", "type": "首選" },
+      "resistance": { "value": 2100.00, "source": "60日高點", "type": "次選" },
+      "integer_level": { "support": 1500, "resistance": 2200 }
+    }
+  },
+  "2382.TW": {
+    "short": {
+      "support": { "value": 311.88, "source": "VAL", "type": "首選" },
+      "resistance": { "value": 324.62, "source": "VAH", "type": "次選" },
+      "integer_level": { "support": 310, "resistance": 330 }
+    },
+    "medium": {
+      "support": { "value": 276.40, "source": "VAL", "type": "首選" },
+      "resistance": { "value": 329.50, "source": "20日高點", "type": "次選" },
+      "integer_level": { "support": 280, "resistance": 330 }
+    },
+    "long": {
+      "support": { "value": 277.65, "source": "VAL", "type": "次選" },
+      "resistance": { "value": 329.50, "source": "60日高點", "type": "次選" },
+      "integer_level": { "support": 250, "resistance": 350 }
+    }
+  },
+  "2454.TW": {
+    "short": {
+      "support": { "value": 1770.75, "source": "VAL", "type": "首選" },
+      "resistance": { "value": 1949.41, "source": "VAH", "type": "次選" },
+      "integer_level": { "support": 1750, "resistance": 1950 }
+    },
+    "medium": {
+      "support": { "value": 1438.75, "source": "VAL", "type": "首選" },
+      "resistance": { "value": 1955.00, "source": "20日高點", "type": "次選" },
+      "integer_level": { "support": 1400, "resistance": 2000 }
+    },
+    "long": {
+      "support": { "value": 1617.50, "source": "VAL", "type": "次選" },
+      "resistance": { "value": 1947.50, "source": "VAH", "type": "次選" },
+      "integer_level": { "support": 1500, "resistance": 2000 }
+    }
+  },
+  "2887.TW": {
+    "short": {
+      "support": { "value": 24.16, "source": "VAL", "type": "次選" },
+      "resistance": { "value": 25.10, "source": "5日高點", "type": "首選" },
+      "integer_level": { "support": 24.0, "resistance": 25.0 }
+    },
+    "medium": {
+      "support": { "value": 23.93, "source": "VAL", "type": "次選" },
+      "resistance": { "value": 24.67, "source": "VAH", "type": "次選" },
+      "integer_level": { "support": 23.5, "resistance": 25.0 }
+    },
+    "long": {
+      "support": { "value": 20.80, "source": "60日低點", "type": "首選" },
+      "resistance": { "value": 25.57, "source": "VAH", "type": "次選" },
+      "integer_level": { "support": 20.0, "resistance": 25.5 }
+    }
+  }
+}
