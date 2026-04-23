@@ -81,6 +81,7 @@ export default function KLineChart({
   const lastVisibleRangeRef = useRef<{ from: UTCTimestamp; to: UTCTimestamp } | null>(null);
   const [vpAnalysis, setVpAnalysis] = useState<string>('');
   const debugCounterRef = useRef(0);
+  const isInitializedRef = useRef(false);
 
   // 根據showPeriods計算需要的K線數量（用於設置初始可見範圍）
   const requiredDays = Math.max(
@@ -531,9 +532,9 @@ export default function KLineChart({
       );
     }
 
-    // 設置初始可見範圍：以最新K線為右邊界，顯示requiredDays根K線
+    // 設置初始可見範圍：僅在首次初始化時執行，之後允許用戶自由縮放
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
-    if (displayBars.length > 0) {
+    if (displayBars.length > 0 && !isInitializedRef.current) {
       // 先調用fitContent以確保圖表初始化
       try {
         chart.timeScale().fitContent();
@@ -556,6 +557,7 @@ export default function KLineChart({
               from: fromTime,
               to: toTime,
             });
+            isInitializedRef.current = true; // 標記已初始化，後續不再重設範圍
           }
         } catch (e) {
           // 圖表已被銷毀，忽略錯誤
@@ -652,35 +654,7 @@ export default function KLineChart({
     };
   }, [displayBars, chartType, drawOverlay]);
 
-  // 當showPeriods改變時，更新可見範圍
-  useEffect(() => {
-    if (!chartRef.current || displayBars.length === 0) return;
-
-    const chart = chartRef.current;
-    const timeoutId = setTimeout(() => {
-      try {
-        const totalBars = displayBars.length;
-        const startIdx = Math.max(0, totalBars - requiredDays);
-        const startBar = displayBars[startIdx];
-        const endBar = displayBars[totalBars - 1];
-
-        if (startBar && endBar && chart) {
-          const fromTime = toUnix(startBar.time);
-          const toTime = toUnix(endBar.time) + 86400;
-          chart.timeScale().setVisibleRange({
-            from: fromTime,
-            to: toTime,
-          });
-        }
-      } catch (e) {
-        // 圖表已被銷毀，忽略錯誤
-      }
-    }, 0);
-
-    return () => clearTimeout(timeoutId);
-  }, [requiredDays, displayBars.length]);
-
-  // 當showPeriods改變時，觸發重繪
+  // 當showPeriods改變時，觸發重繪（不更改可見範圍，允許用戶自由縮放）
   useEffect(() => {
     if (seriesRef.current) {
       requestAnimationFrame(drawOverlay);
