@@ -610,7 +610,8 @@ export default function KLineChart({
 
       const currentRange = visibleRange;
       const rangeDuration = currentRange.to - currentRange.from;
-      const direction = e.deltaY > 0 ? 1 : -1;
+      // 向下滾輪 (deltaY > 0) = 放大，向上滾輪 (deltaY < 0) = 縮小
+      const direction = e.deltaY > 0 ? -1 : 1;
       const zoomFactor = direction > 0 ? 1.1 : 0.9;
       const newDuration = rangeDuration * zoomFactor;
 
