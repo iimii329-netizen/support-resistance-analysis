@@ -46,9 +46,9 @@ const VP_CONFIG = {
 
 // 期別對應的交易日數（用於計算 VP 最大寬度）
 const PERIOD_DAY_MAP: Record<PeriodName, number> = {
-  short: 5,
-  medium: 20,
-  long: 60,
+  short: 20,
+  medium: 40,
+  long: 80,
 };
 
 const PERIOD_COLORS: Record<PeriodName, { support: string; resistance: string; vp: string }> = {
@@ -82,6 +82,26 @@ export default function KLineChart({
   const [vpAnalysis, setVpAnalysis] = useState<string>('');
   const debugCounterRef = useRef(0);
 
+  // Zoom 控制函數
+  const handleZoom = (direction: 'in' | 'out') => {
+    if (!chartRef.current) return;
+
+    const visibleRange = chartRef.current.timeScale().getVisibleRange();
+    if (!visibleRange) return;
+
+    const currentRange = visibleRange;
+    const rangeDuration = currentRange.to - currentRange.from;
+    const zoomFactor = direction === 'out' ? 1.1 : 0.9;
+    const newDuration = rangeDuration * zoomFactor;
+
+    const newFrom = currentRange.to - newDuration;
+
+    chartRef.current.timeScale().setVisibleRange({
+      from: newFrom as UTCTimestamp,
+      to: currentRange.to,
+    });
+  };
+
   // 根據showPeriods計算需要的K線數量（用於設置初始可見範圍）
   const requiredDays = Math.max(
     ...Object.entries(showPeriods)
@@ -112,9 +132,9 @@ export default function KLineChart({
   };
 
   const priceRanges: Record<PeriodName, { min: number; max: number }> = {
-    short: calculatePriceRange(5),    // 最近 5 個交易日
-    medium: calculatePriceRange(20),  // 最近 20 個交易日
-    long: calculatePriceRange(60),    // 最近 60 個交易日
+    short: calculatePriceRange(20),   // 最近 20 個交易日
+    medium: calculatePriceRange(40),  // 最近 40 個交易日
+    long: calculatePriceRange(80),    // 最近 80 個交易日
   };
 
   // 生成 VP 分析文字
@@ -156,9 +176,9 @@ export default function KLineChart({
     };
 
     const priceRanges: Record<PeriodName, { min: number; max: number }> = {
-      short: calculatePriceRange(5),
-      medium: calculatePriceRange(20),
-      long: calculatePriceRange(60),
+      short: calculatePriceRange(20),
+      medium: calculatePriceRange(40),
+      long: calculatePriceRange(80),
     };
 
     const ctx = canvas.getContext('2d');
@@ -698,7 +718,7 @@ export default function KLineChart({
       )}
 
       {/* 圖表主體 */}
-      <div className="flex flex-1 min-w-0">
+      <div className="flex flex-1 min-w-0 relative">
         <div className="relative flex-1 min-w-0">
           <div ref={containerRef} className="w-full h-full" />
           <canvas
@@ -706,6 +726,24 @@ export default function KLineChart({
             className="absolute top-0 left-0 pointer-events-none"
             style={{ width: '100%', height: '100%', zIndex: 10 }}
           />
+        </div>
+
+        {/* Zoom 按鈕（右上角） */}
+        <div className="absolute top-4 right-4 z-20 flex gap-2 bg-white border border-gray-200 rounded shadow-sm p-2">
+          <button
+            onClick={() => handleZoom('in')}
+            title="放大（Zoom In）"
+            className="px-2 py-1 bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold rounded transition-colors"
+          >
+            +
+          </button>
+          <button
+            onClick={() => handleZoom('out')}
+            title="縮小（Zoom Out）"
+            className="px-2 py-1 bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold rounded transition-colors"
+          >
+            −
+          </button>
         </div>
       </div>
     </div>
