@@ -1,13 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useCallback, useState } from 'react';
-import { createChart, CandlestickSeries, LineSeries, IChartApi, ISeriesApi, UTCTimestamp, Time } from 'lightweight-charts';
+import { createChart, CandlestickSeries, LineSeries, IChartApi, ISeriesApi, UTCTimestamp } from 'lightweight-charts';
 import { Bar, PeriodAnalysis, Timeframe, PeriodName } from '../types';
 import { analyzeVolumeProfile } from '../utils/vpAnalysis';
-
-const TIMEFRAMES: { key: Timeframe; label: string }[] = [
-  { key: '1d', label: '' },
-];
 
 interface ChartProps {
   bars: Bar[];
@@ -35,26 +31,34 @@ function toUnix(timeStr: string): UTCTimestamp {
   return Math.floor(Date.UTC(+y, +m - 1, +d, hh, mm) / 1000) as UTCTimestamp;
 }
 
-// VP 布局配置
-const VP_CONFIG = {
-  PRICE_SCALE_WIDTH: 60,    // Y軸寬度（估算值）
-  RIGHT_MARGIN: 50,         // 右側邊距（避開Y軸標籤）
-  BASE_WIDTH_PER_BAR: 5,    // 單根K棒基礎寬度（像素）
-  VP_PADDING: 0,            // VP內部邊距
-  TRANSPARENCY: 0.5,        // VP透明度
-};
+const PRICE_SCALE_WIDTH = 60;
+const BLANK_BARS = 5;          // 右側空白K棒數
+const TRANSPARENCY = 0.5;
 
-// 期別對應的交易日數（用於計算 VP 最大寬度）
-const PERIOD_DAY_MAP: Record<PeriodName, number> = {
-  short: 20,
-  medium: 40,
-  long: 80,
-};
-
+// 短期=黃色, 中期=紫色, 長期=藍色
 const PERIOD_COLORS: Record<PeriodName, { support: string; resistance: string; vp: string }> = {
-  short: { support: '#ef5350', resistance: '#ef5350', vp: `rgba(239, 83, 80, ${VP_CONFIG.TRANSPARENCY})` },
-  medium: { support: '#2196F3', resistance: '#2196F3', vp: `rgba(33, 150, 243, ${VP_CONFIG.TRANSPARENCY})` },
-  long: { support: '#4caf50', resistance: '#4caf50', vp: `rgba(76, 175, 80, ${VP_CONFIG.TRANSPARENCY})` },
+  short:  {
+    support:    '#EAB308',
+    resistance: '#EAB308',
+    vp: `rgba(234, 179, 8, ${TRANSPARENCY})`,
+  },
+  medium: {
+    support:    '#9333EA',
+    resistance: '#9333EA',
+    vp: `rgba(147, 51, 234, ${TRANSPARENCY})`,
+  },
+  long:   {
+    support:    '#2563EB',
+    resistance: '#2563EB',
+    vp: `rgba(37, 99, 235, ${TRANSPARENCY})`,
+  },
+};
+
+// 各期別預設顯示K棒數
+const PERIOD_DAY_MAP: Record<PeriodName, number> = {
+  short:  20,
+  medium: 40,
+  long:   80,
 };
 
 export default function KLineChart({
@@ -75,412 +79,217 @@ export default function KLineChart({
   aiSummary = '',
 }: ChartProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const chartRef = useRef<IChartApi | null>(null);
-  const overlayRef = useRef<HTMLCanvasElement | null>(null);
-  const seriesRef = useRef<ISeriesApi<'Candlestick' | 'Line'> | null>(null);
-  const lastVisibleRangeRef = useRef<{ from: UTCTimestamp; to: UTCTimestamp } | null>(null);
+  const chartRef     = useRef<IChartApi | null>(null);
+  const overlayRef   = useRef<HTMLCanvasElement | null>(null);
+  const seriesRef    = useRef<ISeriesApi<'Candlestick' | 'Line'> | null>(null);
+  const isInitializedRef    = useRef(false);
+  const lastPeriodStateRef  = useRef<{ periods: string; barsLength: number } | null>(null);
   const [vpAnalysis, setVpAnalysis] = useState<string>('');
-  const debugCounterRef = useRef(0);
-  const isInitializedRef = useRef(false);
 
-  // 根據showPeriods計算需要的K線數量（用於設置初始可見範圍）
   const requiredDays = Math.max(
     ...Object.entries(showPeriods)
       .filter(([_, show]) => show)
-      .map(([periodName]) => periodDays[periodName as PeriodName]),
+      .map(([pName]) => periodDays[pName as PeriodName]),
     20
   );
 
-  // 保持所有K線數據（不截取），傳給圖表
-  const displayBars = bars;
-
-  // 計算每個期別對應的K線數量和價格範圍（用於VP過濾）
-  const calculatePriceRange = (periodDays: number): { min: number; max: number } => {
-    if (displayBars.length === 0) return { min: 0, max: 0 };
-
-    const startIdx = Math.max(0, displayBars.length - periodDays);
-    const relevantBars = displayBars.slice(startIdx);
-
-    let minPrice = Infinity;
-    let maxPrice = -Infinity;
-
-    relevantBars.forEach((bar) => {
-      minPrice = Math.min(minPrice, bar.low);
-      maxPrice = Math.max(maxPrice, bar.high);
-    });
-
-    return { min: minPrice, max: maxPrice };
-  };
-
-  const priceRanges: Record<PeriodName, { min: number; max: number }> = {
-    short: calculatePriceRange(20),   // 最近 20 個交易日
-    medium: calculatePriceRange(40),  // 最近 40 個交易日
-    long: calculatePriceRange(80),    // 最近 80 個交易日
-  };
-
   // 生成 VP 分析文字
   useEffect(() => {
-    const activeShortPeriod = allPeriods.short;
-    if (activeShortPeriod && activeShortPeriod.vp) {
+    const shortPeriod = allPeriods.short;
+    if (shortPeriod?.vp) {
       const closePrice = bars.length > 0 ? bars[bars.length - 1].close : currentPrice;
-      const analysis = analyzeVolumeProfile(activeShortPeriod.vp, currentPrice, closePrice);
-      if (analysis) {
-        setVpAnalysis(analysis.summary);
-      }
+      const analysis = analyzeVolumeProfile(shortPeriod.vp, currentPrice, closePrice);
+      if (analysis) setVpAnalysis(analysis.summary);
     }
   }, [allPeriods, bars, currentPrice]);
 
-  // 繪製overlay（VP和支撐壓力線）
+  // 計算各期別對應的 K 棒價格範圍（用於 VP 過濾）
+  const getPriceRange = useCallback((days: number): { min: number; max: number } => {
+    if (bars.length === 0) return { min: 0, max: 0 };
+    const startIdx = Math.max(0, bars.length - days);
+    const slice = bars.slice(startIdx);
+    return {
+      min: Math.min(...slice.map((b) => b.low)),
+      max: Math.max(...slice.map((b) => b.high)),
+    };
+  }, [bars]);
+
+  // 繪製 overlay（VP 從左往右、支撐壓力線）
   const drawOverlay = useCallback((): void => {
-    const canvas = overlayRef.current;
-    const series = seriesRef.current;
+    const canvas    = overlayRef.current;
+    const series    = seriesRef.current;
     const container = containerRef.current;
-    const chart = chartRef.current;
-
-    if (!canvas || !series || !container || !chart) {
-      console.warn('[DrawOverlay] Missing refs:', { canvas: !!canvas, series: !!series, container: !!container, chart: !!chart });
-      return;
-    }
-
-    // 計算每個期別對應的價格範圍（用於 VP 過濾）
-    const calculatePriceRange = (days: number): { min: number; max: number } => {
-      if (bars.length === 0) return { min: 0, max: 0 };
-      const startIdx = Math.max(0, bars.length - days);
-      const relevantBars = bars.slice(startIdx);
-      let minPrice = Infinity;
-      let maxPrice = -Infinity;
-      relevantBars.forEach((bar) => {
-        minPrice = Math.min(minPrice, bar.low);
-        maxPrice = Math.max(maxPrice, bar.high);
-      });
-      return { min: minPrice, max: maxPrice };
-    };
-
-    const priceRanges: Record<PeriodName, { min: number; max: number }> = {
-      short: calculatePriceRange(20),
-      medium: calculatePriceRange(40),
-      long: calculatePriceRange(80),
-    };
+    const chart     = chartRef.current;
+    if (!canvas || !series || !container || !chart) return;
 
     const ctx = canvas.getContext('2d');
-    if (!ctx) {
-      console.error('[DrawOverlay] Failed to get 2D context');
-      return;
-    }
+    if (!ctx) return;
 
-    // ========== 步驟 1：強制數據驗證 ==========
-    debugCounterRef.current++;
-    const debugId = debugCounterRef.current;
-    const activePeriods = (['short', 'medium', 'long'] as PeriodName[]).filter(p => showPeriods[p]);
-
-    console.log(`[DrawOverlay #${debugId}] ===== 繪製週期開始 =====`);
-    console.log(`[DrawOverlay #${debugId}] Active periods:`, activePeriods);
-    console.log(`[DrawOverlay #${debugId}] Show periods:`, showPeriods);
-
-    // 驗證每個 period 的數據
-    activePeriods.forEach(pName => {
-      const pData = allPeriods[pName];
-      console.log(`[DrawOverlay #${debugId}] Period [${pName}]:`, {
-        hasData: !!pData,
-        supportPrice: pData?.support?.price,
-        resistancePrice: pData?.resistance?.price,
-        vpValid: pData?.vp?.valid,
-        vpBinsCount: pData?.vp?.bins?.length || 0,
-        vpPOC: pData?.vp?.poc,
-        vpVAH: pData?.vp?.vah,
-        vpVAL: pData?.vp?.val,
-      });
-    });
-
-    // ========== 步驟 2：Canvas 尺寸和 DPI 驗證 ==========
     const dpr = window.devicePixelRatio || 1;
     const w = container.clientWidth;
     const h = container.clientHeight;
+    if (w <= 0 || h <= 0) return;
 
-    console.log(`[DrawOverlay #${debugId}] Canvas dimensions:`, {
-      containerWidth: w,
-      containerHeight: h,
-      dpr: dpr,
-      scaledWidth: w * dpr,
-      scaledHeight: h * dpr,
-    });
-
-    if (w <= 0 || h <= 0) {
-      console.error(`[DrawOverlay #${debugId}] Invalid canvas dimensions: w=${w}, h=${h}`);
-      return;
-    }
-
-    // 正確設置 canvas 物理尺寸和邏輯尺寸
-    canvas.width = w * dpr;
+    canvas.width  = w * dpr;
     canvas.height = h * dpr;
     ctx.scale(dpr, dpr);
     ctx.clearRect(0, 0, w, h);
 
-    console.log(`[DrawOverlay #${debugId}] Canvas cleared and scaled. Ready for drawing.`);
+    const chartContentWidth = w - PRICE_SCALE_WIDTH;
+    const activePeriods = (['short', 'medium', 'long'] as PeriodName[]).filter((p) => showPeriods[p]);
 
-    // ========== 計算 K 棒間距（用於動態調整 VP 寬度）==========
-    const chartContentWidth = w - VP_CONFIG.PRICE_SCALE_WIDTH;
-    let barSpacing = VP_CONFIG.BASE_WIDTH_PER_BAR; // 預設值
-    let visibleBarCount = 20; // 預設值
+    const priceRangeDays: Record<PeriodName, number> = { short: 20, medium: 40, long: 80 };
+    const priceRanges: Record<PeriodName, { min: number; max: number }> = {
+      short:  getPriceRange(priceRangeDays.short),
+      medium: getPriceRange(priceRangeDays.medium),
+      long:   getPriceRange(priceRangeDays.long),
+    };
 
-    // 嘗試透過 logicalRange 計算可見 K 棒數量
-    try {
-      const logicalRange = chart.timeScale().getVisibleLogicalRange();
-      if (logicalRange) {
-        visibleBarCount = Math.max(1, logicalRange.to - logicalRange.from);
-        barSpacing = Math.max(2, chartContentWidth / visibleBarCount);
-        console.log(`[DrawOverlay #${debugId}] K棒間距計算（邏輯範圍）:`, {
-          visibleBarCount: visibleBarCount.toFixed(0),
-          chartContentWidth: chartContentWidth,
-          barSpacing: barSpacing.toFixed(2),
-        });
-      }
-    } catch (e) {
-      // fallback to time range
-      const visibleRange = chart.timeScale().getVisibleRange();
-      if (visibleRange && bars.length > 1) {
-        const rangeLength = visibleRange.to - visibleRange.from;
-        barSpacing = Math.max(2, chartContentWidth / Math.max(rangeLength, 1));
-        console.log(`[DrawOverlay #${debugId}] K棒間距計算（時間範圍）:`, {
-          rangeLength: rangeLength,
-          chartContentWidth: chartContentWidth,
-          barSpacing: barSpacing.toFixed(2),
-        });
-      }
-    }
-
-    // ========== 步驟 3：繪製每個 period ==========
     activePeriods.forEach((periodName) => {
       const periodData = allPeriods[periodName];
+      if (!periodData) return;
       const colors = PERIOD_COLORS[periodName];
 
-      if (!periodData) {
-        console.warn(`[DrawOverlay #${debugId}] Period [${periodName}] has no data`);
-        return;
-      }
-
-      console.log(`[DrawOverlay #${debugId}] ===== 開始繪製 ${periodName} =====`);
-
-      // ========== 3a. 繪製 Volume Profile (VP) - 按時間範圍過濾、動態寬度 ==========
+      // ── VP：由左往右，全寬，無空隙 ──
       const vp = periodData.vp;
       const priceRange = priceRanges[periodName];
 
-      if (showVolumeProfile && vp && vp.valid && vp.bins && vp.bins.length > 0 && priceRange) {
-        // 過濾 bins：只保留在對應期別時間範圍內的價格柱
-        const filteredBins = vp.bins.filter(bin =>
-          bin.price >= priceRange.min && bin.price <= priceRange.max
-        );
-
+      if (showVolumeProfile && vp?.valid && vp.bins?.length && priceRange) {
         const tick = vp.tick || 1;
 
-        // ========== 精確寬度計算 ==========
-        // 該期別的總寬度 = 交易日數 * K棒間距
-        const periodDaysCount = PERIOD_DAY_MAP[periodName];
-        const vpTotalWidth = periodDaysCount * barSpacing;
+        const filteredBins = vp.bins.filter(
+          (bin) => bin.price >= priceRange.min && bin.price <= priceRange.max
+        );
 
-        // 計算最大成交量（基於已過濾的 bins）
-        const maxVolume = filteredBins.length > 0
-          ? Math.max(...filteredBins.map(b => b.volume || 0))
-          : 1; // 避免除以 0
+        if (filteredBins.length > 0) {
+          const maxVolume = Math.max(...filteredBins.map((b) => b.volume || 0)) || 1;
 
-        // VP 右邊界位置：從 chartContentWidth 開始向左畫
-        const vpChartRightX = chartContentWidth;
+          // 依價格由低到高排序，確保相鄰邊界無空隙
+          const sortedBins = [...filteredBins].sort((a, b) => a.price - b.price);
 
-        let vpDrawnCount = 0;
-        filteredBins.forEach((bin, binIdx) => {
-          // 座標轉換：價格 -> Canvas Y
-          const yTop = series.priceToCoordinate(bin.price + tick / 2);
-          const yBot = series.priceToCoordinate(bin.price - tick / 2);
+          sortedBins.forEach((bin, i) => {
+            const prevBin = sortedBins[i - 1];
+            const nextBin = sortedBins[i + 1];
 
-          if (yTop === null || yBot === null) {
-            return;
-          }
+            // 相鄰中點作為邊界（確保無空隙）
+            const topPrice = nextBin
+              ? (bin.price + nextBin.price) / 2
+              : bin.price + tick / 2;
+            const botPrice = prevBin
+              ? (bin.price + prevBin.price) / 2
+              : bin.price - tick / 2;
 
-          const barH = Math.abs(yBot - yTop);
-          if (barH <= 0) return; // 高度必須 > 0
+            const yTop = series.priceToCoordinate(topPrice);
+            const yBot = series.priceToCoordinate(botPrice);
+            if (yTop === null || yBot === null) return;
 
-          // ========== 水平縮放比例計算 ==========
-          // currentBucketWidth = (currentBucketVolume / maxVolume) * 該週期的總寬度
-          const bucketVolume = bin.volume || 0;
-          const normalizedRatio = bucketVolume / maxVolume;
-          const bucketWidth = normalizedRatio * vpTotalWidth;
+            const barH = Math.abs(yBot - yTop);
+            if (barH <= 0) return;
 
-          if (bucketWidth <= 0) return; // 寬度必須 > 0
+            const bucketVolume = bin.volume || 0;
+            const barWidth = (bucketVolume / maxVolume) * chartContentWidth;
+            if (barWidth <= 0) return;
 
-          const y = Math.min(yTop, yBot);
-
-          // ========== 渲染指令：從右往左繪製 ==========
-          // ctx.fillRect(chartRightEdge - currentBucketWidth, y, currentBucketWidth, bucketHeight)
-          const barX = vpChartRightX - bucketWidth;
-
-          // 驗證坐標有效性
-          if (isNaN(y) || isNaN(bucketWidth) || isNaN(barH) || isNaN(barX)) {
-            return;
-          }
-
-          if (vpDrawnCount === 0) {
-            console.log(`[DrawOverlay #${debugId}] VP [${periodName}] 精確計算驗證:`, {
-              期別: periodName,
-              K棒間距: barSpacing.toFixed(2),
-              交易日數: periodDaysCount,
-              VP總寬度: vpTotalWidth.toFixed(2),
-              可見K棒數: visibleBarCount,
-              maxVolume: maxVolume,
-              價格範圍: `[${priceRange.min.toFixed(2)}, ${priceRange.max.toFixed(2)}]`,
-              原始bins數: vp.bins.length,
-              過濾後bins數: filteredBins.length,
-              第一柱: {
-                price: filteredBins[0]?.price,
-                volume: filteredBins[0]?.volume,
-                計算寬度: (filteredBins[0]?.volume ? (filteredBins[0].volume / maxVolume * vpTotalWidth).toFixed(2) : 'N/A'),
-              },
-            });
-          }
-
-          ctx.fillStyle = colors.vp;
-          ctx.fillRect(barX, y, bucketWidth, barH);
-          vpDrawnCount++;
-        });
-
-        console.log(`[DrawOverlay #${debugId}] VP [${periodName}] 繪製完成: ${vpDrawnCount}/${filteredBins.length} 柱, 右邊界: ${vpChartRightX.toFixed(0)}, 總寬度: ${vpTotalWidth.toFixed(2)}px`);
-      } else {
-        console.log(`[DrawOverlay #${debugId}] VP [${periodName}] 無效或無數據或無價格範圍`, {
-          hasVp: !!vp,
-          hasRange: !!priceRange,
-          bins: vp?.bins?.length,
-        });
+            const y = Math.min(yTop, yBot);
+            ctx.fillStyle = colors.vp;
+            ctx.fillRect(0, y, barWidth, barH);
+          });
+        }
       }
 
-      // ========== 3b. 繪製支撐線 (Support) ==========
-      // 優先使用roundedSupport（如果是當前period），否則使用srData，最後使用allPeriods
+      // ── 支撐線 ──
       let supportPrice: number | undefined;
       if (roundedSupport !== undefined && periodName === currentPeriod) {
         supportPrice = roundedSupport;
-      } else if (srData && srData[periodName] && srData[periodName].support) {
+      } else if (srData?.[periodName]?.support) {
         supportPrice = srData[periodName].support.value;
-      } else if (periodData.support && periodData.support.price !== undefined) {
+      } else if (periodData.support?.price !== undefined) {
         supportPrice = periodData.support.price;
       }
 
       if (supportPrice !== undefined) {
         const yPrice = series.priceToCoordinate(supportPrice);
-
-        console.log(`[DrawOverlay #${debugId}] Support [${periodName}]:`, {
-          price: supportPrice,
-          yCoord: yPrice,
-          isValid: yPrice !== null && !isNaN(yPrice),
-        });
-
         if (yPrice !== null && !isNaN(yPrice) && yPrice >= 0 && yPrice <= h) {
-          // 陰影效果
-          ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+          // 延伸至整個畫面（含右側空白區）
+          ctx.strokeStyle = 'rgba(0,0,0,0.08)';
           ctx.lineWidth = 4;
           ctx.setLineDash([]);
           ctx.beginPath();
           ctx.moveTo(0, yPrice);
-          ctx.lineTo(chartContentWidth, yPrice);
+          ctx.lineTo(w, yPrice);
           ctx.stroke();
 
-          // 主線（虛線）
           ctx.strokeStyle = colors.support;
-          ctx.lineWidth = 2.5;
-          ctx.setLineDash([5, 3]);
+          ctx.lineWidth = 2;
+          ctx.setLineDash([6, 4]);
           ctx.beginPath();
           ctx.moveTo(0, yPrice);
-          ctx.lineTo(chartContentWidth, yPrice);
+          ctx.lineTo(w, yPrice);
           ctx.stroke();
           ctx.setLineDash([]);
 
-          // 標籤（放在Y軸上）
           ctx.fillStyle = colors.support;
           ctx.font = 'bold 12px sans-serif';
           ctx.textAlign = 'left';
-          // 格式化：移除小數點後的0
-          const supportLabel = supportPrice.toFixed(2).replace(/\.?0+$/, '');
-          ctx.fillText(supportLabel, 5, yPrice - 8);
-          ctx.textAlign = 'left';
-
-          console.log(`[DrawOverlay #${debugId}] Support [${periodName}] 線條已繪製`);
+          ctx.fillText(supportPrice.toFixed(2).replace(/\.?0+$/, ''), 5, yPrice - 6);
         }
       }
 
-      // ========== 3c. 繪製壓力線 (Resistance) ==========
-      // 優先使用roundedResistance（如果是當前period），否則使用srData，最後使用allPeriods
+      // ── 壓力線 ──
       let resistancePrice: number | undefined;
       if (roundedResistance !== undefined && periodName === currentPeriod) {
         resistancePrice = roundedResistance;
-      } else if (srData && srData[periodName] && srData[periodName].resistance) {
+      } else if (srData?.[periodName]?.resistance) {
         resistancePrice = srData[periodName].resistance.value;
-      } else if (periodData.resistance && periodData.resistance.price !== undefined) {
+      } else if (periodData.resistance?.price !== undefined) {
         resistancePrice = periodData.resistance.price;
       }
 
       if (resistancePrice !== undefined) {
         const yPrice = series.priceToCoordinate(resistancePrice);
-
-        console.log(`[DrawOverlay #${debugId}] Resistance [${periodName}]:`, {
-          price: resistancePrice,
-          yCoord: yPrice,
-          isValid: yPrice !== null && !isNaN(yPrice),
-        });
-
         if (yPrice !== null && !isNaN(yPrice) && yPrice >= 0 && yPrice <= h) {
-          // 陰影效果
-          ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+          ctx.strokeStyle = 'rgba(0,0,0,0.08)';
           ctx.lineWidth = 4;
           ctx.setLineDash([]);
           ctx.beginPath();
           ctx.moveTo(0, yPrice);
-          ctx.lineTo(chartContentWidth, yPrice);
+          ctx.lineTo(w, yPrice);
           ctx.stroke();
 
-          // 主線（虛線）
           ctx.strokeStyle = colors.resistance;
-          ctx.lineWidth = 2.5;
-          ctx.setLineDash([5, 3]);
+          ctx.lineWidth = 2;
+          ctx.setLineDash([6, 4]);
           ctx.beginPath();
           ctx.moveTo(0, yPrice);
-          ctx.lineTo(chartContentWidth, yPrice);
+          ctx.lineTo(w, yPrice);
           ctx.stroke();
           ctx.setLineDash([]);
 
-          // 標籤（放在Y軸上）
           ctx.fillStyle = colors.resistance;
           ctx.font = 'bold 12px sans-serif';
           ctx.textAlign = 'left';
-          // 格式化：移除小數點後的0
-          const resistanceLabel = resistancePrice.toFixed(2).replace(/\.?0+$/, '');
-          ctx.fillText(resistanceLabel, 5, yPrice + 15);
-          ctx.textAlign = 'left';
-
-          console.log(`[DrawOverlay #${debugId}] Resistance [${periodName}] 線條已繪製`);
+          ctx.fillText(resistancePrice.toFixed(2).replace(/\.?0+$/, ''), 5, yPrice + 14);
         }
       }
-
-      console.log(`[DrawOverlay #${debugId}] ===== ${periodName} 繪製完成 =====`);
     });
+  }, [showPeriods, allPeriods, bars, showVolumeProfile, srData, roundedSupport, roundedResistance, currentPeriod, getPriceRange]);
 
-    console.log(`[DrawOverlay #${debugId}] ===== 繪製週期結束 =====\n`);
-  }, [showPeriods, allPeriods, bars, periodDays, showVolumeProfile, srData, roundedSupport, roundedResistance, currentPeriod]);
-
+  // 建立/重建 chart
   useEffect(() => {
-    if (!containerRef.current || displayBars.length === 0) return;
-    if (chartRef.current) {
-      chartRef.current.remove();
-    }
+    if (!containerRef.current || bars.length === 0) return;
+    if (chartRef.current) chartRef.current.remove();
 
-    const containerHeight = containerRef.current.clientHeight;
     const chart = createChart(containerRef.current, {
-      width: containerRef.current.clientWidth,
-      height: containerHeight,
+      width:  containerRef.current.clientWidth,
+      height: containerRef.current.clientHeight,
       layout: {
         background: { color: '#ffffff' },
         textColor: '#999',
         fontSize: 14,
       },
       grid: {
-        vertLines: { color: 'rgba(200, 200, 200, 0.08)' },
-        horzLines: { color: 'rgba(200, 200, 200, 0.08)' },
+        vertLines: { color: 'rgba(200,200,200,0.08)' },
+        horzLines: { color: 'rgba(200,200,200,0.08)' },
       },
       crosshair: { mode: 1 },
       rightPriceScale: {
@@ -491,188 +300,162 @@ export default function KLineChart({
         borderColor: 'rgba(0,0,0,0.1)',
         timeVisible: false,
       },
+      handleScale: {
+        mouseWheel: false,
+      },
     });
     chartRef.current = chart;
 
     if (chartType === 'candlestick') {
-      const candleSeries = chart.addSeries(CandlestickSeries, {
-        upColor: '#ef5350',
-        downColor: '#26a69a',
-        borderVisible: false,
-        wickUpColor: '#ef5350',
-        wickDownColor: '#26a69a',
+      const cs = chart.addSeries(CandlestickSeries, {
+        upColor:        '#ef5350',
+        downColor:      '#26a69a',
+        borderVisible:  false,
+        wickUpColor:    '#ef5350',
+        wickDownColor:  '#26a69a',
         priceLineVisible: false,
         lastValueVisible: false,
       });
-      seriesRef.current = candleSeries;
-
-      candleSeries.setData(
-        displayBars.map((b) => ({
-          time: toUnix(b.time),
-          open: b.open,
-          high: b.high,
-          low: b.low,
-          close: b.close,
-        }))
-      );
+      seriesRef.current = cs;
+      cs.setData(bars.map((b) => ({
+        time:  toUnix(b.time),
+        open:  b.open,
+        high:  b.high,
+        low:   b.low,
+        close: b.close,
+      })));
     } else {
-      const lineSeries = chart.addSeries(LineSeries, {
+      const ls = chart.addSeries(LineSeries, {
         color: '#2196F3',
-        lineWidth: 2.5,
+        lineWidth: 2,
         priceLineVisible: false,
         lastValueVisible: false,
       });
-      seriesRef.current = lineSeries;
-
-      lineSeries.setData(
-        displayBars.map((b) => ({
-          time: toUnix(b.time),
-          value: b.close,
-        }))
-      );
+      seriesRef.current = ls;
+      ls.setData(bars.map((b) => ({ time: toUnix(b.time), value: b.close })));
     }
 
-    // 設置初始可見範圍：僅在首次初始化時執行，之後允許用戶自由縮放
-    let timeoutId: ReturnType<typeof setTimeout> | null = null;
-    if (displayBars.length > 0 && !isInitializedRef.current) {
-      // 先調用fitContent以確保圖表初始化
-      try {
-        chart.timeScale().fitContent();
-      } catch (e) {
-        // 忽略錯誤
-      }
+    // 初始可見範圍：requiredDays 根K棒 + 5根空白
+    let initTimeoutId: ReturnType<typeof setTimeout> | null = null;
+    if (!isInitializedRef.current) {
+      try { chart.timeScale().fitContent(); } catch (_) {}
 
-      // 延遲後限制可見範圍
-      timeoutId = setTimeout(() => {
+      initTimeoutId = setTimeout(() => {
         try {
-          const totalBars = displayBars.length;
-          const startIdx = Math.max(0, totalBars - requiredDays);
-          const startBar = displayBars[startIdx];
-          const endBar = displayBars[totalBars - 1];
-
-          if (startBar && endBar && chartRef.current) {
-            const fromTime = toUnix(startBar.time);
-            const toTime = toUnix(endBar.time) + 86400; // +1天，以確保最後一根K線完全顯示
-            chartRef.current.timeScale().setVisibleRange({
-              from: fromTime,
-              to: toTime,
-            });
-            isInitializedRef.current = true; // 標記已初始化，後續不再重設範圍
-          }
-        } catch (e) {
-          // 圖表已被銷毀，忽略錯誤
-        }
+          if (!chartRef.current) return;
+          const total = bars.length;
+          chartRef.current.timeScale().setVisibleLogicalRange({
+            from: total - 1 - requiredDays,
+            to:   total - 1 + BLANK_BARS + 0.5,
+          });
+          isInitializedRef.current = true;
+        } catch (_) {}
       }, 100);
     }
 
-    // 觸發繪製
-    const handleRedraw = () => {
-      requestAnimationFrame(drawOverlay);
-    };
-
-    handleRedraw();
-
-    // 初始化 overlay canvas 的物理尺寸
-    const initCanvasSize = () => {
-      const canvas = overlayRef.current;
+    // Canvas 初始化
+    const initCanvas = () => {
+      const canvas    = overlayRef.current;
       const container = containerRef.current;
-
       if (!canvas || !container) return;
-
       const dpr = window.devicePixelRatio || 1;
       const w = container.clientWidth;
       const h = container.clientHeight;
-
       if (w > 0 && h > 0) {
-        canvas.width = w * dpr;
+        canvas.width  = w * dpr;
         canvas.height = h * dpr;
-        console.log(`[Canvas Init] Overlay canvas 物理尺寸設置: ${w}x${h}px (DPI: ${dpr})`);
       }
     };
+    initCanvas();
+    const canvasTimeoutId = setTimeout(initCanvas, 50);
 
-    initCanvasSize();
-
-    // 延遲重繪，確保 canvas 完全初始化
-    const redrawTimeoutId = setTimeout(() => {
-      initCanvasSize();
-      handleRedraw();
-    }, 50);
-
-    chart.timeScale().subscribeVisibleTimeRangeChange(handleRedraw);
-    chart.timeScale().subscribeVisibleLogicalRangeChange(handleRedraw);
-
-    // 添加滑鼠滾輪縮放邏輯：固定右邊界（最新 K 棒位置）
+    // 滑鼠滾輪縮放：固定右邊界（含5根空白），調整左側
     const handleWheel = (e: WheelEvent) => {
       if (!chartRef.current) return;
-
-      const visibleRange = chartRef.current.timeScale().getVisibleRange();
-      if (!visibleRange) return;
-
+      const lr = chartRef.current.timeScale().getVisibleLogicalRange();
+      if (!lr) return;
       e.preventDefault();
 
-      const currentRange = visibleRange;
-      const rangeDuration = currentRange.to - currentRange.from;
-      // 向下滾輪 (deltaY > 0) = 放大，向上滾輪 (deltaY < 0) = 縮小
-      const direction = e.deltaY > 0 ? -1 : 1;
-      const zoomFactor = direction > 0 ? 1.1 : 0.9;
-      const newDuration = rangeDuration * zoomFactor;
+      const zoomFactor  = e.deltaY > 0 ? 1.2 : 0.8;
+      const newDuration = (lr.to - lr.from) * zoomFactor;
 
-      // 固定右邊界，調整左邊界
-      const newFrom = currentRange.to - newDuration;
-
-      chartRef.current.timeScale().setVisibleRange({
-        from: newFrom as UTCTimestamp,
-        to: currentRange.to,
+      chartRef.current.timeScale().setVisibleLogicalRange({
+        from: lr.to - newDuration,
+        to:   lr.to,
       });
     };
 
-    if (containerRef.current) {
-      containerRef.current.addEventListener('wheel', handleWheel, { passive: false });
-    }
+    containerRef.current.addEventListener('wheel', handleWheel, { passive: false });
 
     const resizeObserver = new ResizeObserver(() => {
-      if (containerRef.current) {
-        chart.applyOptions({ width: containerRef.current.clientWidth });
-        handleRedraw();
+      if (containerRef.current && chartRef.current) {
+        chartRef.current.applyOptions({ width: containerRef.current.clientWidth });
       }
     });
-
-    if (containerRef.current) {
-      resizeObserver.observe(containerRef.current);
-    }
+    resizeObserver.observe(containerRef.current);
 
     return () => {
-      if (timeoutId) clearTimeout(timeoutId);
-      if (redrawTimeoutId) clearTimeout(redrawTimeoutId);
+      if (initTimeoutId)  clearTimeout(initTimeoutId);
+      if (canvasTimeoutId) clearTimeout(canvasTimeoutId);
       resizeObserver.disconnect();
-      if (containerRef.current) {
-        containerRef.current.removeEventListener('wheel', handleWheel);
-      }
+      containerRef.current?.removeEventListener('wheel', handleWheel);
+      isInitializedRef.current   = false;
+      lastPeriodStateRef.current = null;
       chart.remove();
-      chartRef.current = null;
+      chartRef.current  = null;
       seriesRef.current = null;
     };
-  }, [displayBars, chartType, drawOverlay]);
+  }, [bars, chartType]);
 
-  // 當showPeriods改變時，觸發重繪（不更改可見範圍，允許用戶自由縮放）
+  // 訂閱 chart 事件 → 重繪 overlay
   useEffect(() => {
-    if (seriesRef.current) {
-      requestAnimationFrame(drawOverlay);
-    }
+    if (!chartRef.current) return;
+    const handleRedraw = () => requestAnimationFrame(drawOverlay);
+    chartRef.current.timeScale().subscribeVisibleTimeRangeChange(handleRedraw);
+    chartRef.current.timeScale().subscribeVisibleLogicalRangeChange(handleRedraw);
+    return () => {
+      try {
+        chartRef.current?.timeScale().unsubscribeVisibleTimeRangeChange(handleRedraw);
+        chartRef.current?.timeScale().unsubscribeVisibleLogicalRangeChange(handleRedraw);
+      } catch (_) {}
+    };
+  }, [drawOverlay]);
+
+  // showPeriods 改變 → 重繪
+  useEffect(() => {
+    if (seriesRef.current) requestAnimationFrame(drawOverlay);
   }, [showPeriods, drawOverlay]);
+
+  // showPeriods 改變 → 設定對應可見範圍
+  useEffect(() => {
+    if (!chartRef.current || bars.length === 0) return;
+
+    const checked = (['short', 'medium', 'long'] as PeriodName[]).filter((p) => showPeriods[p]);
+    const stateKey = checked.join(',') + '|' + bars.length;
+    const lastKey  = lastPeriodStateRef.current?.periods + '|' + lastPeriodStateRef.current?.barsLength;
+    if (stateKey === lastKey) return;
+    lastPeriodStateRef.current = { periods: checked.join(','), barsLength: bars.length };
+
+    const barsToShow = checked.length > 0
+      ? Math.max(...checked.map((p) => PERIOD_DAY_MAP[p]))
+      : 20;
+
+    try {
+      chartRef.current.timeScale().setVisibleLogicalRange({
+        from: bars.length - 1 - barsToShow,
+        to:   bars.length - 1 + BLANK_BARS + 0.5,
+      });
+    } catch (_) {}
+  }, [showPeriods, bars]);
 
   return (
     <div className="flex flex-col w-full h-full bg-white">
-      {/* AI 支撐壓力一句話 */}
       {aiSummary && (
-        <div className="px-5 py-2 border-b border-blue-200 bg-blue-50">
-          <p className="text-sm text-blue-800 leading-relaxed">
-            {aiSummary}
-          </p>
+        <div className="px-5 py-2 border-b border-blue-100 bg-blue-50">
+          <p className="text-sm text-blue-800 leading-relaxed">{aiSummary}</p>
         </div>
       )}
 
-      {/* 圖表主體 */}
       <div className="flex flex-1 min-w-0">
         <div className="relative flex-1 min-w-0">
           <div ref={containerRef} className="w-full h-full" />
