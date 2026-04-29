@@ -5,6 +5,37 @@ import { createChart, CandlestickSeries, LineSeries, IChartApi, ISeriesApi, UTCT
 import { Bar, PeriodAnalysis, Timeframe, PeriodName } from '../types';
 import { analyzeVolumeProfile } from '../utils/vpAnalysis';
 
+export interface SRLevel {
+  id: string;
+  name: string;
+  price: number;
+  period: PeriodName;
+}
+
+export interface SRZoneData {
+  type: string;   // "壓力區" | "壓力線" | "支撐區" | "支撐線"
+  low: number;
+  high: number;
+  ai_sentence: string;
+}
+export interface SRPeriodAnalysis {
+  resistance: SRZoneData;
+  support: SRZoneData;
+}
+export interface SRAnalysis {
+  short_term:  SRPeriodAnalysis;
+  medium_term: SRPeriodAnalysis;
+  long_term:   SRPeriodAnalysis;
+}
+
+interface LabelGroup {
+  y: number;
+  price: number;
+  period: PeriodName;
+  items: SRLevel[];
+  expanded: boolean;
+}
+
 interface ChartProps {
   bars: Bar[];
   period: PeriodAnalysis;
@@ -16,10 +47,8 @@ interface ChartProps {
   allPeriods: Record<PeriodName, PeriodAnalysis>;
   currentPrice: number;
   showVolumeProfile?: boolean;
-  srData?: any;
-  roundedSupport?: number;
-  roundedResistance?: number;
-  currentPeriod?: PeriodName;
+  selectedSRLevels?: SRLevel[];
+  srAnalysis?: SRAnalysis | null;
   aiSummary?: string;
 }
 
@@ -31,35 +60,56 @@ function toUnix(timeStr: string): UTCTimestamp {
   return Math.floor(Date.UTC(+y, +m - 1, +d, hh, mm) / 1000) as UTCTimestamp;
 }
 
-const PRICE_SCALE_WIDTH = 60;
-const BLANK_BARS = 5;          // 右側空白K棒數
+const PRICE_SCALE_WIDTH = 70;
+const BLANK_BARS = 5;
 const TRANSPARENCY = 0.5;
 
-// 短期=黃色, 中期=紫色, 長期=藍色
-const PERIOD_COLORS: Record<PeriodName, { support: string; resistance: string; vp: string }> = {
-  short:  {
-    support:    '#EAB308',
-    resistance: '#EAB308',
-    vp: `rgba(234, 179, 8, ${TRANSPARENCY})`,
-  },
-  medium: {
-    support:    '#9333EA',
-    resistance: '#9333EA',
-    vp: `rgba(147, 51, 234, ${TRANSPARENCY})`,
-  },
-  long:   {
-    support:    '#2563EB',
-    resistance: '#2563EB',
-    vp: `rgba(37, 99, 235, ${TRANSPARENCY})`,
-  },
+const PERIOD_COLORS: Record<PeriodName, { vp: string; line: string; label: string; labelBg: string }> = {
+  short:  { vp: `rgba(234,179,8,${TRANSPARENCY})`,   line: '#EAB308', label: '#92400E', labelBg: '#FEF9C3' },
+  medium: { vp: `rgba(147,51,234,${TRANSPARENCY})`,  line: '#9333EA', label: '#4C1D95', labelBg: '#F3E8FF' },
+  long:   { vp: `rgba(37,99,235,${TRANSPARENCY})`,   line: '#2563EB', label: '#1E3A8A', labelBg: '#DBEAFE' },
 };
 
-// 各期別預設顯示K棒數
-const PERIOD_DAY_MAP: Record<PeriodName, number> = {
-  short:  20,
-  medium: 40,
-  long:   80,
+// 深色：用於 SR Analysis 區塊繪製
+const SR_COLORS: Record<PeriodName, { stroke: string; fillR: string; fillS: string; hatch: string }> = {
+  short:  { stroke: '#B45309', fillR: 'rgba(180,83,9,0.08)',    fillS: 'rgba(180,83,9,0.08)',    hatch: 'rgba(180,83,9,0.7)'   },
+  medium: { stroke: '#6D28D9', fillR: 'rgba(109,40,217,0.08)',  fillS: 'rgba(109,40,217,0.08)',  hatch: 'rgba(109,40,217,0.7)' },
+  long:   { stroke: '#1D4ED8', fillR: 'rgba(29,78,216,0.08)',   fillS: 'rgba(29,78,216,0.08)',   hatch: 'rgba(29,78,216,0.7)'  },
 };
+
+function drawHatchedZone(
+  ctx: CanvasRenderingContext2D,
+  x: number, yTop: number, w: number, zoneH: number,
+  fillColor: string, hatchColor: string, strokeColor: string
+) {
+  if (zoneH < 0.5) return;
+  // 淡背景
+  ctx.fillStyle = fillColor;
+  ctx.fillRect(x, yTop, w, zoneH);
+  // 斜線（clipped）
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(x, yTop, w, zoneH);
+  ctx.clip();
+  ctx.strokeStyle = hatchColor;
+  ctx.lineWidth = 1;
+  const spacing = 7;
+  for (let i = -(zoneH + spacing); i < w + zoneH; i += spacing) {
+    ctx.beginPath();
+    ctx.moveTo(x + i, yTop);
+    ctx.lineTo(x + i + zoneH + spacing, yTop + zoneH + spacing);
+    ctx.stroke();
+  }
+  ctx.restore();
+  // 上下邊框
+  ctx.strokeStyle = strokeColor;
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([]);
+  ctx.beginPath(); ctx.moveTo(x, yTop);          ctx.lineTo(x + w, yTop);          ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x, yTop + zoneH);  ctx.lineTo(x + w, yTop + zoneH);  ctx.stroke();
+}
+
+const PERIOD_DAY_MAP: Record<PeriodName, number> = { short: 20, medium: 40, long: 80 };
 
 export default function KLineChart({
   bars,
@@ -72,10 +122,8 @@ export default function KLineChart({
   allPeriods,
   currentPrice,
   showVolumeProfile = true,
-  srData,
-  roundedSupport,
-  roundedResistance,
-  currentPeriod = 'short',
+  selectedSRLevels = [],
+  srAnalysis = null,
   aiSummary = '',
 }: ChartProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -84,7 +132,10 @@ export default function KLineChart({
   const seriesRef    = useRef<ISeriesApi<'Candlestick' | 'Line'> | null>(null);
   const isInitializedRef    = useRef(false);
   const lastPeriodStateRef  = useRef<{ periods: string; barsLength: number } | null>(null);
-  const [vpAnalysis, setVpAnalysis] = useState<string>('');
+
+  const [labelGroups, setLabelGroups]       = useState<LabelGroup[]>([]);
+  const [hoveredGroupIdx, setHoveredGroupIdx] = useState<number | null>(null);
+  const [expandedGroupIdx, setExpandedGroupIdx] = useState<number | null>(null);
 
   const requiredDays = Math.max(
     ...Object.entries(showPeriods)
@@ -93,28 +144,44 @@ export default function KLineChart({
     20
   );
 
-  // 生成 VP 分析文字
-  useEffect(() => {
-    const shortPeriod = allPeriods.short;
-    if (shortPeriod?.vp) {
-      const closePrice = bars.length > 0 ? bars[bars.length - 1].close : currentPrice;
-      const analysis = analyzeVolumeProfile(shortPeriod.vp, currentPrice, closePrice);
-      if (analysis) setVpAnalysis(analysis.summary);
-    }
-  }, [allPeriods, bars, currentPrice]);
-
-  // 計算各期別對應的 K 棒價格範圍（用於 VP 過濾）
-  const getPriceRange = useCallback((days: number): { min: number; max: number } => {
+  const getPriceRange = useCallback((days: number) => {
     if (bars.length === 0) return { min: 0, max: 0 };
-    const startIdx = Math.max(0, bars.length - days);
-    const slice = bars.slice(startIdx);
-    return {
-      min: Math.min(...slice.map((b) => b.low)),
-      max: Math.max(...slice.map((b) => b.high)),
-    };
+    const slice = bars.slice(Math.max(0, bars.length - days));
+    return { min: Math.min(...slice.map(b => b.low)), max: Math.max(...slice.map(b => b.high)) };
   }, [bars]);
 
-  // 繪製 overlay（VP 從左往右、支撐壓力線）
+  // Build label groups from selectedSRLevels
+  const buildLabelGroups = useCallback((): LabelGroup[] => {
+    if (!seriesRef.current || selectedSRLevels.length === 0) return [];
+    const sorted = [...selectedSRLevels].sort((a, b) => a.price - b.price);
+    const groups: LabelGroup[] = [];
+    for (const lv of sorted) {
+      const mergeThreshold = lv.price * 0.005;
+      const existing = groups.find(g => Math.abs(g.price - lv.price) <= mergeThreshold);
+      if (existing) {
+        existing.items.push(lv);
+      } else {
+        const y = seriesRef.current!.priceToCoordinate(lv.price) ?? 0;
+        groups.push({ y, price: lv.price, period: lv.period, items: [lv], expanded: false });
+      }
+    }
+    return groups;
+  }, [selectedSRLevels]);
+
+  const refreshLabelPositions = useCallback(() => {
+    if (!seriesRef.current) return;
+    setLabelGroups(prev => {
+      const next = buildLabelGroups();
+      // preserve expanded state
+      return next.map((g, i) => ({
+        ...g,
+        expanded: prev[i]?.expanded ?? false,
+        y: seriesRef.current!.priceToCoordinate(g.price) ?? g.y,
+      }));
+    });
+  }, [buildLabelGroups]);
+
+  // Draw VP + SR lines on canvas overlay
   const drawOverlay = useCallback((): void => {
     const canvas    = overlayRef.current;
     const series    = seriesRef.current;
@@ -135,146 +202,123 @@ export default function KLineChart({
     ctx.scale(dpr, dpr);
     ctx.clearRect(0, 0, w, h);
 
-    const chartContentWidth = w - PRICE_SCALE_WIDTH;
-    const activePeriods = (['short', 'medium', 'long'] as PeriodName[]).filter((p) => showPeriods[p]);
-
+    const chartW = w - PRICE_SCALE_WIDTH;
+    const activePeriods = (['short', 'medium', 'long'] as PeriodName[]).filter(p => showPeriods[p]);
     const priceRangeDays: Record<PeriodName, number> = { short: 20, medium: 40, long: 80 };
-    const priceRanges: Record<PeriodName, { min: number; max: number }> = {
-      short:  getPriceRange(priceRangeDays.short),
-      medium: getPriceRange(priceRangeDays.medium),
-      long:   getPriceRange(priceRangeDays.long),
-    };
 
-    activePeriods.forEach((periodName) => {
+    // ── VP bars (left → right) ──
+    activePeriods.forEach(periodName => {
       const periodData = allPeriods[periodName];
       if (!periodData) return;
       const colors = PERIOD_COLORS[periodName];
-
-      // ── VP：由左往右，全寬，無空隙 ──
       const vp = periodData.vp;
-      const priceRange = priceRanges[periodName];
+      const priceRange = getPriceRange(priceRangeDays[periodName]);
 
       if (showVolumeProfile && vp?.valid && vp.bins?.length && priceRange) {
         const tick = vp.tick || 1;
-
-        const filteredBins = vp.bins.filter(
-          (bin) => bin.price >= priceRange.min && bin.price <= priceRange.max
-        );
-
+        const filteredBins = vp.bins.filter(b => b.price >= priceRange.min && b.price <= priceRange.max);
         if (filteredBins.length > 0) {
-          const maxVolume = Math.max(...filteredBins.map((b) => b.volume || 0)) || 1;
-
-          // 依價格由低到高排序，確保相鄰邊界無空隙
+          const maxVolume = Math.max(...filteredBins.map(b => b.volume || 0)) || 1;
           const sortedBins = [...filteredBins].sort((a, b) => a.price - b.price);
-
           sortedBins.forEach((bin, i) => {
-            const prevBin = sortedBins[i - 1];
-            const nextBin = sortedBins[i + 1];
-
-            // 相鄰中點作為邊界（確保無空隙）
-            const topPrice = nextBin
-              ? (bin.price + nextBin.price) / 2
-              : bin.price + tick / 2;
-            const botPrice = prevBin
-              ? (bin.price + prevBin.price) / 2
-              : bin.price - tick / 2;
-
+            const prev = sortedBins[i - 1];
+            const next = sortedBins[i + 1];
+            const topPrice = next ? (bin.price + next.price) / 2 : bin.price + tick / 2;
+            const botPrice = prev ? (bin.price + prev.price) / 2 : bin.price - tick / 2;
             const yTop = series.priceToCoordinate(topPrice);
             const yBot = series.priceToCoordinate(botPrice);
             if (yTop === null || yBot === null) return;
-
             const barH = Math.abs(yBot - yTop);
             if (barH <= 0) return;
-
-            const bucketVolume = bin.volume || 0;
-            const barWidth = (bucketVolume / maxVolume) * chartContentWidth;
+            const barWidth = (bin.volume / maxVolume) * chartW;
             if (barWidth <= 0) return;
-
-            const y = Math.min(yTop, yBot);
             ctx.fillStyle = colors.vp;
-            ctx.fillRect(0, y, barWidth, barH);
+            ctx.fillRect(0, Math.min(yTop, yBot), barWidth, barH);
           });
         }
       }
-
-      // ── 支撐線 ──
-      let supportPrice: number | undefined;
-      if (roundedSupport !== undefined && periodName === currentPeriod) {
-        supportPrice = roundedSupport;
-      } else if (srData?.[periodName]?.support) {
-        supportPrice = srData[periodName].support.value;
-      } else if (periodData.support?.price !== undefined) {
-        supportPrice = periodData.support.price;
-      }
-
-      if (supportPrice !== undefined) {
-        const yPrice = series.priceToCoordinate(supportPrice);
-        if (yPrice !== null && !isNaN(yPrice) && yPrice >= 0 && yPrice <= h) {
-          // 延伸至整個畫面（含右側空白區）
-          ctx.strokeStyle = 'rgba(0,0,0,0.08)';
-          ctx.lineWidth = 4;
-          ctx.setLineDash([]);
-          ctx.beginPath();
-          ctx.moveTo(0, yPrice);
-          ctx.lineTo(w, yPrice);
-          ctx.stroke();
-
-          ctx.strokeStyle = colors.support;
-          ctx.lineWidth = 2;
-          ctx.setLineDash([6, 4]);
-          ctx.beginPath();
-          ctx.moveTo(0, yPrice);
-          ctx.lineTo(w, yPrice);
-          ctx.stroke();
-          ctx.setLineDash([]);
-
-          ctx.fillStyle = colors.support;
-          ctx.font = 'bold 12px sans-serif';
-          ctx.textAlign = 'left';
-          ctx.fillText(supportPrice.toFixed(2).replace(/\.?0+$/, ''), 5, yPrice - 6);
-        }
-      }
-
-      // ── 壓力線 ──
-      let resistancePrice: number | undefined;
-      if (roundedResistance !== undefined && periodName === currentPeriod) {
-        resistancePrice = roundedResistance;
-      } else if (srData?.[periodName]?.resistance) {
-        resistancePrice = srData[periodName].resistance.value;
-      } else if (periodData.resistance?.price !== undefined) {
-        resistancePrice = periodData.resistance.price;
-      }
-
-      if (resistancePrice !== undefined) {
-        const yPrice = series.priceToCoordinate(resistancePrice);
-        if (yPrice !== null && !isNaN(yPrice) && yPrice >= 0 && yPrice <= h) {
-          ctx.strokeStyle = 'rgba(0,0,0,0.08)';
-          ctx.lineWidth = 4;
-          ctx.setLineDash([]);
-          ctx.beginPath();
-          ctx.moveTo(0, yPrice);
-          ctx.lineTo(w, yPrice);
-          ctx.stroke();
-
-          ctx.strokeStyle = colors.resistance;
-          ctx.lineWidth = 2;
-          ctx.setLineDash([6, 4]);
-          ctx.beginPath();
-          ctx.moveTo(0, yPrice);
-          ctx.lineTo(w, yPrice);
-          ctx.stroke();
-          ctx.setLineDash([]);
-
-          ctx.fillStyle = colors.resistance;
-          ctx.font = 'bold 12px sans-serif';
-          ctx.textAlign = 'left';
-          ctx.fillText(resistancePrice.toFixed(2).replace(/\.?0+$/, ''), 5, yPrice + 14);
-        }
-      }
     });
-  }, [showPeriods, allPeriods, bars, showVolumeProfile, srData, roundedSupport, roundedResistance, currentPeriod, getPriceRange]);
 
-  // 建立/重建 chart
+    // ── SR Analysis 區塊（勾選成交量時顯示）──
+    if (srAnalysis) {
+      const periodMap: { period: PeriodName; data: SRPeriodAnalysis }[] = [
+        { period: 'short',  data: srAnalysis.short_term  },
+        { period: 'medium', data: srAnalysis.medium_term },
+        { period: 'long',   data: srAnalysis.long_term   },
+      ];
+
+      periodMap.forEach(({ period: pName, data }) => {
+        if (!showPeriods[pName] || !data) return;
+        const c = SR_COLORS[pName];
+
+        ([data.resistance, data.support] as SRZoneData[]).forEach(zone => {
+          if (!zone) return;
+          const isZone = zone.type.includes('區');
+          const yH = series.priceToCoordinate(zone.high);
+          const yL = series.priceToCoordinate(zone.low);
+          if (yH === null || yL === null) return;
+
+          const yTop  = Math.min(yH, yL);
+          const yBot  = Math.max(yH, yL);
+          const zoneH = yBot - yTop;
+
+          if (isZone) {
+            // 壓力區 / 支撐區 → 斜線填充
+            drawHatchedZone(ctx, 0, yTop, chartW, Math.max(zoneH, 1), c.fillR, c.hatch, c.stroke);
+          } else {
+            // 壓力線 / 支撐線 → 實線
+            const yLine = series.priceToCoordinate((zone.low + zone.high) / 2) ?? yTop;
+            if (yLine < 0 || yLine > h) return;
+            ctx.save();
+            ctx.strokeStyle = c.stroke;
+            ctx.lineWidth = 2;
+            ctx.setLineDash([]);
+            ctx.globalAlpha = 0.9;
+            ctx.beginPath();
+            ctx.moveTo(0, yLine);
+            ctx.lineTo(chartW, yLine);
+            ctx.stroke();
+            ctx.restore();
+          }
+        });
+      });
+    }
+
+    // ── Selected SR lines ──
+    const newGroups = buildLabelGroups();
+    newGroups.forEach(group => {
+      const y = series.priceToCoordinate(group.price);
+      if (y === null || isNaN(y) || y < 0 || y > h) return;
+      const colors = PERIOD_COLORS[group.period];
+
+      // shadow
+      ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+      ctx.lineWidth = 4;
+      ctx.setLineDash([]);
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+
+      // dashed line extending to right blank area
+      ctx.strokeStyle = colors.line;
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([5, 4]);
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w - PRICE_SCALE_WIDTH + 2, y); ctx.stroke();
+      ctx.setLineDash([]);
+    });
+
+    // Update label group Y positions (trigger state update on next tick)
+    requestAnimationFrame(() => {
+      if (!seriesRef.current) return;
+      setLabelGroups(prev => {
+        const updated = newGroups.map((g, i) => {
+          const newY = seriesRef.current!.priceToCoordinate(g.price) ?? g.y;
+          return { ...g, y: newY, expanded: prev[i]?.expanded ?? false };
+        });
+        return updated;
+      });
+    });
+  }, [showPeriods, allPeriods, showVolumeProfile, getPriceRange, buildLabelGroups, srAnalysis]);
+
+  // Build/rebuild chart on bars or chartType change
   useEffect(() => {
     if (!containerRef.current || bars.length === 0) return;
     if (chartRef.current) chartRef.current.remove();
@@ -282,164 +326,122 @@ export default function KLineChart({
     const chart = createChart(containerRef.current, {
       width:  containerRef.current.clientWidth,
       height: containerRef.current.clientHeight,
-      layout: {
-        background: { color: '#ffffff' },
-        textColor: '#999',
-        fontSize: 14,
-      },
+      layout: { background: { color: '#ffffff' }, textColor: '#94a3b8', fontSize: 13 },
       grid: {
-        vertLines: { color: 'rgba(200,200,200,0.08)' },
-        horzLines: { color: 'rgba(200,200,200,0.08)' },
+        vertLines: { color: 'rgba(200,200,200,0.1)' },
+        horzLines: { color: 'rgba(200,200,200,0.1)' },
       },
       crosshair: { mode: 1 },
-      rightPriceScale: {
-        borderColor: 'rgba(0,0,0,0.1)',
-        textColor: '#999',
-      },
-      timeScale: {
-        borderColor: 'rgba(0,0,0,0.1)',
-        timeVisible: false,
-      },
-      handleScale: {
-        mouseWheel: false,
-      },
+      rightPriceScale: { borderColor: 'rgba(0,0,0,0.08)', textColor: '#94a3b8' },
+      timeScale: { borderColor: 'rgba(0,0,0,0.08)', timeVisible: false },
+      handleScale: { mouseWheel: false },
     });
     chartRef.current = chart;
 
     if (chartType === 'candlestick') {
       const cs = chart.addSeries(CandlestickSeries, {
-        upColor:        '#ef5350',
-        downColor:      '#26a69a',
-        borderVisible:  false,
-        wickUpColor:    '#ef5350',
-        wickDownColor:  '#26a69a',
-        priceLineVisible: false,
-        lastValueVisible: false,
+        upColor: '#ef5350', downColor: '#26a69a',
+        borderVisible: false, wickUpColor: '#ef5350', wickDownColor: '#26a69a',
+        priceLineVisible: false, lastValueVisible: false,
       });
       seriesRef.current = cs;
-      cs.setData(bars.map((b) => ({
-        time:  toUnix(b.time),
-        open:  b.open,
-        high:  b.high,
-        low:   b.low,
-        close: b.close,
-      })));
+      cs.setData(bars.map(b => ({ time: toUnix(b.time), open: b.open, high: b.high, low: b.low, close: b.close })));
     } else {
       const ls = chart.addSeries(LineSeries, {
-        color: '#2196F3',
-        lineWidth: 2,
-        priceLineVisible: false,
-        lastValueVisible: false,
+        color: '#2196F3', lineWidth: 2, priceLineVisible: false, lastValueVisible: false,
       });
       seriesRef.current = ls;
-      ls.setData(bars.map((b) => ({ time: toUnix(b.time), value: b.close })));
+      ls.setData(bars.map(b => ({ time: toUnix(b.time), value: b.close })));
     }
 
-    // 初始可見範圍：requiredDays 根K棒 + 5根空白
-    let initTimeoutId: ReturnType<typeof setTimeout> | null = null;
+    // Initial visible range
     if (!isInitializedRef.current) {
       try { chart.timeScale().fitContent(); } catch (_) {}
-
-      initTimeoutId = setTimeout(() => {
+      const tid = setTimeout(() => {
         try {
-          if (!chartRef.current) return;
-          const total = bars.length;
-          chartRef.current.timeScale().setVisibleLogicalRange({
-            from: total - 1 - requiredDays,
-            to:   total - 1 + BLANK_BARS + 0.5,
+          chartRef.current?.timeScale().setVisibleLogicalRange({
+            from: bars.length - 1 - requiredDays,
+            to:   bars.length - 1 + BLANK_BARS + 0.5,
           });
           isInitializedRef.current = true;
         } catch (_) {}
       }, 100);
+      return () => clearTimeout(tid);
     }
 
-    // Canvas 初始化
+    // Canvas size init
     const initCanvas = () => {
-      const canvas    = overlayRef.current;
-      const container = containerRef.current;
-      if (!canvas || !container) return;
+      const canvas = overlayRef.current;
+      const cont   = containerRef.current;
+      if (!canvas || !cont) return;
       const dpr = window.devicePixelRatio || 1;
-      const w = container.clientWidth;
-      const h = container.clientHeight;
-      if (w > 0 && h > 0) {
-        canvas.width  = w * dpr;
-        canvas.height = h * dpr;
-      }
+      const w = cont.clientWidth, h = cont.clientHeight;
+      if (w > 0 && h > 0) { canvas.width = w * dpr; canvas.height = h * dpr; }
     };
     initCanvas();
-    const canvasTimeoutId = setTimeout(initCanvas, 50);
+    const tid2 = setTimeout(initCanvas, 50);
 
-    // 滑鼠滾輪縮放：固定右邊界（含5根空白），調整左側
+    // Wheel zoom: anchor = last data bar (6th from right incl. 5 blanks)
     const handleWheel = (e: WheelEvent) => {
       if (!chartRef.current) return;
       const lr = chartRef.current.timeScale().getVisibleLogicalRange();
       if (!lr) return;
       e.preventDefault();
-
-      const zoomFactor  = e.deltaY > 0 ? 1.2 : 0.8;
-      const newDuration = (lr.to - lr.from) * zoomFactor;
-
+      const anchor = bars.length - 1;
+      const fromAnchor = anchor - lr.from;
+      const factor = e.deltaY > 0 ? 1.2 : 0.8;
+      const newFromAnchor = fromAnchor * factor;
       chartRef.current.timeScale().setVisibleLogicalRange({
-        from: lr.to - newDuration,
-        to:   lr.to,
+        from: anchor - newFromAnchor,
+        to:   anchor + BLANK_BARS + 0.5,
       });
     };
-
     containerRef.current.addEventListener('wheel', handleWheel, { passive: false });
 
     const resizeObserver = new ResizeObserver(() => {
-      if (containerRef.current && chartRef.current) {
+      if (containerRef.current && chartRef.current)
         chartRef.current.applyOptions({ width: containerRef.current.clientWidth });
-      }
     });
     resizeObserver.observe(containerRef.current);
 
     return () => {
-      if (initTimeoutId)  clearTimeout(initTimeoutId);
-      if (canvasTimeoutId) clearTimeout(canvasTimeoutId);
+      clearTimeout(tid2);
       resizeObserver.disconnect();
       containerRef.current?.removeEventListener('wheel', handleWheel);
       isInitializedRef.current   = false;
       lastPeriodStateRef.current = null;
       chart.remove();
-      chartRef.current  = null;
-      seriesRef.current = null;
+      chartRef.current = seriesRef.current = null;
     };
   }, [bars, chartType]);
 
-  // 訂閱 chart 事件 → 重繪 overlay
+  // Subscribe to chart range changes → redraw overlay + refresh labels
   useEffect(() => {
     if (!chartRef.current) return;
-    const handleRedraw = () => requestAnimationFrame(drawOverlay);
-    chartRef.current.timeScale().subscribeVisibleTimeRangeChange(handleRedraw);
-    chartRef.current.timeScale().subscribeVisibleLogicalRangeChange(handleRedraw);
+    const redraw = () => requestAnimationFrame(drawOverlay);
+    chartRef.current.timeScale().subscribeVisibleTimeRangeChange(redraw);
+    chartRef.current.timeScale().subscribeVisibleLogicalRangeChange(redraw);
     return () => {
       try {
-        chartRef.current?.timeScale().unsubscribeVisibleTimeRangeChange(handleRedraw);
-        chartRef.current?.timeScale().unsubscribeVisibleLogicalRangeChange(handleRedraw);
+        chartRef.current?.timeScale().unsubscribeVisibleTimeRangeChange(redraw);
+        chartRef.current?.timeScale().unsubscribeVisibleLogicalRangeChange(redraw);
       } catch (_) {}
     };
   }, [drawOverlay]);
 
-  // showPeriods 改變 → 重繪
   useEffect(() => {
     if (seriesRef.current) requestAnimationFrame(drawOverlay);
-  }, [showPeriods, drawOverlay]);
+  }, [showPeriods, selectedSRLevels, drawOverlay]);
 
-  // showPeriods 改變 → 設定對應可見範圍
+  // Adjust visible range when period selection changes
   useEffect(() => {
     if (!chartRef.current || bars.length === 0) return;
-
-    const checked = (['short', 'medium', 'long'] as PeriodName[]).filter((p) => showPeriods[p]);
+    const checked = (['short', 'medium', 'long'] as PeriodName[]).filter(p => showPeriods[p]);
     const stateKey = checked.join(',') + '|' + bars.length;
-    const lastKey  = lastPeriodStateRef.current?.periods + '|' + lastPeriodStateRef.current?.barsLength;
+    const lastKey  = (lastPeriodStateRef.current?.periods ?? '') + '|' + (lastPeriodStateRef.current?.barsLength ?? 0);
     if (stateKey === lastKey) return;
     lastPeriodStateRef.current = { periods: checked.join(','), barsLength: bars.length };
-
-    const barsToShow = checked.length > 0
-      ? Math.max(...checked.map((p) => PERIOD_DAY_MAP[p]))
-      : 20;
-
+    const barsToShow = checked.length > 0 ? Math.max(...checked.map(p => PERIOD_DAY_MAP[p])) : 20;
     try {
       chartRef.current.timeScale().setVisibleLogicalRange({
         from: bars.length - 1 - barsToShow,
@@ -447,6 +449,9 @@ export default function KLineChart({
       });
     } catch (_) {}
   }, [showPeriods, bars]);
+
+  const fmtPrice = (p: number) =>
+    p < 100 ? p.toFixed(2) : p >= 1000 ? p.toFixed(0) : p.toFixed(1);
 
   return (
     <div className="flex flex-col w-full h-full bg-white">
@@ -456,7 +461,7 @@ export default function KLineChart({
         </div>
       )}
 
-      <div className="flex flex-1 min-w-0">
+      <div className="flex flex-1 min-w-0 relative">
         <div className="relative flex-1 min-w-0">
           <div ref={containerRef} className="w-full h-full" />
           <canvas
@@ -464,6 +469,51 @@ export default function KLineChart({
             className="absolute top-0 left-0 pointer-events-none"
             style={{ width: '100%', height: '100%', zIndex: 10 }}
           />
+
+          {/* SR label badges on Y-axis edge */}
+          {labelGroups.map((group, gi) => {
+            const colors = PERIOD_COLORS[group.period];
+            const isHovered  = hoveredGroupIdx === gi;
+            const isExpanded = expandedGroupIdx === gi;
+            const label = group.items.length > 1 ? `${group.items[0].name} +${group.items.length - 1}` : group.items[0].name;
+            const containerH = containerRef.current?.clientHeight ?? 600;
+            if (group.y < 10 || group.y > containerH - 10) return null;
+
+            return (
+              <div
+                key={gi}
+                className="absolute flex items-center gap-1 cursor-pointer"
+                style={{
+                  right: PRICE_SCALE_WIDTH + 4,
+                  top: group.y - 10,
+                  zIndex: 20,
+                }}
+                onMouseEnter={() => setHoveredGroupIdx(gi)}
+                onMouseLeave={() => setHoveredGroupIdx(null)}
+                onClick={() => setExpandedGroupIdx(prev => prev === gi ? null : gi)}
+              >
+                {/* Connector line stub */}
+                <div className="w-3 border-t border-dashed" style={{ borderColor: colors.line }} />
+
+                {/* Label badge */}
+                <div
+                  className="text-[10px] font-bold px-1.5 py-0.5 rounded border shadow-sm whitespace-nowrap transition-all"
+                  style={{
+                    backgroundColor: isHovered || isExpanded ? colors.line : colors.labelBg,
+                    color: isHovered || isExpanded ? '#fff' : colors.label,
+                    borderColor: colors.line,
+                  }}
+                >
+                  {isExpanded
+                    ? group.items.map(it => `${it.name} ${fmtPrice(it.price)}`).join(' / ')
+                    : isHovered
+                      ? `${label} ${fmtPrice(group.price)}`
+                      : label
+                  }
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

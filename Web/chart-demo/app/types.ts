@@ -63,3 +63,36 @@ export interface StockData {
     long:   PeriodAnalysis;
   };
 }
+
+// ── SR Summary（三期各 1S+1R）────────────────────────────────────────
+
+export interface SRIndicator {
+  name: string;
+  value: number | null;
+  distance_pct: number | null;
+  hitrate: number | null;
+}
+
+export interface SRKeyLevel {
+  price: number;
+  label: string;
+  layer: 'L1' | 'L2' | 'L3';
+  distance_pct: number;
+  indicators: SRIndicator[];
+}
+
+export interface SRPeriodSummary {
+  support: SRKeyLevel | null;
+  resistance: SRKeyLevel | null;
+}
+
+export interface SRSummaryData {
+  symbol: string;
+  date: string;
+  current_price: number;
+  periods: {
+    short:  SRPeriodSummary;
+    medium: SRPeriodSummary;
+    long:   SRPeriodSummary;
+  };
+}

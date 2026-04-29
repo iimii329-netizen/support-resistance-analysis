@@ -1,147 +1,201 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
-import { StockData, Timeframe, PeriodName, PeriodAnalysis } from './types';
-import KLineChart    from './components/KLineChart';
-import StockSelector from './components/StockSelector';
+import { useState, useEffect, useMemo, useRef } from 'react';
+import { StockData, PeriodName, Timeframe } from './types';
+import KLineChart, { SRLevel, SRAnalysis } from './components/KLineChart';
+import StockSelector   from './components/StockSelector';
 import SRDataPanel, { DataPeriod } from './components/SRDataPanel';
-import ManualPage    from './components/ManualPage';
-import { processBands } from './utils/calcBands';
-import { mockAIPrompt } from './utils/mockAIPrompt';
-import { roundSRLevel, formatSRPrice } from './utils/roundSRLevel';
+import ManualPage      from './components/ManualPage';
 
-const PERIOD_DAYS: Record<PeriodName, number> = {
-  short:  20,
-  medium: 40,
-  long:   80,
-};
+const PERIOD_DAYS: Record<PeriodName, number> = { short: 20, medium: 40, long: 80 };
+
+// ── SR Levels data types ────────────────────────────────────────────────
+interface SRLevelsStockData {
+  name: string; close: number; change_pct: number;
+  indicators: Record<string, number>;
+  vp: { period_5: { poc:number;vah:number;val:number }; period_20: { poc:number;vah:number;val:number }; period_60: { poc:number;vah:number;val:number } };
+  analysis: {
+    short_term:  { resistance: SRZone; support: SRZone };
+    medium_term: { resistance: SRZone; support: SRZone };
+    long_term:   { resistance: SRZone; support: SRZone };
+  };
+}
+interface SRZone { type:string; low:number; high:number; components:string[]; ai_sentence:string; }
+
+// ── Build selectable SR level list for a stock ──────────────────────────
+function buildAvailableSRLevels(d: SRLevelsStockData): SRLevel[] {
+  const ind = d.indicators;
+  const vp  = d.vp;
+  const close = d.close;
+
+  const short: [string, number | undefined][] = [
+    ['上關',     ind['上關']],     ['下關',     ind['下關']],
+    ['SAR',      ind['SAR']],      ['5日最高價', ind['5日最高價']],
+    ['5日最低價', ind['5日最低價']], ['10日最高價',ind['10日最高價']],
+    ['10日最低價',ind['10日最低價']],['MA5',     ind['MA5']],
+    ['MA10',     ind['MA10']],     ['5日POC',   vp.period_5.poc],
+    ['5日VAH',   vp.period_5.vah], ['5日VAL',   vp.period_5.val],
+  ];
+  const medium: [string, number | undefined][] = [
+    ['布林通道上緣',ind['布林通道上緣']],['布林通道下緣',ind['布林通道下緣']],
+    ['20日最高價', ind['20日最高價']], ['20日最低價', ind['20日最低價']],
+    ['MA20',      ind['MA20']],       ['MA30',      ind['MA30']],
+    ['20日POC',   vp.period_20.poc],  ['20日VAH',   vp.period_20.vah],
+    ['20日VAL',   vp.period_20.val],
+  ];
+  const longPairs: [string, number | undefined][] = [
+    ['240日最高價',ind['240日最高價']],['240日最低價',ind['240日最低價']],
+    ['MA60',  ind['MA60']],['MA120', ind['MA120']],['MA240', ind['MA240']],
+    ['60日POC',vp.period_60.poc],['60日VAH',vp.period_60.vah],['60日VAL',vp.period_60.val],
+  ];
+  // integer levels
+  const step  = close >= 1000 ? 100 : close >= 100 ? 50 : close >= 10 ? 5 : 1;
+  const lo = close * 0.75, hi = close * 1.25;
+  let n = Math.ceil(lo / step) * step;
+  while (n <= hi) { if (Math.abs(n - close) / close > 0.005) longPairs.push([`整數${n}`, n]); n += step; }
+
+  const toLevel = (pairs: [string, number | undefined][], p: PeriodName): SRLevel[] =>
+    pairs
+      .filter(([, v]) => v != null && !isNaN(v as number))
+      .map(([name, price]) => ({ id: `${p}-${name}`, name, price: price as number, period: p }));
+
+  return [
+    ...toLevel(short,  'short'),
+    ...toLevel(medium, 'medium'),
+    ...toLevel(longPairs, 'long'),
+  ];
+}
 
 export default function Home() {
   const [stocks,     setStocks]     = useState<Record<string, StockData>>({});
   const [selectedId, setSelectedId] = useState<string>('');
-  const [mainTab,    setMainTab]    = useState<'data' | 'chart'>('chart');
+  const [mainTab,    setMainTab]    = useState<'data' | 'chart'>('data');
   const [dataPeriod, setDataPeriod] = useState<DataPeriod>('short');
   const [timeframe,  setTimeframe]  = useState<Timeframe>('1d');
 
-  // 成交量分佈勾選（對應 short/medium/long VP）
   const [showVolumes, setShowVolumes] = useState<Record<PeriodName, boolean>>({
-    short:  true,
-    medium: false,
-    long:   false,
+    short: true, medium: false, long: false,
   });
 
-  const [contentData, setContentData] = useState<Record<string, any>>({});
-  const [srData,      setSRData]      = useState<Record<string, any>>({});
-  const [showManual,  setShowManual]  = useState(false);
+  const [srLevelsData,   setSrLevelsData]   = useState<Record<string, SRLevelsStockData>>({});
+  const [showManual,     setShowManual]     = useState(false);
+
+  // Selected SR levels for chart
+  const [selectedSRIds, setSelectedSRIds] = useState<Set<string>>(new Set());
+  const [showSRDropdown, setShowSRDropdown] = useState(false);
+  const [showSRModal,    setShowSRModal]    = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    fetch('/data/stocks.json')
-      .then((r) => r.json())
-      .then((d: Record<string, StockData>) => {
-        setStocks(d);
-        const first = Object.keys(d)[0];
-        if (first) setSelectedId(first);
-      });
-
-    fetch('/data/support-resistance.json')
-      .then((r) => r.json())
-      .then((d) => setSRData(d))
-      .catch(() => console.log('支撐壓力數據加載失敗'));
-
-    const stockIds = ['2317.TW', '2330.TW', '2382.TW', '2454.TW', '2887.TW'];
-    Promise.all(
-      stockIds.map((id) =>
-        fetch(`/content/${id}_20260417.json`)
-          .then((r) => r.json())
-          .then((data) => ({ [id]: data }))
-          .catch(() => ({ [id]: null }))
-      )
-    ).then((results) => {
-      const merged = results.reduce((acc, obj) => ({ ...acc, ...obj }), {});
-      setContentData(merged);
+    fetch('/data/stocks.json').then(r => r.json()).then((d: Record<string, StockData>) => {
+      setStocks(d);
+      const first = Object.keys(d)[0];
+      if (first) setSelectedId(first);
     });
+    fetch('/data/sr_levels_20260417.json')
+      .then(r => r.json())
+      .then(d => setSrLevelsData(d))
+      .catch(() => {});
   }, []);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node))
+        setShowSRDropdown(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  // Reset SR selections when stock changes
+  useEffect(() => { setSelectedSRIds(new Set()); }, [selectedId]);
 
   const stockList = useMemo(() => Object.values(stocks), [stocks]);
   const stockData = stocks[selectedId];
 
-  if (showManual) {
-    return <ManualPage onBack={() => setShowManual(false)} />;
-  }
-
-  if (!stockData) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-gray-400 text-sm">
-        載入中…
-      </div>
-    );
-  }
+  if (showManual) return <ManualPage onBack={() => setShowManual(false)} />;
+  if (!stockData) return (
+    <div className="min-h-screen flex items-center justify-center text-gray-400 text-sm">載入中…</div>
+  );
 
   const bars = stockData.klines[timeframe];
-
-  const activePeriods: Record<PeriodName, PeriodAnalysis> = {
-    short:  stockData.periods.short,
-    medium: stockData.periods.medium,
-    long:   stockData.periods.long,
+  const activePeriods: Record<PeriodName, any> = {
+    short: stockData.periods.short, medium: stockData.periods.medium, long: stockData.periods.long,
   };
-
-  // 根據勾選的成交量期別，決定當前 period（用於 SR 線）
-  const activeVolumeList = (['short', 'medium', 'long'] as PeriodName[]).filter(p => showVolumes[p]);
+  const activeVolumeList = (['short','medium','long'] as PeriodName[]).filter(p => showVolumes[p]);
   const currentPeriod: PeriodName =
-    activeVolumeList.includes('long')   ? 'long' :
-    activeVolumeList.includes('medium') ? 'medium' : 'short';
-
+    activeVolumeList.includes('long') ? 'long' : activeVolumeList.includes('medium') ? 'medium' : 'short';
   const periodData = stockData.periods[currentPeriod];
 
-  const processedSup = processBands(periodData.all_support || [], 'support');
-  const processedRes = processBands(periodData.all_resistance || [], 'resistance');
-  if (processedSup.main) {
-    processedSup.main.summary = mockAIPrompt(processedSup.main, 'support', stockData.current_price);
-  }
-  if (processedRes.main) {
-    processedRes.main.summary = mockAIPrompt(processedRes.main, 'resistance', stockData.current_price);
-  }
+  const currentSRLevelsData = srLevelsData[selectedId] ?? null;
 
-  // AI 一句話摘要
+  // AI 一句話：來自 sr_analysis，依勾選的成交量期別顯示
   const aiSummaries: string[] = [];
   for (const pName of ['short', 'medium', 'long'] as PeriodName[]) {
-    if (showVolumes[pName]) {
-      const pData = stockData.periods[pName];
-      if (pData?.support && pData?.resistance) {
-        const roundedSup = roundSRLevel(pData.support.price, stockData.current_price);
-        const roundedRes = roundSRLevel(pData.resistance.price, stockData.current_price);
-        const supLabel = pData.support.members?.[0] || '支撐';
-        const resLabel = pData.resistance.members?.[0] || '壓力';
-        const supPrice = formatSRPrice(roundedSup, stockData.current_price);
-        const resPrice = formatSRPrice(roundedRes, stockData.current_price);
-        aiSummaries.push(`根據${supLabel}，在${supPrice}元附近有支撐。根據${resLabel}，在${resPrice}元附近有壓力。`);
-      }
-    }
+    if (!showVolumes[pName]) continue;
+    const termKey = pName === 'short' ? 'short_term' : pName === 'medium' ? 'medium_term' : 'long_term';
+    const termData = currentSRLevelsData?.analysis?.[termKey as keyof typeof currentSRLevelsData.analysis];
+    if (termData?.resistance?.ai_sentence) aiSummaries.push(termData.resistance.ai_sentence);
+    if (termData?.support?.ai_sentence)    aiSummaries.push(termData.support.ai_sentence);
   }
-  const aiSummary = aiSummaries.join(' ');
+  const aiSummary = aiSummaries.join('　');
 
-  let roundedSupport: number | undefined;
-  if (periodData?.support) {
-    roundedSupport = roundSRLevel(periodData.support.price, stockData.current_price);
-  }
-  let roundedResistance: number | undefined;
-  if (periodData?.resistance) {
-    roundedResistance = roundSRLevel(periodData.resistance.price, stockData.current_price);
-  }
+  // srAnalysis 傳給 KLineChart 用於繪製區塊
+  const srAnalysis: SRAnalysis | null = currentSRLevelsData?.analysis ?? null;
+  const availableSRLevels   = currentSRLevelsData ? buildAvailableSRLevels(currentSRLevelsData) : [];
+  const selectedSRLevels    = availableSRLevels.filter(lv => selectedSRIds.has(lv.id));
 
-  const handleVolumeChange = (p: PeriodName, checked: boolean) => {
-    setShowVolumes((prev) => ({ ...prev, [p]: checked }));
+  const toggleSR = (id: string) => {
+    setSelectedSRIds(prev => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
   };
+
+  const srByPeriod: Record<PeriodName, SRLevel[]> = {
+    short:  availableSRLevels.filter(lv => lv.period === 'short'),
+    medium: availableSRLevels.filter(lv => lv.period === 'medium'),
+    long:   availableSRLevels.filter(lv => lv.period === 'long'),
+  };
+
+  const PERIOD_LABEL: Record<PeriodName, string> = { short: '短期', medium: '中期', long: '長期' };
+  const PERIOD_COLOR: Record<PeriodName, string> = {
+    short:  'text-yellow-700 font-bold',
+    medium: 'text-purple-700 font-bold',
+    long:   'text-blue-700 font-bold',
+  };
+
+  const SRCheckList = ({ compact }: { compact?: boolean }) => (
+    <div className={compact ? 'max-h-72 overflow-y-auto' : ''}>
+      {(['short','medium','long'] as PeriodName[]).map(p => (
+        <div key={p} className="mb-2">
+          <div className={`text-xs px-2 py-1 ${PERIOD_COLOR[p]}`}>{PERIOD_LABEL[p]}支撐壓力</div>
+          {srByPeriod[p].map(lv => (
+            <label key={lv.id} className="flex items-center gap-2 px-2 py-1 hover:bg-gray-50 cursor-pointer rounded text-sm">
+              <input
+                type="checkbox"
+                checked={selectedSRIds.has(lv.id)}
+                onChange={() => toggleSR(lv.id)}
+                className="w-3.5 h-3.5 rounded"
+              />
+              <span className="flex-1 text-gray-700">{lv.name}</span>
+              <span className="text-xs text-gray-400 tabular-nums">
+                {lv.price < 100 ? lv.price.toFixed(2) : lv.price >= 1000 ? lv.price.toFixed(0) : lv.price.toFixed(1)}
+              </span>
+            </label>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-
-      {/* 頂部主 Tab */}
+      {/* Main Tabs */}
       <div className="flex bg-white border-b border-gray-200">
-        {[
-          { key: 'data',  label: '支撐壓力數據' },
-          { key: 'chart', label: '支撐壓力K線圖' },
-        ].map(({ key, label }) => (
+        {[{ key: 'data', label: '支撐壓力數據' }, { key: 'chart', label: '支撐壓力K線圖' }].map(({ key, label }) => (
           <button
             key={key}
             onClick={() => setMainTab(key as 'data' | 'chart')}
@@ -150,26 +204,23 @@ export default function Home() {
                 ? 'border-blue-600 text-blue-700 bg-blue-50'
                 : 'border-transparent text-gray-500 hover:text-gray-800 hover:bg-gray-50'
             }`}
-          >
-            {label}
-          </button>
+          >{label}</button>
         ))}
       </div>
 
-      {/* 選股列 */}
+      {/* Stock Selector */}
       <StockSelector
         stocks={stockList}
         selectedId={selectedId}
-        onSelect={(id) => setSelectedId(id)}
+        onSelect={id => setSelectedId(id)}
         onShowManual={() => setShowManual(true)}
       />
 
-      {/* 主內容 */}
+      {/* Content */}
       {mainTab === 'data' ? (
         <SRDataPanel
           data={stockData}
-          contentData={contentData[selectedId] || null}
-          srData={srData[selectedId] || null}
+          srLevelsData={currentSRLevelsData}
           period={dataPeriod}
           onPeriodChange={setDataPeriod}
         />
@@ -177,46 +228,58 @@ export default function Home() {
         <div className="flex flex-1 items-stretch">
           <div className="flex-1 min-w-0 flex flex-col gap-3 p-3">
 
-            {/* 控制棒：成交量勾選 */}
-            <div className="bg-white border border-gray-200 rounded-lg shadow-sm px-5 py-3 flex flex-row items-center gap-6">
-              <label className="flex items-center gap-2 cursor-pointer hover:bg-yellow-50 px-3 py-1.5 rounded transition-colors">
-                <input
-                  type="checkbox"
-                  checked={showVolumes.short}
-                  onChange={(e) => handleVolumeChange('short', e.target.checked)}
-                  className="w-4 h-4"
-                  style={{ accentColor: '#EAB308' }}
-                />
-                <span className="text-sm text-gray-800 font-semibold">成交量(5日)</span>
-                <span className="w-3 h-3 rounded-sm" style={{ backgroundColor: 'rgba(234,179,8,0.7)' }} />
-              </label>
+            {/* Control bar */}
+            <div className="bg-white border border-gray-200 rounded-lg shadow-sm px-5 py-3 flex flex-row items-center gap-4 flex-wrap">
+              {/* Volume toggles */}
+              {[
+                { key: 'short' as PeriodName,  label: '成交量(5日)',  accent: '#EAB308', bg: 'rgba(234,179,8,0.7)' },
+                { key: 'medium' as PeriodName, label: '成交量(20日)', accent: '#9333EA', bg: 'rgba(147,51,234,0.7)' },
+                { key: 'long' as PeriodName,   label: '成交量(60日)', accent: '#2563EB', bg: 'rgba(37,99,235,0.7)'  },
+              ].map(({ key, label, accent, bg }) => (
+                <label key={key} className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={showVolumes[key]}
+                    onChange={e => setShowVolumes(prev => ({ ...prev, [key]: e.target.checked }))}
+                    className="w-4 h-4"
+                    style={{ accentColor: accent }}
+                  />
+                  <span className="text-sm text-gray-800 font-semibold">{label}</span>
+                  <span className="w-3 h-3 rounded-sm" style={{ backgroundColor: bg }} />
+                </label>
+              ))}
 
-              <label className="flex items-center gap-2 cursor-pointer hover:bg-purple-50 px-3 py-1.5 rounded transition-colors">
-                <input
-                  type="checkbox"
-                  checked={showVolumes.medium}
-                  onChange={(e) => handleVolumeChange('medium', e.target.checked)}
-                  className="w-4 h-4"
-                  style={{ accentColor: '#9333EA' }}
-                />
-                <span className="text-sm text-gray-800 font-semibold">成交量(20日)</span>
-                <span className="w-3 h-3 rounded-sm" style={{ backgroundColor: 'rgba(147,51,234,0.7)' }} />
-              </label>
+              <div className="flex-1" />
 
-              <label className="flex items-center gap-2 cursor-pointer hover:bg-blue-50 px-3 py-1.5 rounded transition-colors">
-                <input
-                  type="checkbox"
-                  checked={showVolumes.long}
-                  onChange={(e) => handleVolumeChange('long', e.target.checked)}
-                  className="w-4 h-4"
-                  style={{ accentColor: '#2563EB' }}
-                />
-                <span className="text-sm text-gray-800 font-semibold">成交量(60日)</span>
-                <span className="w-3 h-3 rounded-sm" style={{ backgroundColor: 'rgba(37,99,235,0.7)' }} />
-              </label>
+              {/* SR level dropdown */}
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setShowSRDropdown(v => !v)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  <span>支撐壓力水位</span>
+                  {selectedSRIds.size > 0 && (
+                    <span className="bg-blue-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">{selectedSRIds.size}</span>
+                  )}
+                  <span className="text-gray-400 text-xs">{showSRDropdown ? '▲' : '▼'}</span>
+                </button>
+                {showSRDropdown && (
+                  <div className="absolute right-0 top-full mt-1 w-52 bg-white border border-gray-200 rounded-xl shadow-xl z-50 p-2">
+                    <SRCheckList compact />
+                  </div>
+                )}
+              </div>
+
+              {/* SR modal button */}
+              <button
+                onClick={() => setShowSRModal(true)}
+                className="px-3 py-1.5 text-sm font-semibold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+              >
+                支撐壓力
+              </button>
             </div>
 
-            {/* K 線圖 */}
+            {/* K-line chart */}
             <div className="bg-white rounded border border-gray-200 overflow-hidden flex-1 min-h-0">
               <KLineChart
                 bars={bars}
@@ -229,12 +292,41 @@ export default function Home() {
                 allPeriods={activePeriods}
                 currentPrice={stockData.current_price}
                 showVolumeProfile={activeVolumeList.length > 0}
-                srData={srData[selectedId] || null}
-                roundedSupport={roundedSupport}
-                roundedResistance={roundedResistance}
-                currentPeriod={currentPeriod}
+                selectedSRLevels={selectedSRLevels}
+                srAnalysis={srAnalysis}
                 aiSummary={aiSummary}
               />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SR Modal */}
+      {showSRModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+          onClick={e => { if (e.target === e.currentTarget) setShowSRModal(false); }}
+        >
+          <div className="bg-white rounded-2xl shadow-2xl w-96 max-h-[80vh] flex flex-col overflow-hidden">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+              <h3 className="text-base font-bold text-gray-900">選擇支撐壓力水位</h3>
+              <div className="flex items-center gap-3">
+                {selectedSRIds.size > 0 && (
+                  <button onClick={() => setSelectedSRIds(new Set())} className="text-xs text-gray-400 hover:text-gray-600">清除全部</button>
+                )}
+                <button onClick={() => setShowSRModal(false)} className="text-gray-400 hover:text-gray-700 text-xl leading-none">×</button>
+              </div>
+            </div>
+            <div className="flex-1 overflow-y-auto p-4">
+              <SRCheckList />
+            </div>
+            <div className="px-5 py-3 border-t border-gray-100 bg-gray-50">
+              <button
+                onClick={() => setShowSRModal(false)}
+                className="w-full py-2 text-sm font-bold bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                確認（已選 {selectedSRIds.size} 個）
+              </button>
             </div>
           </div>
         </div>
