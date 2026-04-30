@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { StockData, PeriodName, Timeframe } from './types';
 import KLineChart, { SRLevel, SRAnalysis } from './components/KLineChart';
 import StockSelector   from './components/StockSelector';
-import SRDataPanel, { DataPeriod } from './components/SRDataPanel';
+import SRDataPanel     from './components/SRDataPanel';
 import ManualPage      from './components/ManualPage';
 
 const PERIOD_DAYS: Record<PeriodName, number> = { short: 20, medium: 40, long: 80 };
@@ -48,7 +48,6 @@ function buildAvailableSRLevels(d: SRLevelsStockData): SRLevel[] {
     ['MA60',  ind['MA60']],['MA120', ind['MA120']],['MA240', ind['MA240']],
     ['60日POC',vp.period_60.poc],['60日VAH',vp.period_60.vah],['60日VAL',vp.period_60.val],
   ];
-  // integer levels
   const step  = close >= 1000 ? 100 : close >= 100 ? 50 : close >= 10 ? 5 : 1;
   const lo = close * 0.75, hi = close * 1.25;
   let n = Math.ceil(lo / step) * step;
@@ -60,9 +59,9 @@ function buildAvailableSRLevels(d: SRLevelsStockData): SRLevel[] {
       .map(([name, price]) => ({ id: `${p}-${name}`, name, price: price as number, period: p }));
 
   return [
-    ...toLevel(short,  'short'),
-    ...toLevel(medium, 'medium'),
-    ...toLevel(longPairs, 'long'),
+    ...toLevel(short,    'short'),
+    ...toLevel(medium,   'medium'),
+    ...toLevel(longPairs,'long'),
   ];
 }
 
@@ -70,10 +69,15 @@ export default function Home() {
   const [stocks,     setStocks]     = useState<Record<string, StockData>>({});
   const [selectedId, setSelectedId] = useState<string>('');
   const [mainTab,    setMainTab]    = useState<'data' | 'chart'>('data');
-  const [dataPeriod, setDataPeriod] = useState<DataPeriod>('short');
   const [timeframe,  setTimeframe]  = useState<Timeframe>('1d');
 
+  // Volume period toggles
   const [showVolumes, setShowVolumes] = useState<Record<PeriodName, boolean>>({
+    short: true, medium: false, long: false,
+  });
+
+  // AI判讀 toggles (default: 短期 on)
+  const [showAI, setShowAI] = useState<Record<PeriodName, boolean>>({
     short: true, medium: false, long: false,
   });
 
@@ -81,7 +85,7 @@ export default function Home() {
   const [showManual,     setShowManual]     = useState(false);
 
   // Selected SR levels for chart
-  const [selectedSRIds, setSelectedSRIds] = useState<Set<string>>(new Set());
+  const [selectedSRIds,  setSelectedSRIds]  = useState<Set<string>>(new Set());
   const [showSRDropdown, setShowSRDropdown] = useState(false);
   const [showSRModal,    setShowSRModal]    = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -98,7 +102,6 @@ export default function Home() {
       .catch(() => {});
   }, []);
 
-  // Close dropdown on outside click
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node))
@@ -108,10 +111,14 @@ export default function Home() {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  // Reset SR selections when stock changes
-  useEffect(() => { setSelectedSRIds(new Set()); }, [selectedId]);
+  // (reset handled in onSelect handler below to batch all state in one render)
 
-  const stockList = useMemo(() => Object.values(stocks), [stocks]);
+  const stockList = useMemo(() =>
+    Object.values(stocks).map(s => ({
+      ...s,
+      change_pct: srLevelsData[s.stock_id]?.change_pct ?? s.change_pct,
+    })),
+  [stocks, srLevelsData]);
   const stockData = stocks[selectedId];
 
   if (showManual) return <ManualPage onBack={() => setShowManual(false)} />;
@@ -130,21 +137,20 @@ export default function Home() {
 
   const currentSRLevelsData = srLevelsData[selectedId] ?? null;
 
-  // AI 一句話：來自 sr_analysis，依勾選的成交量期別顯示
-  const aiSummaries: string[] = [];
+  // AI 一句話：依 showAI 決定顯示哪幾期
+  const aiLines: string[] = [];
   for (const pName of ['short', 'medium', 'long'] as PeriodName[]) {
-    if (!showVolumes[pName]) continue;
+    if (!showAI[pName]) continue;
     const termKey = pName === 'short' ? 'short_term' : pName === 'medium' ? 'medium_term' : 'long_term';
     const termData = currentSRLevelsData?.analysis?.[termKey as keyof typeof currentSRLevelsData.analysis];
-    if (termData?.resistance?.ai_sentence) aiSummaries.push(termData.resistance.ai_sentence);
-    if (termData?.support?.ai_sentence)    aiSummaries.push(termData.support.ai_sentence);
+    if (termData?.resistance?.ai_sentence) aiLines.push(termData.resistance.ai_sentence);
+    if (termData?.support?.ai_sentence)    aiLines.push(termData.support.ai_sentence);
   }
-  const aiSummary = aiSummaries.join('　');
+  const aiSummary = aiLines.join('　');
 
-  // srAnalysis 傳給 KLineChart 用於繪製區塊
   const srAnalysis: SRAnalysis | null = currentSRLevelsData?.analysis ?? null;
-  const availableSRLevels   = currentSRLevelsData ? buildAvailableSRLevels(currentSRLevelsData) : [];
-  const selectedSRLevels    = availableSRLevels.filter(lv => selectedSRIds.has(lv.id));
+  const availableSRLevels = currentSRLevelsData ? buildAvailableSRLevels(currentSRLevelsData) : [];
+  const selectedSRLevels  = availableSRLevels.filter(lv => selectedSRIds.has(lv.id));
 
   const toggleSR = (id: string) => {
     setSelectedSRIds(prev => {
@@ -161,7 +167,7 @@ export default function Home() {
   };
 
   const PERIOD_LABEL: Record<PeriodName, string> = { short: '短期', medium: '中期', long: '長期' };
-  const PERIOD_COLOR: Record<PeriodName, string> = {
+  const PERIOD_COLOR_TEXT: Record<PeriodName, string> = {
     short:  'text-yellow-700 font-bold',
     medium: 'text-purple-700 font-bold',
     long:   'text-blue-700 font-bold',
@@ -169,9 +175,17 @@ export default function Home() {
 
   const SRCheckList = ({ compact }: { compact?: boolean }) => (
     <div className={compact ? 'max-h-72 overflow-y-auto' : ''}>
+      {selectedSRIds.size > 0 && (
+        <button
+          onClick={() => setSelectedSRIds(new Set())}
+          className="w-full text-xs text-gray-500 hover:text-red-600 py-1.5 border-b border-gray-100 mb-1"
+        >
+          清除全部（已選 {selectedSRIds.size} 個）
+        </button>
+      )}
       {(['short','medium','long'] as PeriodName[]).map(p => (
         <div key={p} className="mb-2">
-          <div className={`text-xs px-2 py-1 ${PERIOD_COLOR[p]}`}>{PERIOD_LABEL[p]}支撐壓力</div>
+          <div className={`text-xs px-2 py-1 ${PERIOD_COLOR_TEXT[p]}`}>{PERIOD_LABEL[p]}支撐壓力</div>
           {srByPeriod[p].map(lv => (
             <label key={lv.id} className="flex items-center gap-2 px-2 py-1 hover:bg-gray-50 cursor-pointer rounded text-sm">
               <input
@@ -212,7 +226,12 @@ export default function Home() {
       <StockSelector
         stocks={stockList}
         selectedId={selectedId}
-        onSelect={id => setSelectedId(id)}
+        onSelect={id => {
+          setSelectedId(id);
+          setShowVolumes({ short: true, medium: false, long: false });
+          setShowAI({ short: true, medium: false, long: false });
+          setSelectedSRIds(new Set());
+        }}
         onShowManual={() => setShowManual(true)}
       />
 
@@ -221,8 +240,6 @@ export default function Home() {
         <SRDataPanel
           data={stockData}
           srLevelsData={currentSRLevelsData}
-          period={dataPeriod}
-          onPeriodChange={setDataPeriod}
         />
       ) : (
         <div className="flex flex-1 items-stretch">
@@ -232,20 +249,45 @@ export default function Home() {
             <div className="bg-white border border-gray-200 rounded-lg shadow-sm px-5 py-3 flex flex-row items-center gap-4 flex-wrap">
               {/* Volume toggles */}
               {[
-                { key: 'short' as PeriodName,  label: '成交量(5日)',  accent: '#EAB308', bg: 'rgba(234,179,8,0.7)' },
-                { key: 'medium' as PeriodName, label: '成交量(20日)', accent: '#9333EA', bg: 'rgba(147,51,234,0.7)' },
-                { key: 'long' as PeriodName,   label: '成交量(60日)', accent: '#2563EB', bg: 'rgba(37,99,235,0.7)'  },
+                { key: 'short'  as PeriodName, label: '成交量(5日)',  accent: '#EAB308', bg: 'rgba(234,179,8,0.7)'   },
+                { key: 'medium' as PeriodName, label: '成交量(20日)', accent: '#9333EA', bg: 'rgba(147,51,234,0.7)'  },
+                { key: 'long'   as PeriodName, label: '成交量(60日)', accent: '#2563EB', bg: 'rgba(37,99,235,0.7)'   },
               ].map(({ key, label, accent, bg }) => (
                 <label key={key} className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded transition-colors">
                   <input
                     type="checkbox"
                     checked={showVolumes[key]}
-                    onChange={e => setShowVolumes(prev => ({ ...prev, [key]: e.target.checked }))}
+                    onChange={e => {
+                      const v = e.target.checked;
+                      setShowVolumes(prev => ({ ...prev, [key]: v }));
+                      setShowAI(prev => ({ ...prev, [key]: v }));
+                    }}
                     className="w-4 h-4"
                     style={{ accentColor: accent }}
                   />
                   <span className="text-sm text-gray-800 font-semibold">{label}</span>
                   <span className="w-3 h-3 rounded-sm" style={{ backgroundColor: bg }} />
+                </label>
+              ))}
+
+              {/* Separator */}
+              <div className="w-px h-6 bg-gray-200 mx-1" />
+
+              {/* AI判讀 toggles */}
+              {[
+                { key: 'short'  as PeriodName, label: 'AI判讀(短期)', accent: '#EAB308', textCls: 'text-yellow-700' },
+                { key: 'medium' as PeriodName, label: 'AI判讀(中期)', accent: '#9333EA', textCls: 'text-purple-700' },
+                { key: 'long'   as PeriodName, label: 'AI判讀(長期)', accent: '#2563EB', textCls: 'text-blue-700'   },
+              ].map(({ key, label, accent, textCls }) => (
+                <label key={key} className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-2 py-1.5 rounded transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={showAI[key]}
+                    onChange={e => setShowAI(prev => ({ ...prev, [key]: e.target.checked }))}
+                    className="w-4 h-4"
+                    style={{ accentColor: accent }}
+                  />
+                  <span className={`text-sm font-semibold ${textCls}`}>{label}</span>
                 </label>
               ))}
 
@@ -264,7 +306,7 @@ export default function Home() {
                   <span className="text-gray-400 text-xs">{showSRDropdown ? '▲' : '▼'}</span>
                 </button>
                 {showSRDropdown && (
-                  <div className="absolute right-0 top-full mt-1 w-52 bg-white border border-gray-200 rounded-xl shadow-xl z-50 p-2">
+                  <div className="absolute right-0 top-full mt-1 w-56 bg-white border border-gray-200 rounded-xl shadow-xl z-50 p-2">
                     <SRCheckList compact />
                   </div>
                 )}
@@ -295,6 +337,7 @@ export default function Home() {
                 selectedSRLevels={selectedSRLevels}
                 srAnalysis={srAnalysis}
                 aiSummary={aiSummary}
+                showAIPeriods={showAI}
               />
             </div>
           </div>
@@ -310,12 +353,7 @@ export default function Home() {
           <div className="bg-white rounded-2xl shadow-2xl w-96 max-h-[80vh] flex flex-col overflow-hidden">
             <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200">
               <h3 className="text-base font-bold text-gray-900">選擇支撐壓力水位</h3>
-              <div className="flex items-center gap-3">
-                {selectedSRIds.size > 0 && (
-                  <button onClick={() => setSelectedSRIds(new Set())} className="text-xs text-gray-400 hover:text-gray-600">清除全部</button>
-                )}
-                <button onClick={() => setShowSRModal(false)} className="text-gray-400 hover:text-gray-700 text-xl leading-none">×</button>
-              </div>
+              <button onClick={() => setShowSRModal(false)} className="text-gray-400 hover:text-gray-700 text-xl leading-none">×</button>
             </div>
             <div className="flex-1 overflow-y-auto p-4">
               <SRCheckList />

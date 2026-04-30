@@ -50,6 +50,7 @@ interface ChartProps {
   selectedSRLevels?: SRLevel[];
   srAnalysis?: SRAnalysis | null;
   aiSummary?: string;
+  showAIPeriods?: Record<PeriodName, boolean>;
 }
 
 function toUnix(timeStr: string): UTCTimestamp {
@@ -62,7 +63,7 @@ function toUnix(timeStr: string): UTCTimestamp {
 
 const PRICE_SCALE_WIDTH = 70;
 const BLANK_BARS = 5;
-const TRANSPARENCY = 0.5;
+const TRANSPARENCY = 0.3;
 
 const PERIOD_COLORS: Record<PeriodName, { vp: string; line: string; label: string; labelBg: string }> = {
   short:  { vp: `rgba(234,179,8,${TRANSPARENCY})`,   line: '#EAB308', label: '#92400E', labelBg: '#FEF9C3' },
@@ -125,6 +126,7 @@ export default function KLineChart({
   selectedSRLevels = [],
   srAnalysis = null,
   aiSummary = '',
+  showAIPeriods = { short: true, medium: true, long: true },
 }: ChartProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef     = useRef<IChartApi | null>(null);
@@ -132,6 +134,7 @@ export default function KLineChart({
   const seriesRef    = useRef<ISeriesApi<'Candlestick' | 'Line'> | null>(null);
   const isInitializedRef    = useRef(false);
   const lastPeriodStateRef  = useRef<{ periods: string; barsLength: number } | null>(null);
+  const drawOverlayRef      = useRef<() => void>(() => {});
 
   const [labelGroups, setLabelGroups]       = useState<LabelGroup[]>([]);
   const [hoveredGroupIdx, setHoveredGroupIdx] = useState<number | null>(null);
@@ -248,7 +251,7 @@ export default function KLineChart({
       ];
 
       periodMap.forEach(({ period: pName, data }) => {
-        if (!showPeriods[pName] || !data) return;
+        if (!showAIPeriods[pName] || !data) return;
         const c = SR_COLORS[pName];
 
         ([data.resistance, data.support] as SRZoneData[]).forEach(zone => {
@@ -316,7 +319,9 @@ export default function KLineChart({
         return updated;
       });
     });
-  }, [showPeriods, allPeriods, showVolumeProfile, getPriceRange, buildLabelGroups, srAnalysis]);
+  }, [showPeriods, showAIPeriods, allPeriods, showVolumeProfile, getPriceRange, buildLabelGroups, srAnalysis]);
+
+  useEffect(() => { drawOverlayRef.current = drawOverlay; }, [drawOverlay]);
 
   // Build/rebuild chart on bars or chartType change
   useEffect(() => {
@@ -354,22 +359,7 @@ export default function KLineChart({
       ls.setData(bars.map(b => ({ time: toUnix(b.time), value: b.close })));
     }
 
-    // Initial visible range
-    if (!isInitializedRef.current) {
-      try { chart.timeScale().fitContent(); } catch (_) {}
-      const tid = setTimeout(() => {
-        try {
-          chartRef.current?.timeScale().setVisibleLogicalRange({
-            from: bars.length - 1 - requiredDays,
-            to:   bars.length - 1 + BLANK_BARS + 0.5,
-          });
-          isInitializedRef.current = true;
-        } catch (_) {}
-      }, 100);
-      return () => clearTimeout(tid);
-    }
-
-    // Canvas size init
+    // Canvas size init (always set up)
     const initCanvas = () => {
       const canvas = overlayRef.current;
       const cont   = containerRef.current;
@@ -379,16 +369,16 @@ export default function KLineChart({
       if (w > 0 && h > 0) { canvas.width = w * dpr; canvas.height = h * dpr; }
     };
     initCanvas();
-    const tid2 = setTimeout(initCanvas, 50);
+    const tid2 = setTimeout(() => { initCanvas(); requestAnimationFrame(() => drawOverlayRef.current()); }, 50);
 
-    // Wheel zoom: anchor = last data bar (6th from right incl. 5 blanks)
+    // Wheel zoom: always attach — right 5 blanks + last bar stays fixed
     const handleWheel = (e: WheelEvent) => {
       if (!chartRef.current) return;
       const lr = chartRef.current.timeScale().getVisibleLogicalRange();
       if (!lr) return;
       e.preventDefault();
       const anchor = bars.length - 1;
-      const fromAnchor = anchor - lr.from;
+      const fromAnchor = Math.max(5, anchor - lr.from);
       const factor = e.deltaY > 0 ? 1.2 : 0.8;
       const newFromAnchor = fromAnchor * factor;
       chartRef.current.timeScale().setVisibleLogicalRange({
@@ -404,7 +394,23 @@ export default function KLineChart({
     });
     resizeObserver.observe(containerRef.current);
 
+    // Initial visible range (first load per stock)
+    let tidInitRange: ReturnType<typeof setTimeout> | null = null;
+    if (!isInitializedRef.current) {
+      try { chart.timeScale().fitContent(); } catch (_) {}
+      tidInitRange = setTimeout(() => {
+        try {
+          chartRef.current?.timeScale().setVisibleLogicalRange({
+            from: bars.length - 1 - requiredDays,
+            to:   bars.length - 1 + BLANK_BARS + 0.5,
+          });
+          isInitializedRef.current = true;
+        } catch (_) {}
+      }, 100);
+    }
+
     return () => {
+      if (tidInitRange) clearTimeout(tidInitRange);
       clearTimeout(tid2);
       resizeObserver.disconnect();
       containerRef.current?.removeEventListener('wheel', handleWheel);
@@ -431,7 +437,7 @@ export default function KLineChart({
 
   useEffect(() => {
     if (seriesRef.current) requestAnimationFrame(drawOverlay);
-  }, [showPeriods, selectedSRLevels, drawOverlay]);
+  }, [showPeriods, showAIPeriods, selectedSRLevels, drawOverlay]);
 
   // Adjust visible range when period selection changes
   useEffect(() => {
@@ -475,42 +481,70 @@ export default function KLineChart({
             const colors = PERIOD_COLORS[group.period];
             const isHovered  = hoveredGroupIdx === gi;
             const isExpanded = expandedGroupIdx === gi;
-            const label = group.items.length > 1 ? `${group.items[0].name} +${group.items.length - 1}` : group.items[0].name;
+            const isSingle   = group.items.length === 1;
             const containerH = containerRef.current?.clientHeight ?? 600;
             if (group.y < 10 || group.y > containerH - 10) return null;
+
+            // Expanded: center vertically around the price level
+            const expandedH = group.items.length * 20 + 8;
+            const expandedTop = Math.min(
+              Math.max(5, group.y - expandedH / 2),
+              containerH - expandedH - 5
+            );
 
             return (
               <div
                 key={gi}
-                className="absolute flex items-center gap-1 cursor-pointer"
+                className="absolute flex items-start gap-1 cursor-pointer"
                 style={{
                   right: PRICE_SCALE_WIDTH + 4,
-                  top: group.y - 10,
-                  zIndex: 20,
+                  top: isExpanded ? expandedTop : group.y - 10,
+                  zIndex: 25,
                 }}
                 onMouseEnter={() => setHoveredGroupIdx(gi)}
                 onMouseLeave={() => setHoveredGroupIdx(null)}
                 onClick={() => setExpandedGroupIdx(prev => prev === gi ? null : gi)}
               >
-                {/* Connector line stub */}
-                <div className="w-3 border-t border-dashed" style={{ borderColor: colors.line }} />
-
-                {/* Label badge */}
+                {/* Connector stub aligned to price level */}
                 <div
-                  className="text-[10px] font-bold px-1.5 py-0.5 rounded border shadow-sm whitespace-nowrap transition-all"
+                  className="w-3 shrink-0 border-t border-dashed"
                   style={{
-                    backgroundColor: isHovered || isExpanded ? colors.line : colors.labelBg,
-                    color: isHovered || isExpanded ? '#fff' : colors.label,
                     borderColor: colors.line,
+                    marginTop: isExpanded ? group.y - expandedTop + 1 : 9,
                   }}
-                >
-                  {isExpanded
-                    ? group.items.map(it => `${it.name} ${fmtPrice(it.price)}`).join(' / ')
-                    : isHovered
-                      ? `${label} ${fmtPrice(group.price)}`
-                      : label
-                  }
-                </div>
+                />
+
+                {/* Expanded: vertical list */}
+                {isExpanded ? (
+                  <div
+                    className="flex flex-col gap-px text-[10px] font-bold px-2 py-1.5 rounded border shadow-md"
+                    style={{ backgroundColor: colors.line, color: '#fff', borderColor: colors.line }}
+                  >
+                    {group.items.map(it => (
+                      <div key={it.id} className="whitespace-nowrap flex items-center gap-2">
+                        <span>{it.name}</span>
+                        <span className="font-mono opacity-90">{fmtPrice(it.price)}</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  /* Normal / hover badge */
+                  <div
+                    className="text-[10px] font-bold px-1.5 py-0.5 rounded border shadow-sm whitespace-nowrap transition-all"
+                    style={{
+                      backgroundColor: isHovered ? colors.line : colors.labelBg,
+                      color: isHovered ? '#fff' : colors.label,
+                      borderColor: colors.line,
+                    }}
+                  >
+                    {isHovered && isSingle
+                      ? `${group.items[0].name}  ${fmtPrice(group.price)}`
+                      : isSingle
+                        ? group.items[0].name
+                        : `${group.items[0].name} +`
+                    }
+                  </div>
+                )}
               </div>
             );
           })}

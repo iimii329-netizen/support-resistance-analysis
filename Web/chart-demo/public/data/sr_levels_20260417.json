@@ -2,7 +2,7 @@
   "2317.TW": {
     "name": "鴻海",
     "close": 206.0,
-    "change_pct": -5.94,
+    "change_pct": -0.48,
     "indicators": {
       "上關": 212.91, "下關": 204.09, "SAR": 193.58,
       "5日最高價": 211.5, "5日最低價": 198.5,
@@ -29,7 +29,7 @@
         "support":    { "type": "支撐區", "low": 194.3,  "high": 204.87, "components": ["20日VAL","20日POC","MA20","MA30"],           "ai_sentence": "支撐區 (194-204)：20日VAL、POC、20MA與30MA密集聚合。" }
       },
       "long_term": {
-        "resistance": { "type": "壓力區", "low": 210.0,  "high": 232.6,  "components": ["整數210","60日POC","MA60","MA120","60日VAH"], "ai_sentence": "壓力區 (210-233)：整數210、60日POC、季線、半年線與60日VAH共振。" },
+        "resistance": { "type": "壓力區", "low": 210.0,  "high": 232.6,  "components": ["60日POC","MA60","MA120","60日VAH"], "ai_sentence": "壓力區 (215-233)：60日POC、季線、半年線與60日VAH共振。" },
         "support":    { "type": "支撐區", "low": 200.0,  "high": 201.8,  "components": ["整數200","MA240","60日VAL"],                 "ai_sentence": "支撐區 (200-201)：整數200、240MA與60日VAL三指標密集交疊。" }
       }
     }
@@ -37,7 +37,7 @@
   "2330.TW": {
     "name": "台積電",
     "close": 2030.0,
-    "change_pct": 53.21,
+    "change_pct": -2.64,
     "indicators": {
       "上關": 2103.37, "下關": 2041.63, "SAR": 1872.07,
       "5日最高價": 2100.0, "5日最低價": 1970.0,
@@ -65,14 +65,14 @@
       },
       "long_term": {
         "resistance": { "type": "壓力線",  "low": 2100.0,  "high": 2100.0,  "components": ["240日最高價","整數2100"],                         "ai_sentence": "壓力線 (2100)：240日最高與整數2100重合。" },
-        "support":    { "type": "支撐區",  "low": 1743.0,  "high": 1853.67, "components": ["60日VAL","60日POC","整數1800","MA60"],             "ai_sentence": "支撐區 (1740-1850)：60日VAL、POC、整數1800與季線聚合。" }
+        "support":    { "type": "支撐區",  "low": 1743.0,  "high": 1853.67, "components": ["60日VAL","60日POC","MA60"],             "ai_sentence": "支撐區 (1740-1850)：60日VAL、POC與季線聚合。" }
       }
     }
   },
   "2382.TW": {
     "name": "廣達",
     "close": 323.0,
-    "change_pct": 10.24,
+    "change_pct": 1.41,
     "indicators": {
       "上關": 321.37, "下關": 308.13, "SAR": 291.38,
       "5日最高價": 329.5, "5日最低價": 307.0,
@@ -91,23 +91,23 @@
     },
     "analysis": {
       "short_term": {
-        "resistance": { "type": "壓力區", "low": 324.63, "high": 329.5,  "components": ["5日VAH","5日最高價","10日最高價"],           "ai_sentence": "壓力區 (325-330)：5日VAH、5日最高與10日最高聚合。" },
-        "support":    { "type": "支撐區", "low": 307.0,  "high": 311.88, "components": ["5日VAL","MA10","下關","5日最低價"],          "ai_sentence": "支撐區 (307-311)：5日VAL、10MA、下關與5日最低聚合。" }
+        "resistance": { "type": "壓力區", "low": 324.63, "high": 329.5,  "components": ["5日VAH","5日最高價","10日最高價"],           "ai_sentence": "壓力區 (325-330)：5日VAH、5日最高價與10日最高價聚合。" },
+        "support":    { "type": "支撐區", "low": 307.0,  "high": 311.88, "components": ["5日VAL","MA10","下關","5日最低價"],          "ai_sentence": "支撐區 (307-311)：5日VAL、10MA、下關與5日最低價聚合。" }
       },
       "medium_term": {
-        "resistance": { "type": "壓力線", "low": 329.5,  "high": 331.16, "components": ["20日最高價","240日最高價","布林通道上緣"],    "ai_sentence": "壓力線 (330)：20日最高與240日最高重合。" },
-        "support":    { "type": "支撐區", "low": 275.5,  "high": 281.8,  "components": ["20日最低價","20日POC","20日VAL"],            "ai_sentence": "支撐區 (275-281)：20日最低、20日POC與20日VAL三指標聚合。" }
+        "resistance": { "type": "壓力線", "low": 329.5,  "high": 331.16, "components": ["20日最高價","240日最高價","布林通道上緣"],    "ai_sentence": "壓力線 (330)：20日最高價與240日最高價重合。" },
+        "support":    { "type": "支撐區", "low": 275.5,  "high": 281.8,  "components": ["20日最低價","20日POC","20日VAL"],            "ai_sentence": "支撐區 (275-281)：20日最低價、20日POC與20日VAL三指標聚合。" }
       },
       "long_term": {
-        "resistance": { "type": "壓力區", "low": 325.0,  "high": 329.5,  "components": ["整數325","240日最高價"],                     "ai_sentence": "壓力區 (325-330)：整數325與240日最高共振。" },
-        "support":    { "type": "支撐區", "low": 277.65, "high": 300.0,  "components": ["60日VAL","MA240","60日POC","MA120","MA60","60日VAH","整數300"], "ai_sentence": "支撐區 (277-300)：60日VAL、POC、三均線與整數300共振。" }
+        "resistance": { "type": "壓力線", "high": 329.5,  "components": ["240日最高價"],                     "ai_sentence": "壓力線 (330)：240日最高價。" },
+        "support":    { "type": "支撐區", "low": 277.65, "high": 300.0,  "components": ["60日VAL","MA240","60日POC","MA120","MA60","60日VAH","整數300"], "ai_sentence": "支撐區 (277-300)：60日VAL、POC、MA60、MA120、MA240與整數300共振。" }
       }
     }
   },
   "2454.TW": {
     "name": "聯發科",
     "close": 1925.0,
-    "change_pct": 47.51,
+    "change_pct": 1.58,
     "indicators": {
       "上關": 1975.84, "下關": 1764.16, "SAR": 1590.06,
       "5日最高價": 1930.0, "5日最低價": 1570.0,
@@ -134,7 +134,7 @@
         "support":    { "type": "支撐區", "low": 1578.75, "high": 1718.75, "components": ["20日POC","MA20","MA30","20日VAH"],                      "ai_sentence": "支撐區 (1570-1710)：20日POC、20MA、30MA與20日VAH聚合。" }
       },
       "long_term": {
-        "resistance": { "type": "壓力區", "low": 1947.5,  "high": 2000.0,  "components": ["60日VAH","240日最高價","整數2000"],                     "ai_sentence": "壓力區 (1950-2000)：60日VAH、240日最高與整數2000三指標共振。" },
+        "resistance": { "type": "壓力區", "low": 1947.5,  "high": 2000.0,  "components": ["60日VAH","240日最高價","整數2000"],                     "ai_sentence": "壓力區 (1950-2000)：60日VAH、240日最高與整數2000共振。" },
         "support":    { "type": "支撐區", "low": 1431.06, "high": 1900.0,  "components": ["整數1900","60日POC","MA60","60日VAL","MA120","MA240"],   "ai_sentence": "支撐區 (1430-1900)：整數1900、60日POC、季線、60日VAL、120MA與240MA聚合。" }
       }
     }
@@ -142,7 +142,7 @@
   "2887.TW": {
     "name": "台新金",
     "close": 24.3,
-    "change_pct": 34.25,
+    "change_pct": -2.61,
     "indicators": {
       "上關": 25.29, "下關": 24.41, "SAR": 23.14,
       "5日最高價": 25.1, "5日最低價": 23.9,
@@ -162,15 +162,15 @@
     "analysis": {
       "short_term": {
         "resistance": { "type": "壓力區", "low": 24.32, "high": 24.72, "components": ["5日POC","下關","MA5","MA10","5日VAH"],             "ai_sentence": "壓力區 (24.4-24.8)：5日POC、下關、5MA、10MA與5日VAH密集聚合。" },
-        "support":    { "type": "支撐區", "low": 23.9,  "high": 24.16, "components": ["5日VAL","5日最低價"],                               "ai_sentence": "支撐區 (23.9-24.1)：5日VAL與5日最低緊密聚合。" }
+        "support":    { "type": "支撐區", "low": 23.9,  "high": 24.16, "components": ["5日VAL","5日最低價"],                               "ai_sentence": "支撐區 (23.9-24.1)：5日VAL與5日最低價緊密聚合。" }
       },
       "medium_term": {
-        "resistance": { "type": "壓力區", "low": 24.37, "high": 25.49, "components": ["MA30","20日POC","20日VAH","20日最高價","布林通道上緣"], "ai_sentence": "壓力區 (24.4-25.5)：30MA、20日POC、VAH、20日最高、布林通道上緣共振。" },
+        "resistance": { "type": "壓力區", "low": 24.37, "high": 25.49, "components": ["MA30","20日POC","20日VAH","20日最高價","布林通道上緣"], "ai_sentence": "壓力區 (24.4-25.5)：30MA、20日POC、VAH、20日最高價、布林通道上緣共振。" },
         "support":    { "type": "支撐區", "low": 23.93, "high": 24.29, "components": ["MA20","20日VAL"],                                   "ai_sentence": "支撐區 (23.9-24.2)：20MA與20日VAL共振。" }
       },
       "long_term": {
-        "resistance": { "type": "壓力區", "low": 24.53, "high": 26.0,  "components": ["60日POC","整數25","60日VAH","240日最高價"],           "ai_sentence": "壓力區 (24.6-26.0)：60日POC、整數25、60日VAH與240日最高共振。" },
-        "support":    { "type": "支撐區", "low": 23.14, "high": 24.0,  "components": ["60日VAL","整數24","MA60"],                           "ai_sentence": "支撐區 (23.1-24.0)：60日VAL、整數24與季線聚合。" }
+        "resistance": { "type": "壓力區", "low": 24.53, "high": 26.0,  "components": ["60日POC","整數25","60日VAH","240日最高價"],           "ai_sentence": "壓力區 (24.6-26.0)：60日POC、整數25、60日VAH與240日最高價共振。" },
+        "support":    { "type": "支撐區", "low": 23.14, "high": 24.0,  "components": ["60日VAL","MA60"],                           "ai_sentence": "支撐區 (23.1-24.0)：60日VAL與季線聚合。" }
       }
     }
   }

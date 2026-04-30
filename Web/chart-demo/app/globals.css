@@ -24,3 +24,10 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Hide TradingView attribution logo */
+.tv-lightweight-charts td.first a,
+[class*="tv-lightweight-charts"] a[href*="tradingview"],
+.tv-attribution {
+  display: none !important;
+}
