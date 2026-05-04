@@ -137,10 +137,6 @@ export default function SRDataPanel({ data, srLevelsData }: Props) {
     return [term?.resistance?.ai_sentence, term?.support?.ai_sentence].filter(Boolean).join('　');
   };
 
-  // Marquee: short-term AI (resistance + support combined)
-  const marqueeText = getAIText('short');
-  const doubledText = marqueeText ? `${marqueeText}　　　　${marqueeText}` : '';
-
   const handleRowClick = (key: string) =>
     setExpandedRowKey(prev => (prev === key ? null : key));
 
@@ -190,23 +186,6 @@ export default function SRDataPanel({ data, srLevelsData }: Props) {
   return (
     <div className="flex-1 flex flex-col overflow-hidden bg-slate-50">
 
-      {/* 智慧跑馬燈 */}
-      {doubledText && (
-        <div
-          className="bg-slate-900 shrink-0 overflow-hidden flex items-stretch"
-          style={{ height: '54px' }}
-        >
-          <div className="flex items-center gap-2 px-4 bg-slate-800 shrink-0 border-r border-slate-700">
-            <span className="text-[9px] font-bold text-blue-300 uppercase tracking-widest leading-tight">AI<br/>短期</span>
-          </div>
-          <div className="flex-1 overflow-hidden flex items-center">
-            <div className="marquee-track text-sm text-slate-200 leading-relaxed">
-              {doubledText}
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Filter bar — 期別 only */}
       <div className="bg-white border-b border-gray-200 px-6 py-3 flex flex-wrap items-center gap-x-5 gap-y-2">
         <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0">期別</span>
@@ -230,38 +209,43 @@ export default function SRDataPanel({ data, srLevelsData }: Props) {
       <div className="flex-1 overflow-y-auto p-6">
         <div className="max-w-2xl mx-auto space-y-4">
 
-          {/* AI 判讀摘要 — 置頂收合 */}
+          {/* AI 判讀摘要 — 短期預設顯示，展開後顯示中/長期 */}
           {srLevelsData && (
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-              <button
-                className="w-full flex items-center justify-between px-5 py-3 hover:bg-gray-50 transition-colors text-left"
-                onClick={() => setAiExpanded(v => !v)}
-              >
+              {/* Header with expand toggle */}
+              <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100">
                 <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wide">AI 判讀摘要</h3>
-                <span className="text-gray-400 text-xs">{aiExpanded ? '▲ 收合' : '▼ 展開'}</span>
-              </button>
+                <button
+                  className="text-xs text-gray-400 hover:text-gray-700 transition-colors"
+                  onClick={() => setAiExpanded(v => !v)}
+                >
+                  {aiExpanded ? '▲ 收合' : '▼ 展開'}
+                </button>
+              </div>
 
-              {aiExpanded && (
-                <div className="border-t border-gray-100 px-5 pb-5 space-y-3">
-                  {(['short', 'medium', 'long'] as PeriodName[]).map(p => {
-                    const text = getAIText(p);
-                    if (!text) return null;
-                    return (
-                      <div key={p}>
-                        <div className="flex items-center gap-2 pt-3 mb-1.5">
-                          <span className={`text-[11px] font-bold px-2 py-0.5 rounded border ${PERIOD_BADGE[p]}`}>
-                            {PERIOD_LABEL[p]}
-                          </span>
-                          <span className="text-xs text-gray-400">{PERIOD_FULLNAME[p]}分析</span>
-                        </div>
-                        <div className={`text-sm leading-relaxed px-4 py-2.5 rounded-lg border ${PERIOD_AI_BG[p]} ${PERIOD_AI_TEXT[p]}`}>
-                          {text}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
+              <div className="px-5 pb-4 space-y-2.5 pt-3">
+                {/* Short-term always visible */}
+                {(() => {
+                  const text = getAIText('short');
+                  if (!text) return null;
+                  return (
+                    <div className={`text-sm leading-relaxed px-4 py-2.5 rounded-lg border ${PERIOD_AI_BG.short} ${PERIOD_AI_TEXT.short}`}>
+                      <span className="font-bold">短期：</span>{text}
+                    </div>
+                  );
+                })()}
+
+                {/* Medium + Long visible when expanded */}
+                {aiExpanded && (['medium', 'long'] as PeriodName[]).map(p => {
+                  const text = getAIText(p);
+                  if (!text) return null;
+                  return (
+                    <div key={p} className={`text-sm leading-relaxed px-4 py-2.5 rounded-lg border ${PERIOD_AI_BG[p]} ${PERIOD_AI_TEXT[p]}`}>
+                      <span className="font-bold">{PERIOD_FULLNAME[p]}：</span>{text}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           )}
 
@@ -284,15 +268,6 @@ export default function SRDataPanel({ data, srLevelsData }: Props) {
                     </div>
                   </div>
                 )}
-
-                {/* Current price divider */}
-                <div className="flex items-center gap-3 py-1.5 my-1">
-                  <div className="flex-1 h-px bg-gray-300" />
-                  <span className="text-xs font-bold text-gray-600 tabular-nums shrink-0">
-                    現價 {fmtPrice(currentPrice)}
-                  </span>
-                  <div className="flex-1 h-px bg-gray-300" />
-                </div>
 
                 {/* Supports */}
                 {supports.length > 0 && (

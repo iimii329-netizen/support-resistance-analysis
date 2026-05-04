@@ -343,7 +343,7 @@ export default function KLineChart({
     const chart = createChart(containerRef.current, {
       width:  containerRef.current.clientWidth,
       height: containerRef.current.clientHeight,
-      layout: { background: { color: '#ffffff' }, textColor: '#94a3b8', fontSize: 13 },
+      layout: { background: { color: 'rgba(255,255,255,0)' }, textColor: '#94a3b8', fontSize: 13 },
       grid: {
         vertLines: { color: 'rgba(200,200,200,0.1)' },
         horzLines: { color: 'rgba(200,200,200,0.1)' },
