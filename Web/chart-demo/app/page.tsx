@@ -186,7 +186,7 @@ export default function Home() {
       {(['short','medium','long'] as PeriodName[]).map(p => (
         <div key={p} className="mb-2">
           <div className={`text-xs px-2 py-1 ${PERIOD_COLOR_TEXT[p]}`}>{PERIOD_LABEL[p]}支撐壓力</div>
-          {srByPeriod[p].map(lv => (
+          {[...srByPeriod[p]].sort((a, b) => b.price - a.price).map(lv => (
             <label key={lv.id} className="flex items-center gap-2 px-2 py-1 hover:bg-gray-50 cursor-pointer rounded text-sm">
               <input
                 type="checkbox"

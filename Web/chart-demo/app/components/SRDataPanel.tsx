@@ -30,19 +30,19 @@ const PERIOD_BADGE: Record<PeriodName, string> = {
   medium: 'bg-purple-100 text-purple-700 border border-purple-400',
   long:   'bg-blue-100   text-blue-700   border border-blue-400',
 };
-const PERIOD_LABEL: Record<PeriodName, string> = { short: '短', medium: '中', long: '長' };
+const PERIOD_LABEL: Record<PeriodName, string>    = { short: '短', medium: '中', long: '長' };
 const PERIOD_FULLNAME: Record<PeriodName, string> = { short: '短期', medium: '中期', long: '長期' };
-const PERIOD_COLOR: Record<PeriodName, string> = { short: '#EAB308', medium: '#9333EA', long: '#2563EB' };
-const PERIOD_AI_TEXT: Record<PeriodName, string> = {
+const PERIOD_COLOR: Record<PeriodName, string>    = { short: '#EAB308', medium: '#9333EA', long: '#2563EB' };
+const PERIOD_AI_TEXT: Record<PeriodName, string>  = {
   short: 'text-yellow-700', medium: 'text-purple-700', long: 'text-blue-700',
 };
 const PERIOD_AI_BG: Record<PeriodName, string> = {
-  short: 'bg-yellow-50 border-yellow-200',
+  short:  'bg-yellow-50 border-yellow-200',
   medium: 'bg-purple-50 border-purple-200',
-  long: 'bg-blue-50 border-blue-200',
+  long:   'bg-blue-50   border-blue-200',
 };
 
-interface LevelRow { name: string; price: number; period: PeriodName; }
+interface LevelRow   { name: string;   price: number; period: PeriodName; }
 interface DisplayRow { names: string[]; price: number; period: PeriodName; }
 
 function calcRoundNumbers(close: number): number[] {
@@ -100,13 +100,12 @@ export default function SRDataPanel({ data, srLevelsData }: Props) {
   const [showPeriods, setShowPeriods] = useState<Record<PeriodName, boolean>>({
     short: true, medium: true, long: true,
   });
-  const [showAI, setShowAI] = useState<Record<PeriodName, boolean>>({
-    short: true, medium: true, long: true,
-  });
+  const [aiExpanded,      setAiExpanded]      = useState(false);
+  const [expandedRowKey,  setExpandedRowKey]  = useState<string | null>(null);
 
   const currentPrice = data.current_price;
 
-  // Gather all level rows based on checked periods, deduplicated by price
+  // Build deduped price map
   const allRows: LevelRow[] = [];
   (['short', 'medium', 'long'] as PeriodName[]).forEach(p => {
     if (!showPeriods[p] || !srLevelsData) return;
@@ -123,17 +122,93 @@ export default function SRDataPanel({ data, srLevelsData }: Props) {
     }
   });
 
-  const resistances = Array.from(priceMap.values()).filter(r => r.price > currentPrice).sort((a, b) => b.price - a.price);
-  const supports    = Array.from(priceMap.values()).filter(r => r.price <= currentPrice).sort((a, b) => b.price - a.price);
+  const resistances = Array.from(priceMap.values())
+    .filter(r => r.price > currentPrice)
+    .sort((a, b) => b.price - a.price);
+  const supports = Array.from(priceMap.values())
+    .filter(r => r.price <= currentPrice)
+    .sort((a, b) => b.price - a.price);
 
-  const hasAnyAI = (['short', 'medium', 'long'] as PeriodName[]).some(p => showAI[p]);
+  // AI text helpers
+  const getAIText = (period: PeriodName): string => {
+    if (!srLevelsData) return '';
+    const termKey = period === 'short' ? 'short_term' : period === 'medium' ? 'medium_term' : 'long_term';
+    const term = srLevelsData.analysis[termKey as keyof typeof srLevelsData.analysis];
+    return [term?.resistance?.ai_sentence, term?.support?.ai_sentence].filter(Boolean).join('　');
+  };
+
+  // Marquee: short-term AI (resistance + support combined)
+  const marqueeText = getAIText('short');
+  const doubledText = marqueeText ? `${marqueeText}　　　　${marqueeText}` : '';
+
+  const handleRowClick = (key: string) =>
+    setExpandedRowKey(prev => (prev === key ? null : key));
+
+  const renderRow = (item: DisplayRow, isResistance: boolean) => {
+    const key        = item.price.toFixed(2);
+    const isExpanded = expandedRowKey === key;
+    return (
+      <div key={key}>
+        <div
+          className={[
+            'flex flex-wrap items-baseline gap-x-2 gap-y-0.5 px-2 py-1.5 rounded-lg cursor-pointer transition-colors',
+            isResistance ? 'hover:bg-red-50' : 'hover:bg-blue-50',
+            isExpanded   ? (isResistance ? 'bg-red-50' : 'bg-blue-50') : '',
+          ].join(' ')}
+          onClick={() => handleRowClick(key)}
+        >
+          <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded shrink-0 ${PERIOD_BADGE[item.period]}`}>
+            {PERIOD_LABEL[item.period]}
+          </span>
+          <span className={`font-bold text-base tabular-nums shrink-0 ${isResistance ? 'text-red-600' : 'text-blue-600'}`}>
+            {fmtPrice(item.price)}
+          </span>
+          <span className="text-xs text-gray-400 font-medium min-w-0 flex-1">{item.names.join('、')}</span>
+          <span className="text-gray-300 text-[10px] shrink-0">{isExpanded ? '▲' : '▼'}</span>
+        </div>
+
+        {isExpanded && srLevelsData && (
+          <div className="mx-2 mb-2 mt-0.5 space-y-1">
+            {(['short', 'medium', 'long'] as PeriodName[]).map(p => {
+              const text = getAIText(p);
+              if (!text) return null;
+              return (
+                <div
+                  key={p}
+                  className={`text-xs leading-relaxed px-3 py-2 rounded-lg border ${PERIOD_AI_BG[p]} ${PERIOD_AI_TEXT[p]}`}
+                >
+                  <span className="font-bold mr-1.5">{PERIOD_LABEL[p]}</span>{text}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden bg-slate-50">
 
-      {/* Filter bar */}
+      {/* 智慧跑馬燈 */}
+      {doubledText && (
+        <div
+          className="bg-slate-900 shrink-0 overflow-hidden flex items-stretch"
+          style={{ height: '54px' }}
+        >
+          <div className="flex items-center gap-2 px-4 bg-slate-800 shrink-0 border-r border-slate-700">
+            <span className="text-[9px] font-bold text-blue-300 uppercase tracking-widest leading-tight">AI<br/>短期</span>
+          </div>
+          <div className="flex-1 overflow-hidden flex items-center">
+            <div className="marquee-track text-sm text-slate-200 leading-relaxed">
+              {doubledText}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Filter bar — 期別 only */}
       <div className="bg-white border-b border-gray-200 px-6 py-3 flex flex-wrap items-center gap-x-5 gap-y-2">
-        {/* Period checkboxes */}
         <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0">期別</span>
         {(['short', 'medium', 'long'] as PeriodName[]).map(p => (
           <label key={p} className="flex items-center gap-1.5 cursor-pointer select-none">
@@ -149,125 +224,89 @@ export default function SRDataPanel({ data, srLevelsData }: Props) {
             </span>
           </label>
         ))}
-
-        <div className="w-px h-5 bg-gray-200 mx-1 shrink-0" />
-
-        {/* AI checkboxes */}
-        <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide shrink-0">AI判讀</span>
-        {(['short', 'medium', 'long'] as PeriodName[]).map(p => (
-          <label key={p} className="flex items-center gap-1.5 cursor-pointer select-none">
-            <input
-              type="checkbox"
-              checked={showAI[p]}
-              onChange={() => setShowAI(prev => ({ ...prev, [p]: !prev[p] }))}
-              className="w-4 h-4 rounded"
-              style={{ accentColor: PERIOD_COLOR[p] }}
-            />
-            <span className={`text-sm font-medium ${PERIOD_AI_TEXT[p]}`}>
-              AI判讀({PERIOD_FULLNAME[p]})
-            </span>
-          </label>
-        ))}
       </div>
 
       {/* Content area */}
       <div className="flex-1 overflow-y-auto p-6">
         <div className="max-w-2xl mx-auto space-y-4">
 
-          {/* AI Summary block */}
-          {srLevelsData && hasAnyAI && (
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
-              <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">AI 判讀摘要</h3>
-              <div className="space-y-4">
-                {(['short', 'medium', 'long'] as PeriodName[]).map(p => {
-                  if (!showAI[p]) return null;
-                  const termKey = p === 'short' ? 'short_term' : p === 'medium' ? 'medium_term' : 'long_term';
-                  const termData = srLevelsData.analysis[termKey as keyof typeof srLevelsData.analysis];
-                  const aiRes = termData?.resistance?.ai_sentence;
-                  const aiSup = termData?.support?.ai_sentence;
-                  if (!aiRes && !aiSup) return null;
-                  return (
-                    <div key={p}>
-                      <div className="flex items-center gap-2 mb-1.5">
-                        <span className={`text-[11px] font-bold px-2 py-0.5 rounded border ${PERIOD_BADGE[p]}`}>
-                          {PERIOD_LABEL[p]}
-                        </span>
-                        <span className="text-xs text-gray-400">{PERIOD_FULLNAME[p]}分析</span>
+          {/* AI 判讀摘要 — 置頂收合 */}
+          {srLevelsData && (
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+              <button
+                className="w-full flex items-center justify-between px-5 py-3 hover:bg-gray-50 transition-colors text-left"
+                onClick={() => setAiExpanded(v => !v)}
+              >
+                <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wide">AI 判讀摘要</h3>
+                <span className="text-gray-400 text-xs">{aiExpanded ? '▲ 收合' : '▼ 展開'}</span>
+              </button>
+
+              {aiExpanded && (
+                <div className="border-t border-gray-100 px-5 pb-5 space-y-3">
+                  {(['short', 'medium', 'long'] as PeriodName[]).map(p => {
+                    const text = getAIText(p);
+                    if (!text) return null;
+                    return (
+                      <div key={p}>
+                        <div className="flex items-center gap-2 pt-3 mb-1.5">
+                          <span className={`text-[11px] font-bold px-2 py-0.5 rounded border ${PERIOD_BADGE[p]}`}>
+                            {PERIOD_LABEL[p]}
+                          </span>
+                          <span className="text-xs text-gray-400">{PERIOD_FULLNAME[p]}分析</span>
+                        </div>
+                        <div className={`text-sm leading-relaxed px-4 py-2.5 rounded-lg border ${PERIOD_AI_BG[p]} ${PERIOD_AI_TEXT[p]}`}>
+                          {text}
+                        </div>
                       </div>
-                      <div className="space-y-1.5 pl-1">
-                        {aiRes && (
-                          <div className={`text-sm leading-relaxed px-4 py-2.5 rounded-lg border ${PERIOD_AI_BG[p]} ${PERIOD_AI_TEXT[p]}`}>
-                            {aiRes}
-                          </div>
-                        )}
-                        {aiSup && aiSup !== aiRes && (
-                          <div className={`text-sm leading-relaxed px-4 py-2.5 rounded-lg border ${PERIOD_AI_BG[p]} ${PERIOD_AI_TEXT[p]}`}>
-                            {aiSup}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           )}
 
-          {/* SR Levels table */}
+          {/* SR Levels — 單一垂直清單 */}
           <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
             {!srLevelsData ? (
               <div className="text-sm text-gray-400 text-center py-8">資料載入中…</div>
             ) : (
-              <div className="grid grid-cols-2 gap-6">
-                {/* Resistances - left */}
-                <div>
-                  <div className="flex items-center gap-2 mb-3 pb-2 border-b-2 border-red-200">
-                    <div className="w-2 h-2 rounded-full bg-red-500 shrink-0" />
-                    <span className="text-sm font-bold text-red-600 tracking-wide">壓力</span>
-                    <span className="text-xs text-red-400">({resistances.length})</span>
+              <div>
+                {/* Resistances */}
+                {resistances.length > 0 && (
+                  <div className="mb-3">
+                    <div className="flex items-center gap-2 mb-2 pb-2 border-b border-red-100">
+                      <div className="w-2 h-2 rounded-full bg-red-500 shrink-0" />
+                      <span className="text-xs font-bold text-red-600">壓力</span>
+                      <span className="text-xs text-red-400">({resistances.length})</span>
+                    </div>
+                    <div className="space-y-0.5">
+                      {resistances.map(item => renderRow(item, true))}
+                    </div>
                   </div>
-                  <div className="space-y-0.5">
-                    {resistances.length === 0
-                      ? <div className="text-xs text-gray-400 px-2 py-2">無資料</div>
-                      : resistances.map((item, i) => (
-                          <div key={i} className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 px-2 py-1.5 rounded-lg hover:bg-red-50 transition-colors">
-                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded shrink-0 ${PERIOD_BADGE[item.period]}`}>
-                              {PERIOD_LABEL[item.period]}
-                            </span>
-                            <span className="font-bold text-base tabular-nums text-red-600 shrink-0">
-                              {fmtPrice(item.price)}
-                            </span>
-                            <span className="text-xs text-gray-400 font-medium min-w-0">{item.names.join('、')}</span>
-                          </div>
-                        ))
-                    }
-                  </div>
+                )}
+
+                {/* Current price divider */}
+                <div className="flex items-center gap-3 py-1.5 my-1">
+                  <div className="flex-1 h-px bg-gray-300" />
+                  <span className="text-xs font-bold text-gray-600 tabular-nums shrink-0">
+                    現價 {fmtPrice(currentPrice)}
+                  </span>
+                  <div className="flex-1 h-px bg-gray-300" />
                 </div>
 
-                {/* Supports - right */}
-                <div>
-                  <div className="flex items-center gap-2 mb-3 pb-2 border-b-2 border-blue-200">
-                    <div className="w-2 h-2 rounded-full bg-blue-500 shrink-0" />
-                    <span className="text-sm font-bold text-blue-600 tracking-wide">支撐</span>
-                    <span className="text-xs text-blue-400">({supports.length})</span>
+                {/* Supports */}
+                {supports.length > 0 && (
+                  <div className="mt-3">
+                    <div className="flex items-center gap-2 mb-2 pb-2 border-b border-blue-100">
+                      <div className="w-2 h-2 rounded-full bg-blue-500 shrink-0" />
+                      <span className="text-xs font-bold text-blue-600">支撐</span>
+                      <span className="text-xs text-blue-400">({supports.length})</span>
+                    </div>
+                    <div className="space-y-0.5">
+                      {supports.map(item => renderRow(item, false))}
+                    </div>
                   </div>
-                  <div className="space-y-0.5">
-                    {supports.length === 0
-                      ? <div className="text-xs text-gray-400 px-2 py-2">無資料</div>
-                      : supports.map((item, i) => (
-                          <div key={i} className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 px-2 py-1.5 rounded-lg hover:bg-blue-50 transition-colors">
-                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded shrink-0 ${PERIOD_BADGE[item.period]}`}>
-                              {PERIOD_LABEL[item.period]}
-                            </span>
-                            <span className="font-bold text-base tabular-nums text-blue-600 shrink-0">
-                              {fmtPrice(item.price)}
-                            </span>
-                            <span className="text-xs text-gray-400 font-medium min-w-0">{item.names.join('、')}</span>
-                          </div>
-                        ))
-                    }
-                  </div>
-                </div>
+                )}
               </div>
             )}
           </div>

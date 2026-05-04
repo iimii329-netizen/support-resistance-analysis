@@ -71,11 +71,11 @@ const PERIOD_COLORS: Record<PeriodName, { vp: string; line: string; label: strin
   long:   { vp: `rgba(37,99,235,${TRANSPARENCY})`,   line: '#2563EB', label: '#1E3A8A', labelBg: '#DBEAFE' },
 };
 
-// 深色：用於 SR Analysis 區塊繪製
+// SR Analysis 區塊透明度 50%
 const SR_COLORS: Record<PeriodName, { stroke: string; fillR: string; fillS: string; hatch: string }> = {
-  short:  { stroke: '#B45309', fillR: 'rgba(180,83,9,0.08)',    fillS: 'rgba(180,83,9,0.08)',    hatch: 'rgba(180,83,9,0.7)'   },
-  medium: { stroke: '#6D28D9', fillR: 'rgba(109,40,217,0.08)',  fillS: 'rgba(109,40,217,0.08)',  hatch: 'rgba(109,40,217,0.7)' },
-  long:   { stroke: '#1D4ED8', fillR: 'rgba(29,78,216,0.08)',   fillS: 'rgba(29,78,216,0.08)',   hatch: 'rgba(29,78,216,0.7)'  },
+  short:  { stroke: '#B45309', fillR: 'rgba(180,83,9,0.12)',    fillS: 'rgba(180,83,9,0.12)',    hatch: 'rgba(180,83,9,0.5)'   },
+  medium: { stroke: '#6D28D9', fillR: 'rgba(109,40,217,0.12)',  fillS: 'rgba(109,40,217,0.12)',  hatch: 'rgba(109,40,217,0.5)' },
+  long:   { stroke: '#1D4ED8', fillR: 'rgba(29,78,216,0.12)',   fillS: 'rgba(29,78,216,0.12)',   hatch: 'rgba(29,78,216,0.5)'  },
 };
 
 function drawHatchedZone(
@@ -135,10 +135,10 @@ export default function KLineChart({
   const isInitializedRef    = useRef(false);
   const lastPeriodStateRef  = useRef<{ periods: string; barsLength: number } | null>(null);
   const drawOverlayRef      = useRef<() => void>(() => {});
+  const vpCanvasRef         = useRef<HTMLCanvasElement | null>(null);
 
-  const [labelGroups, setLabelGroups]       = useState<LabelGroup[]>([]);
+  const [labelGroups, setLabelGroups]         = useState<LabelGroup[]>([]);
   const [hoveredGroupIdx, setHoveredGroupIdx] = useState<number | null>(null);
-  const [expandedGroupIdx, setExpandedGroupIdx] = useState<number | null>(null);
 
   const requiredDays = Math.max(
     ...Object.entries(showPeriods)
@@ -187,6 +187,7 @@ export default function KLineChart({
   // Draw VP + SR lines on canvas overlay
   const drawOverlay = useCallback((): void => {
     const canvas    = overlayRef.current;
+    const vpCanvas  = vpCanvasRef.current;
     const series    = seriesRef.current;
     const container = containerRef.current;
     const chart     = chartRef.current;
@@ -205,42 +206,53 @@ export default function KLineChart({
     ctx.scale(dpr, dpr);
     ctx.clearRect(0, 0, w, h);
 
+    // VP canvas（繪製在 K 線後方）
+    let vpCtx: CanvasRenderingContext2D | null = null;
+    if (vpCanvas) {
+      vpCanvas.width  = w * dpr;
+      vpCanvas.height = h * dpr;
+      vpCtx = vpCanvas.getContext('2d');
+      if (vpCtx) { vpCtx.scale(dpr, dpr); vpCtx.clearRect(0, 0, w, h); }
+    }
+
     const chartW = w - PRICE_SCALE_WIDTH;
     const activePeriods = (['short', 'medium', 'long'] as PeriodName[]).filter(p => showPeriods[p]);
     const priceRangeDays: Record<PeriodName, number> = { short: 20, medium: 40, long: 80 };
 
-    // ── VP bars (left → right) ──
-    activePeriods.forEach(periodName => {
-      const periodData = allPeriods[periodName];
-      if (!periodData) return;
-      const colors = PERIOD_COLORS[periodName];
-      const vp = periodData.vp;
-      const priceRange = getPriceRange(priceRangeDays[periodName]);
+    // ── VP bars → 繪製在 vpCanvas（K 線後方）──
+    if (vpCtx) {
+      activePeriods.forEach(periodName => {
+        const periodData = allPeriods[periodName];
+        if (!periodData) return;
+        const colors = PERIOD_COLORS[periodName];
+        const vp = periodData.vp;
+        const priceRange = getPriceRange(priceRangeDays[periodName]);
 
-      if (showVolumeProfile && vp?.valid && vp.bins?.length && priceRange) {
-        const tick = vp.tick || 1;
-        const filteredBins = vp.bins.filter(b => b.price >= priceRange.min && b.price <= priceRange.max);
-        if (filteredBins.length > 0) {
-          const maxVolume = Math.max(...filteredBins.map(b => b.volume || 0)) || 1;
-          const sortedBins = [...filteredBins].sort((a, b) => a.price - b.price);
-          sortedBins.forEach((bin, i) => {
-            const prev = sortedBins[i - 1];
-            const next = sortedBins[i + 1];
-            const topPrice = next ? (bin.price + next.price) / 2 : bin.price + tick / 2;
-            const botPrice = prev ? (bin.price + prev.price) / 2 : bin.price - tick / 2;
-            const yTop = series.priceToCoordinate(topPrice);
-            const yBot = series.priceToCoordinate(botPrice);
-            if (yTop === null || yBot === null) return;
-            const barH = Math.abs(yBot - yTop);
-            if (barH <= 0) return;
-            const barWidth = (bin.volume / maxVolume) * chartW;
-            if (barWidth <= 0) return;
-            ctx.fillStyle = colors.vp;
-            ctx.fillRect(0, Math.min(yTop, yBot), barWidth, barH);
-          });
+        if (showVolumeProfile && vp?.valid && vp.bins?.length && priceRange) {
+          const tick = vp.tick || 1;
+          const filteredBins = vp.bins.filter(b => b.price >= priceRange.min && b.price <= priceRange.max);
+          if (filteredBins.length > 0) {
+            const maxVolume = Math.max(...filteredBins.map(b => b.volume || 0)) || 1;
+            const sortedBins = [...filteredBins].sort((a, b) => a.price - b.price);
+            sortedBins.forEach((bin, i) => {
+              const prev = sortedBins[i - 1];
+              const next = sortedBins[i + 1];
+              const topPrice = next ? (bin.price + next.price) / 2 : bin.price + tick / 2;
+              const botPrice = prev ? (bin.price + prev.price) / 2 : bin.price - tick / 2;
+              const yTop = series.priceToCoordinate(topPrice);
+              const yBot = series.priceToCoordinate(botPrice);
+              if (yTop === null || yBot === null) return;
+              const barH = Math.abs(yBot - yTop);
+              if (barH <= 0) return;
+              const barWidth = (bin.volume / maxVolume) * chartW;
+              if (barWidth <= 0) return;
+              vpCtx!.fillStyle = colors.vp;
+              vpCtx!.fillRect(0, Math.min(yTop, yBot), barWidth, barH);
+            });
+          }
         }
-      }
-    });
+      });
+    }
 
     // ── SR Analysis 區塊（勾選成交量時顯示）──
     if (srAnalysis) {
@@ -257,8 +269,9 @@ export default function KLineChart({
         ([data.resistance, data.support] as SRZoneData[]).forEach(zone => {
           if (!zone) return;
           const isZone = zone.type.includes('區');
+          const effectiveLow = zone.low ?? zone.high;   // 壓力線/支撐線可能無 low 欄位
           const yH = series.priceToCoordinate(zone.high);
-          const yL = series.priceToCoordinate(zone.low);
+          const yL = series.priceToCoordinate(effectiveLow);
           if (yH === null || yL === null) return;
 
           const yTop  = Math.min(yH, yL);
@@ -266,17 +279,16 @@ export default function KLineChart({
           const zoneH = yBot - yTop;
 
           if (isZone) {
-            // 壓力區 / 支撐區 → 斜線填充
             drawHatchedZone(ctx, 0, yTop, chartW, Math.max(zoneH, 1), c.fillR, c.hatch, c.stroke);
           } else {
-            // 壓力線 / 支撐線 → 實線
-            const yLine = series.priceToCoordinate((zone.low + zone.high) / 2) ?? yTop;
+            const mid = (effectiveLow + zone.high) / 2;
+            const yLine = series.priceToCoordinate(mid) ?? yTop;
             if (yLine < 0 || yLine > h) return;
             ctx.save();
             ctx.strokeStyle = c.stroke;
             ctx.lineWidth = 2;
             ctx.setLineDash([]);
-            ctx.globalAlpha = 0.9;
+            ctx.globalAlpha = 0.5;
             ctx.beginPath();
             ctx.moveTo(0, yLine);
             ctx.lineTo(chartW, yLine);
@@ -361,12 +373,16 @@ export default function KLineChart({
 
     // Canvas size init (always set up)
     const initCanvas = () => {
-      const canvas = overlayRef.current;
-      const cont   = containerRef.current;
+      const canvas  = overlayRef.current;
+      const vpCvs   = vpCanvasRef.current;
+      const cont    = containerRef.current;
       if (!canvas || !cont) return;
       const dpr = window.devicePixelRatio || 1;
       const w = cont.clientWidth, h = cont.clientHeight;
-      if (w > 0 && h > 0) { canvas.width = w * dpr; canvas.height = h * dpr; }
+      if (w > 0 && h > 0) {
+        canvas.width = w * dpr; canvas.height = h * dpr;
+        if (vpCvs) { vpCvs.width = w * dpr; vpCvs.height = h * dpr; }
+      }
     };
     initCanvas();
     const tid2 = setTimeout(() => { initCanvas(); requestAnimationFrame(() => drawOverlayRef.current()); }, 50);
@@ -469,7 +485,13 @@ export default function KLineChart({
 
       <div className="flex flex-1 min-w-0 relative">
         <div className="relative flex-1 min-w-0">
-          <div ref={containerRef} className="w-full h-full" />
+          {/* VP canvas — placed before chart div so it sits behind K-line candles */}
+          <canvas
+            ref={vpCanvasRef}
+            className="absolute top-0 left-0 pointer-events-none"
+            style={{ width: '100%', height: '100%', zIndex: 1 }}
+          />
+          <div ref={containerRef} className="w-full h-full" style={{ position: 'relative', zIndex: 2 }} />
           <canvas
             ref={overlayRef}
             className="absolute top-0 left-0 pointer-events-none"
@@ -478,15 +500,14 @@ export default function KLineChart({
 
           {/* SR label badges on Y-axis edge */}
           {labelGroups.map((group, gi) => {
-            const colors = PERIOD_COLORS[group.period];
+            const colors     = PERIOD_COLORS[group.period];
             const isHovered  = hoveredGroupIdx === gi;
-            const isExpanded = expandedGroupIdx === gi;
             const isSingle   = group.items.length === 1;
+            const isExpanded = isHovered && !isSingle;
             const containerH = containerRef.current?.clientHeight ?? 600;
             if (group.y < 10 || group.y > containerH - 10) return null;
 
-            // Expanded: center vertically around the price level
-            const expandedH = group.items.length * 20 + 8;
+            const expandedH   = group.items.length * 22 + 10;
             const expandedTop = Math.min(
               Math.max(5, group.y - expandedH / 2),
               containerH - expandedH - 5
@@ -495,7 +516,7 @@ export default function KLineChart({
             return (
               <div
                 key={gi}
-                className="absolute flex items-start gap-1 cursor-pointer"
+                className="absolute flex items-start gap-1 cursor-default"
                 style={{
                   right: PRICE_SCALE_WIDTH + 4,
                   top: isExpanded ? expandedTop : group.y - 10,
@@ -503,9 +524,7 @@ export default function KLineChart({
                 }}
                 onMouseEnter={() => setHoveredGroupIdx(gi)}
                 onMouseLeave={() => setHoveredGroupIdx(null)}
-                onClick={() => setExpandedGroupIdx(prev => prev === gi ? null : gi)}
               >
-                {/* Connector stub aligned to price level */}
                 <div
                   className="w-3 shrink-0 border-t border-dashed"
                   style={{
@@ -514,7 +533,6 @@ export default function KLineChart({
                   }}
                 />
 
-                {/* Expanded: vertical list */}
                 {isExpanded ? (
                   <div
                     className="flex flex-col gap-px text-[10px] font-bold px-2 py-1.5 rounded border shadow-md"
@@ -528,7 +546,6 @@ export default function KLineChart({
                     ))}
                   </div>
                 ) : (
-                  /* Normal / hover badge */
                   <div
                     className="text-[10px] font-bold px-1.5 py-0.5 rounded border shadow-sm whitespace-nowrap transition-all"
                     style={{
