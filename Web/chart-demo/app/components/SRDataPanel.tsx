@@ -100,8 +100,7 @@ export default function SRDataPanel({ data, srLevelsData }: Props) {
   const [showPeriods, setShowPeriods] = useState<Record<PeriodName, boolean>>({
     short: true, medium: true, long: true,
   });
-  const [aiExpanded,      setAiExpanded]      = useState(false);
-  const [expandedRowKey,  setExpandedRowKey]  = useState<string | null>(null);
+  const [aiExpanded, setAiExpanded] = useState(false);
 
   const currentPrice = data.current_price;
 
@@ -137,51 +136,20 @@ export default function SRDataPanel({ data, srLevelsData }: Props) {
     return [term?.resistance?.ai_sentence, term?.support?.ai_sentence].filter(Boolean).join('　');
   };
 
-  const handleRowClick = (key: string) =>
-    setExpandedRowKey(prev => (prev === key ? null : key));
-
-  const renderRow = (item: DisplayRow, isResistance: boolean) => {
-    const key        = item.price.toFixed(2);
-    const isExpanded = expandedRowKey === key;
-    return (
-      <div key={key}>
-        <div
-          className={[
-            'flex flex-wrap items-baseline gap-x-2 gap-y-0.5 px-2 py-1.5 rounded-lg cursor-pointer transition-colors',
-            isResistance ? 'hover:bg-red-50' : 'hover:bg-blue-50',
-            isExpanded   ? (isResistance ? 'bg-red-50' : 'bg-blue-50') : '',
-          ].join(' ')}
-          onClick={() => handleRowClick(key)}
-        >
-          <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded shrink-0 ${PERIOD_BADGE[item.period]}`}>
-            {PERIOD_LABEL[item.period]}
-          </span>
-          <span className={`font-bold text-base tabular-nums shrink-0 ${isResistance ? 'text-red-600' : 'text-blue-600'}`}>
-            {fmtPrice(item.price)}
-          </span>
-          <span className="text-xs text-gray-400 font-medium min-w-0 flex-1">{item.names.join('、')}</span>
-          <span className="text-gray-300 text-[10px] shrink-0">{isExpanded ? '▲' : '▼'}</span>
-        </div>
-
-        {isExpanded && srLevelsData && (
-          <div className="mx-2 mb-2 mt-0.5 space-y-1">
-            {(['short', 'medium', 'long'] as PeriodName[]).map(p => {
-              const text = getAIText(p);
-              if (!text) return null;
-              return (
-                <div
-                  key={p}
-                  className={`text-xs leading-relaxed px-3 py-2 rounded-lg border ${PERIOD_AI_BG[p]} ${PERIOD_AI_TEXT[p]}`}
-                >
-                  <span className="font-bold mr-1.5">{PERIOD_LABEL[p]}</span>{text}
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
-    );
-  };
+  const renderRow = (item: DisplayRow, isResistance: boolean) => (
+    <div
+      key={item.price.toFixed(2)}
+      className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 px-2 py-1.5 rounded-lg"
+    >
+      <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded shrink-0 ${PERIOD_BADGE[item.period]}`}>
+        {PERIOD_LABEL[item.period]}
+      </span>
+      <span className={`font-bold text-base tabular-nums shrink-0 ${isResistance ? 'text-red-600' : 'text-blue-600'}`}>
+        {fmtPrice(item.price)}
+      </span>
+      <span className="text-xs text-gray-400 font-medium min-w-0">{item.names.join('、')}</span>
+    </div>
+  );
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden bg-slate-50">
