@@ -309,7 +309,7 @@ function SRTab() {
 
       {/* ── § 4 Cascade 三層選線 ── */}
       <section>
-        <SectionHeader num="4" title="Cascade 三層選線機制"
+        <SectionHeader num="4" title="Cascade 選線機制"
           sub="以含括率最高的候選對為優先，逐層遞補，確保每個期別都能產出一組 SR 對。" />
 
         {/* 4-1 選線策略 */}
