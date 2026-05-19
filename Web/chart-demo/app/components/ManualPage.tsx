@@ -2,290 +2,295 @@
 
 import { useState } from 'react';
 
+// ─── Types ───────────────────────────────────────────────────────────────────
+type TabKey = 'sr' | 'ai';
+type Period = 'short' | 'mid' | 'long';
+type Trend = 'bull' | 'bear' | 'sideways';
 interface Props { onBack: () => void; }
 
-const HIT_RATE_DATA = [
-  { name: '240日最低',   dir: 'support',    n: 5,  hit: 56.5, med: 52.0, std: 23.5, stocks: 1693 },
-  { name: 'BB上3σ',      dir: 'resistance', n: 5,  hit: 55.8, med: 55.8, std: 11.0, stocks: 1914 },
-  { name: '240日最高',   dir: 'resistance', n: 5,  hit: 55.2, med: 52.6, std: 18.3, stocks: 1732 },
-  { name: 'BB上2σ',      dir: 'resistance', n: 5,  hit: 53.5, med: 53.2, std: 8.3,  stocks: 1925 },
-  { name: '20日最高',    dir: 'resistance', n: 5,  hit: 53.2, med: 53.0, std: 9.3,  stocks: 1925 },
-  { name: '240MA',       dir: 'dual',       n: 5,  hit: 50.6, med: 50.0, std: 11.4, stocks: 1837 },
-  { name: 'BB下3σ',      dir: 'support',    n: 5,  hit: 50.0, med: 50.0, std: 14.6, stocks: 1903 },
-  { name: 'BB下2σ',      dir: 'support',    n: 5,  hit: 48.7, med: 49.2, std: 9.0,  stocks: 1925 },
-  { name: '60MA',        dir: 'dual',       n: 5,  hit: 48.5, med: 48.9, std: 7.8,  stocks: 1909 },
-  { name: '120MA',       dir: 'dual',       n: 5,  hit: 48.5, med: 48.3, std: 8.2,  stocks: 1877 },
-  { name: '20日最低',    dir: 'support',    n: 5,  hit: 48.0, med: 48.2, std: 8.7,  stocks: 1927 },
-  { name: '30MA',        dir: 'dual',       n: 5,  hit: 47.8, med: 48.0, std: 6.5,  stocks: 1927 },
-  { name: '20MA',        dir: 'dual',       n: 5,  hit: 47.8, med: 48.0, std: 6.1,  stocks: 1927 },
-  { name: '10日最高',    dir: 'resistance', n: 3,  hit: 43.5, med: 43.1, std: 7.2,  stocks: 1928 },
-  { name: '5日最高',     dir: 'resistance', n: 3,  hit: 42.1, med: 42.1, std: 6.1,  stocks: 1929 },
-  { name: '上關',        dir: 'resistance', n: 3,  hit: 40.0, med: 39.9, std: 4.9,  stocks: 1931 },
-  { name: 'SAR',         dir: 'dual',       n: 3,  hit: 39.7, med: 40.0, std: 11.0, stocks: 1918 },
-  { name: '10日最低',    dir: 'support',    n: 3,  hit: 38.8, med: 38.9, std: 6.7,  stocks: 1931 },
-  { name: '5日最低',     dir: 'support',    n: 3,  hit: 38.3, med: 38.7, std: 6.3,  stocks: 1932 },
-  { name: '下關',        dir: 'support',    n: 3,  hit: 37.6, med: 38.0, std: 5.6,  stocks: 1932 },
-  { name: '5MA',         dir: 'dual',       n: 3,  hit: 37.5, med: 38.0, std: 4.7,  stocks: 1931 },
-  { name: '10MA',        dir: 'dual',       n: 3,  hit: 37.1, med: 37.7, std: 5.1,  stocks: 1930 },
-];
-
-type TabKey = 'logic' | 'prompt' | 'hitrate';
-
-const TABS: { key: TabKey; label: string }[] = [
-  { key: 'logic',   label: '決策邏輯' },
-  { key: 'prompt',  label: 'AI一句話' },
-  { key: 'hitrate', label: '指標命中率' },
-];
-
-const TAB_ACTIVE: Record<TabKey, string> = {
-  logic:   'border-slate-700  text-slate-800  bg-slate-50',
-  prompt:  'border-gray-600   text-gray-800   bg-gray-50',
-  hitrate: 'border-green-500  text-green-700  bg-green-50',
+// ─── Indicator name mapping ───────────────────────────────────────────────────
+const IND: Record<string, string> = {
+  low_5d:'5日最低', high_5d:'5日最高', low_10d:'10日最低', high_10d:'10日最高',
+  low_20d:'20日最低', high_20d:'20日最高', low_240d:'240日最低', high_240d:'240日最高',
+  ma5:'MA5', ma10:'MA10', ma20:'MA20', ma30:'MA30',
+  ma60:'MA60', ma120:'MA120', ma240:'MA240',
+  vp5_val:'5日VAL', vp5_vah:'5日VAH', vp5_poc:'5日POC',
+  vp20_val:'20日VAL', vp20_vah:'20日VAH', vp20_poc:'20日POC',
+  vp60_val:'60日VAL', vp60_vah:'60日VAH', vp60_poc:'60日POC',
+  bbands_lower_2std:'BB下緣(2σ)', bbands_upper_2std:'BB上緣(2σ)',
+  ma_track_upper:'MA軌道上限', ma_track_lower:'MA軌道下限',
+  vol_dense_upper:'上檔量密集區', vol_dense_lower:'下檔量密集區',
+  lower_gate:'下關', upper_gate:'上關',
 };
 
-function Section({ title, color = 'gray', children }: { title: string; color?: string; children: React.ReactNode }) {
+// ─── Period indicator definitions ────────────────────────────────────────────
+const PERIOD_DEFS = {
+  short: {
+    label: '短期', range: '1–20 個交易日',
+    tagCls: 'bg-amber-100 text-amber-800 border-amber-300',
+    borderCls: 'border-l-amber-400',
+    indicators: [
+      '上關','下關','5日最高價','5日最低價',
+      '10日最高價','10日最低價','MA5','MA10',
+      '5日POC','5日VAH','5日VAL',
+    ],
+  },
+  mid: {
+    label: '中期', range: '20–60 個交易日',
+    tagCls: 'bg-violet-100 text-violet-800 border-violet-300',
+    borderCls: 'border-l-violet-400',
+    indicators: [
+      '布林通道上緣(2σ)','布林通道下緣(2σ)',
+      '20日最高價','20日最低價','MA20','MA30',
+      '20日POC','20日VAH','20日VAL',
+      'MA軌道上限','MA軌道下限',
+      '上檔量密集成交區','下檔量密集成交區',
+    ],
+  },
+  long: {
+    label: '長期', range: '60日以上',
+    tagCls: 'bg-sky-100 text-sky-800 border-sky-300',
+    borderCls: 'border-l-sky-400',
+    indicators: [
+      '240日最高價','240日最低價',
+      'MA60','MA120','MA240',
+      '60日POC','60日VAH','60日VAL',
+    ],
+  },
+};
+
+// ─── Candidate data ───────────────────────────────────────────────────────────
+type Candidate = {
+  sup: string; res: string;
+  cont: string; width: string; isLast?: boolean;
+};
+
+const CANDIDATES: Record<string, Record<string, Candidate[]>> = {
+  short: {
+    all: [
+      { sup:'vp5_val', res:'high_5d',  cont:'77–84%', width:'~5–6%' },
+      { sup:'low_5d',  res:'vp5_vah',  cont:'73–79%', width:'~4–5%' },
+      { sup:'low_5d',  res:'high_5d',  cont:'~90%',   width:'~7.5%' },
+      { sup:'low_10d', res:'high_10d', cont:'~93%',   width:'~11%',  isLast:true },
+    ],
+  },
+  mid: {
+    bull: [
+      { sup:'ma20',           res:'vol_dense_upper',  cont:'98.38%', width:'~4.9%' },
+      { sup:'vol_dense_lower',res:'vol_dense_upper',  cont:'98.35%', width:'~5.7%' },
+      { sup:'ma_track_lower', res:'vol_dense_upper',  cont:'96.58%', width:'~5.8%' },
+      { sup:'ma30',           res:'vol_dense_upper',  cont:'96.32%', width:'~6.4%' },
+      { sup:'vp20_val',       res:'vol_dense_upper',  cont:'96.23%', width:'~6.9%' },
+      { sup:'ma20',           res:'high_20d',         cont:'96.04%', width:'~8.6%' },
+      { sup:'vol_dense_lower',res:'high_20d',         cont:'96.01%', width:'~9.4%' },
+      { sup:'low_20d',        res:'high_20d',         cont:'96.04%', width:'~15.1%' },
+    ],
+    bear: [
+      { sup:'vol_dense_lower',res:'ma20',             cont:'99.66%', width:'~4.3%' },
+      { sup:'vol_dense_lower',res:'vp20_vah',         cont:'99.28%', width:'~8.2%' },
+      { sup:'vol_dense_lower',res:'vol_dense_upper',  cont:'99.05%', width:'~6.9%' },
+      { sup:'vol_dense_lower',res:'ma_track_upper',   cont:'98.91%', width:'~5.5%' },
+      { sup:'vol_dense_lower',res:'ma30',             cont:'97.81%', width:'~5.9%' },
+      { sup:'low_20d',        res:'ma20',             cont:'95.16%', width:'~6.6%' },
+      { sup:'vol_dense_lower',res:'high_20d',         cont:'99.66%', width:'~11.5%' },
+      { sup:'low_20d',        res:'high_20d',         cont:'95.23%', width:'~15.1%' },
+    ],
+    sideways: [
+      { sup:'vol_dense_lower',res:'vol_dense_upper',  cont:'97.64%', width:'~5.0%' },
+      { sup:'vol_dense_lower',res:'high_20d',         cont:'98.03%', width:'~9.1%' },
+      { sup:'low_20d',        res:'vol_dense_upper',  cont:'95.70%', width:'~8.4%' },
+      { sup:'low_20d',        res:'high_20d',         cont:'96.04%', width:'~12.5%' },
+    ],
+  },
+  long: {
+    bull: [
+      { sup:'ma60',    res:'high_240d', cont:'98.10%', width:'~27.5%' },
+      { sup:'vp60_val',res:'high_240d', cont:'98.08%', width:'~34.9%' },
+      { sup:'ma120',   res:'high_240d', cont:'88.03%', width:'~28.9%' },
+      { sup:'vp60_poc',res:'high_240d', cont:'80.48%', width:'~29.0%' },
+      { sup:'ma240',   res:'high_240d', cont:'74.84%', width:'~28.4%' },
+      { sup:'low_240d',res:'high_240d', cont:'98.10%', width:'~44.8%' },
+    ],
+    bear: [
+      { sup:'low_240d',res:'ma60',      cont:'98.22%', width:'~19.7%' },
+      { sup:'low_240d',res:'vp60_vah',  cont:'98.21%', width:'~28.3%' },
+      { sup:'low_240d',res:'ma120',     cont:'91.97%', width:'~22.4%' },
+      { sup:'low_240d',res:'vp60_poc',  cont:'91.54%', width:'~22.2%' },
+      { sup:'low_240d',res:'ma240',     cont:'83.56%', width:'~24.4%' },
+      { sup:'low_240d',res:'high_240d', cont:'98.22%', width:'~58.2%' },
+    ],
+    sideways: [
+      { sup:'low_240d', res:'vp60_vah',  cont:'93.77%', width:'~27.0%' },
+      { sup:'vp60_val', res:'vp60_vah',  cont:'74.70%', width:'~11.9%' },
+      { sup:'vp60_val', res:'ma240',     cont:'70.73%', width:'~14.9%' },
+      { sup:'vp60_val', res:'high_240d', cont:'80.64%', width:'~41.7%' },
+      { sup:'low_240d', res:'high_240d', cont:'99.37%', width:'~48.9%' },
+    ],
+  },
+};
+
+// ─── Candidate table ──────────────────────────────────────────────────────────
+function CandidateTable({ rows, lastResort }: { rows: Candidate[]; lastResort: string }) {
   return (
-    <section className="mb-7">
-      <h2 className={`text-lg font-bold mb-3 pb-2 border-b-2 border-${color}-400 text-gray-900`}>{title}</h2>
-      {children}
-    </section>
+    <div className="rounded-xl border border-gray-200 overflow-x-auto">
+      <table className="w-full text-sm">
+        <thead className="bg-gray-50 border-b border-gray-200">
+          <tr>
+            <th className="px-3 py-2.5 text-left font-semibold text-gray-400 w-8">#</th>
+            <th className="px-3 py-2.5 text-left font-semibold text-blue-700">支撐指標</th>
+            <th className="px-3 py-2.5 text-left font-semibold text-red-700">壓力指標</th>
+            <th className="px-3 py-2.5 text-right font-semibold text-gray-600 w-20">含括率</th>
+            <th className="px-3 py-2.5 text-right font-semibold text-gray-600 w-20">平均寬度</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-100">
+          {rows.map((r, i) => (
+            <tr key={i} className={r.isLast ? 'bg-orange-50' : 'hover:bg-gray-50'}>
+              <td className="px-3 py-2 text-gray-300 text-xs tabular-nums">{i + 1}</td>
+              <td className="px-3 py-2 font-medium text-blue-700 whitespace-nowrap">{IND[r.sup] ?? r.sup}</td>
+              <td className="px-3 py-2 font-medium text-red-700 whitespace-nowrap">{IND[r.res] ?? r.res}</td>
+              <td className="px-3 py-2 text-right text-xs font-mono tabular-nums text-gray-700">{r.cont}</td>
+              <td className="px-3 py-2 text-right text-xs font-mono tabular-nums text-gray-500">{r.width}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="px-4 py-2 border-t border-orange-100 bg-orange-50 text-xs text-orange-700">
+        保底：{lastResort}，無條件輸出
+      </div>
+    </div>
   );
 }
 
-function PeriodTag({ label, cls }: { label: string; cls: string }) {
-  return <span className={`text-[11px] font-bold px-2 py-0.5 rounded border ${cls}`}>{label}</span>;
+// ─── Section header ───────────────────────────────────────────────────────────
+function SectionHeader({ num, title, sub }: { num: string; title: string; sub?: string }) {
+  return (
+    <div className="flex items-start gap-3 mb-4">
+      <span className="shrink-0 w-7 h-7 rounded-full bg-slate-800 text-white flex items-center justify-center text-xs font-bold mt-0.5">{num}</span>
+      <div>
+        <h2 className="text-base font-bold text-gray-900">{title}</h2>
+        {sub && <p className="text-sm text-gray-500 mt-0.5">{sub}</p>}
+      </div>
+    </div>
+  );
 }
 
-function InfoBox({ children, color = 'gray' }: { children: React.ReactNode; color?: string }) {
-  const cls: Record<string, string> = {
-    gray:   'bg-gray-50 border-gray-200 text-gray-700',
-    yellow: 'bg-yellow-50 border-yellow-200 text-yellow-900',
-    purple: 'bg-purple-50 border-purple-200 text-purple-900',
-    blue:   'bg-blue-50 border-blue-200 text-blue-900',
-    green:  'bg-green-50 border-green-200 text-green-900',
+// ─── SRTab ────────────────────────────────────────────────────────────────────
+function SRTab() {
+  const [openPeriod, setOpenPeriod] = useState<Period | null>('short');
+  const [srPeriod,   setSrPeriod]   = useState<Period>('short');
+  const [srTrend,    setSrTrend]    = useState<Trend>('bull');
+
+  const trendLabel: Record<Trend, string> = { bull:'多頭', bear:'空頭', sideways:'盤整' };
+  const trendCls: Record<Trend, string> = {
+    bull:     'border-red-300 text-red-700 bg-red-50',
+    bear:     'border-blue-300 text-blue-700 bg-blue-50',
+    sideways: 'border-gray-300 text-gray-600 bg-gray-50',
   };
-  return <div className={`rounded-lg border px-4 py-3 text-sm leading-relaxed ${cls[color]}`}>{children}</div>;
-}
+  const periodActiveCls: Record<Period, string> = {
+    short: 'bg-amber-500 text-white border-amber-500',
+    mid:   'bg-violet-600 text-white border-violet-600',
+    long:  'bg-sky-600 text-white border-sky-600',
+  };
 
-const PERIOD_INDICATORS: {
-  period: 'short' | 'medium' | 'long';
-  label: string;
-  tagCls: string;
-  eps: string;
-  epsNote: string;
-  indicators: { name: string; desc: string; weight: number }[];
-}[] = [
-  {
-    period: 'short', label: '短期（5–10 個交易日）',
-    tagCls: 'bg-yellow-100 text-yellow-700 border-yellow-400',
-    eps: 'ε = 0.5 × ATR(14)',
-    epsNote: '聚類範圍小，精準捕捉即時壓力位',
-    indicators: [
-      { name: '上關',      desc: '昨低 + (昨高 − 昨低) × 1.382，當日可能遇到阻力的位置', weight: 3 },
-      { name: '下關',      desc: '昨高 − (昨高 − 昨低) × 1.382，當日可能遇到支撐的位置', weight: 2 },
-      { name: 'SAR',       desc: '拋物線停損反轉指標（0.02, 0.02, 0.2），追蹤短期趨勢', weight: 2 },
-      { name: '5日最高價', desc: '近 5 個交易日的最高成交價，代表近期賣壓集中區', weight: 3 },
-      { name: '5日最低價', desc: '近 5 個交易日的最低成交價，代表近期買盤支撐區', weight: 2 },
-      { name: '10日最高價',desc: '近 10 個交易日的最高成交價', weight: 3 },
-      { name: '10日最低價',desc: '近 10 個交易日的最低成交價', weight: 2 },
-      { name: 'MA5',       desc: '5 日移動平均線，短期趨勢參考', weight: 2 },
-      { name: 'MA10',      desc: '10 日移動平均線，短期趨勢參考', weight: 2 },
-      { name: '5日POC',    desc: '近 5 日成交量最集中的價格，是市場最認同的短期公允價', weight: 5 },
-      { name: '5日VAH',    desc: '近 5 日價值區域上緣（成交量前 70%），高於此為溢價區', weight: 5 },
-      { name: '5日VAL',    desc: '近 5 日價值區域下緣（成交量前 70%），低於此為折價區', weight: 5 },
-    ],
-  },
-  {
-    period: 'medium', label: '中期（20–60 個交易日）',
-    tagCls: 'bg-purple-100 text-purple-700 border-purple-400',
-    eps: 'ε = 1.0 × ATR(14)',
-    epsNote: '適中，平衡精度與容錯，允許指標間有更大距離的共振',
-    indicators: [
-      { name: '布林通道上緣', desc: '20 日 MA + 3 STD，超漲 3 個標準差後的統計壓力位（極端偏離區）', weight: 4 },
-      { name: '布林通道下緣', desc: '20 日 MA − 3 STD，超跌 3 個標準差後的統計支撐位（極端偏離區）', weight: 4 },
-      { name: '20日最高價',   desc: '近 20 個交易日的最高成交價，近月高點阻力', weight: 4 },
-      { name: '20日最低價',   desc: '近 20 個交易日的最低成交價，近月低點支撐', weight: 3 },
-      { name: 'MA20',         desc: '20 日均線，市場月線共識', weight: 3 },
-      { name: 'MA30',         desc: '30 日均線，季初趨勢參考', weight: 3 },
-      { name: '20日POC',      desc: '近 20 日成交量最集中的價格，是市場月均衡價', weight: 5 },
-      { name: '20日VAH',      desc: '近 20 日價值區域上緣', weight: 5 },
-      { name: '20日VAL',      desc: '近 20 日價值區域下緣', weight: 5 },
-    ],
-  },
-  {
-    period: 'long', label: '長期（60–240 個交易日）',
-    tagCls: 'bg-blue-100 text-blue-700 border-blue-400',
-    eps: 'ε = 2.0 × ATR(14)',
-    epsNote: '週期長，允許更大的聚類範圍，抓取大趨勢結構壓力',
-    indicators: [
-      { name: '240日最高價', desc: '近 240 個交易日（約 1 年）最高點，長期供給牆', weight: 4 },
-      { name: '240日最低價', desc: '近 240 個交易日最低點，長期需求底板', weight: 4 },
-      { name: 'MA60（季線）',  desc: '60 日均線，機構法人常用的季線', weight: 3 },
-      { name: 'MA120（半年線）',desc: '120 日均線，半年趨勢分界', weight: 3 },
-      { name: 'MA240（年線）', desc: '240 日均線，牛熊分界線', weight: 4 },
-      { name: '60日POC',      desc: '近 60 日（近季）成交量最集中的價格，季度公允價', weight: 5 },
-      { name: '60日VAH',      desc: '近 60 日價值區域上緣', weight: 5 },
-      { name: '60日VAL',      desc: '近 60 日價值區域下緣', weight: 5 },
-      { name: '整數關卡點',   desc: '股價整數位，市場心理壓力/支撐，如 100、150、200', weight: 2 },
-    ],
-  },
-];
+  const candidateRows = srPeriod === 'short'
+    ? CANDIDATES.short.all
+    : (CANDIDATES[srPeriod]?.[srTrend] ?? []);
 
-function LogicContent() {
-  const [expandedPeriod, setExpandedPeriod] = useState<string | null>('short');
+  const LAST_RESORT_LABELS: Record<Period, string> = {
+    short: '10日最低 ＋ 10日最高',
+    mid:   '20日最低 ＋ 20日最高',
+    long:  '240日最低 ＋ 240日最高',
+  };
 
   return (
-    <div className="space-y-5 text-sm text-gray-700 leading-relaxed">
+    <div className="space-y-10">
 
-      {/* Plain-language intro */}
-      <InfoBox color="gray">
-        <p className="font-semibold text-gray-800 mb-2">這個系統在做什麼？</p>
-        <p>
-          股票每天有幾十個技術指標，但指標太多反而讓人不知道看哪個。本系統的核心任務：
-          <strong>每天收盤後，自動從數十個指標中篩選出最重要的「一個壓力價」和「一個支撐價」</strong>，
-          並由 AI 用一句話說明。
-        </p>
-        <p className="mt-2">
-          系統分三個時間週期：<span className="text-yellow-700 font-bold">短期</span>（5–10日，適合短線操作）、
-          <span className="text-purple-700 font-bold mx-1">中期</span>（20–60日，適合波段）、
-          <span className="text-blue-700 font-bold">長期</span>（60–240日，適合趨勢判斷）。
-          每個週期各輸出一組壓力與支撐，合計六個關鍵價位。
-        </p>
-      </InfoBox>
+      {/* ── § 1 系統概覽 ── */}
+      <section>
+        <SectionHeader num="1" title="系統概覽"
+          sub="系統以日 K 線 + Volume Profile 為輸入，對每支股票每個交易日自動產出短 / 中 / 長期支撐壓力位，並生成一句話 AI 判讀。" />
 
-      {/* Common Architecture */}
-      <Section title="共同決策架構（三期通用）" color="slate">
-        <div className="space-y-3">
+        <div className="grid grid-cols-4 gap-2">
           {[
-            {
-              step: 'L1', title: '聚類與區間化',
-              content: '將所有指標依照價位相近程度分組。若多個指標彼此距離 ≤ ε（感應寬度），就視為「共振」，合併為一個區間；若孤立，視為單一線。感應寬度 ε 依據各期 ATR(14)（平均真實波幅）計算，期別越長，ε 越大。',
-            },
-            {
-              step: 'L2', title: '意義權重評分',
-              content: '針對每個聚類計算「意義分數（Zone_Score）」。公式為：Zone_Score = Σ（W × Quality_Factor）。W 是指標權重（1–5）；Quality_Factor（品質修正係數）反映該指標的「現實有效性」，見下方說明。一個指標只計一次，避免重複加分。',
-            },
-            {
-              step: 'L3', title: '唯一最優選拔',
-              content: '收盤價上方的聚類，取 Zone_Score 最高者為「唯一壓力」；收盤價下方取最高者為「唯一支撐」。若聚類寬度 ≤ 0.3%，顯示為「線」；> 0.3% 顯示為「區」（區間有上下邊界）。候選池為空時，以整數關卡或極值作為保底指標。',
-            },
-            {
-              step: 'L4', title: 'AI戰略詮釋',
-              content: '根據選出的最高分壓力與支撐，由 AI 輸出一句話客觀事實描述。嚴格禁止主觀建議，只陳述數值與指標構成。',
-            },
-          ].map(({ step, title, content }) => (
-            <div key={step} className="flex gap-3">
-              <div className="shrink-0 w-8 h-8 rounded-full bg-slate-700 text-white flex items-center justify-center text-xs font-bold">{step}</div>
-              <div>
-                <p className="font-semibold text-gray-800 mb-0.5">{title}</p>
-                <p className="text-gray-600">{content}</p>
-              </div>
+            { step:'1', label:'收盤資料', desc:'K 線 OHLCV + Volume Profile（5/20/60日）' },
+            { step:'2', label:'趨勢判讀', desc:'close / MA20 / MA60 三者關係 → 多頭 / 空頭 / 盤整' },
+            { step:'3', label:'Cascade 選線', desc:'依趨勢查通用候選清單，主要邏輯 → 保底 遞補，輸出最優 SR 對' },
+            { step:'4', label:'AI 輸出', desc:'將選出的壓力 + 支撐指標名稱 + 捨入數值組成一句話' },
+          ].map(({ step, label, desc }) => (
+            <div key={step} className="relative bg-white border border-gray-200 rounded-xl p-4 flex flex-col gap-1">
+              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">STEP {step}</span>
+              <span className="text-sm font-bold text-gray-900">{label}</span>
+              <span className="text-xs text-gray-500 leading-relaxed">{desc}</span>
+              {step !== '4' && (
+                <span className="absolute -right-2.5 top-1/2 -translate-y-1/2 text-gray-300 text-xs font-bold z-10">→</span>
+              )}
             </div>
           ))}
         </div>
+      </section>
 
-        <div className="mt-4 bg-gray-50 rounded-lg border border-gray-200 p-3 font-mono text-sm text-center text-gray-700">
-          Zone_Score = Σ (W × Quality_Factor)
-        </div>
+      {/* ── § 2 趨勢判讀 ── */}
+      <section>
+        <SectionHeader num="2" title="趨勢判讀規則"
+          sub="趨勢決定後續使用哪一份候選清單，是選線的前提條件。" />
 
-        {/* Quality Factor detail */}
-        <div className="mt-4 bg-white rounded-xl border border-gray-200 p-4 space-y-3 text-sm">
-          <p className="font-bold text-gray-800">品質修正係數（Quality_Factor）說明</p>
-          <p className="text-gray-600">
-            Quality_Factor ∈ [0.5, 1.5]，反映單一指標在「當下市場環境」的有效程度，而非僅看靜態權重。
-            三個維度計算後取乘積，最終裁切至 [0.5, 1.5]。
-          </p>
-          <div className="overflow-x-auto rounded-lg border border-gray-100">
-            <table className="w-full text-xs">
-              <thead className="bg-gray-50 border-b border-gray-100">
-                <tr>
-                  <th className="px-3 py-2 text-left font-semibold text-gray-700">維度</th>
-                  <th className="px-3 py-2 text-left font-semibold text-gray-700">計算方式</th>
-                  <th className="px-3 py-2 text-left font-semibold text-gray-700">白話意義</th>
+        <div className="rounded-xl border border-gray-200 overflow-hidden">
+          <table className="w-full text-sm">
+            <thead className="bg-gray-50 border-b border-gray-200">
+              <tr>
+                <th className="px-5 py-2.5 text-left font-semibold text-gray-500 w-20">判讀</th>
+                <th className="px-5 py-2.5 text-left font-semibold text-gray-700">判斷條件</th>
+                <th className="px-5 py-2.5 text-left font-semibold text-gray-500">意涵</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {([
+                { trend:'bull',     label:'多頭', cond:'收盤 > MA20  且  MA20 > MA60', meaning:'均線多頭排列，趨勢向上',       bg:'bg-red-50'  },
+                { trend:'bear',     label:'空頭', cond:'收盤 < MA20  且  MA20 < MA60', meaning:'均線空頭排列，趨勢向下',       bg:'bg-blue-50' },
+                { trend:'sideways', label:'盤整', cond:'其餘情況',                      meaning:'均線糾結，方向不明確',         bg:'bg-gray-50' },
+              ] as const).map(r => (
+                <tr key={r.trend} className={r.bg}>
+                  <td className="px-5 py-3">
+                    <span className={`text-xs font-bold px-2.5 py-1 rounded border ${trendCls[r.trend]}`}>{r.label}</span>
+                  </td>
+                  <td className="px-5 py-3 font-mono text-xs text-gray-700">{r.cond}</td>
+                  <td className="px-5 py-3 text-xs text-gray-600">{r.meaning}</td>
                 </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-50">
-                {[
-                  ['接近度（Proximity）',
-                   '若指標距收盤價 ≤ 1 ATR → 係數 1.2；≤ 2 ATR → 1.0；> 2 ATR → 0.8',
-                   '越近現價的指標「現在就有壓力」，加分；遠的指標降權'],
-                  ['穩定度（Stability）',
-                   '若該指標在過去 5 個交易日內未改變方向（如 SAR 未翻轉、均線斜率一致） → 係數 1.1；否則 → 0.9',
-                   '最近沒有翻轉的指標比剛翻轉的指標更可靠'],
-                  ['命中歷史（HitRate bonus）',
-                   '若指標歷史命中率 ≥ 50% → 係數 1.1；45–50% → 1.0；< 45% → 0.9',
-                   '統計上命中率高的指標，在這次也更有意義'],
-                ].map(([dim, calc, note], i) => (
-                  <tr key={i} className="hover:bg-gray-50">
-                    <td className="px-3 py-2 font-medium text-gray-800 align-top whitespace-nowrap">{dim}</td>
-                    <td className="px-3 py-2 text-gray-600 align-top font-mono text-[11px]">{calc}</td>
-                    <td className="px-3 py-2 text-gray-500 align-top">{note}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="bg-gray-50 rounded-lg p-3 font-mono text-xs text-gray-700 text-center">
-            Quality_Factor = clamp( Proximity × Stability × HitRate_bonus, 0.5, 1.5 )
-          </div>
-          <p className="text-xs text-gray-400">
-            例：一個 ATR 內、斜率穩定、命中率 55% 的指標 → 1.2 × 1.1 × 1.1 ≈ 1.45（接近上限）。
-            反之，遠離且剛翻轉的低命中率指標 → 0.8 × 0.9 × 0.9 ≈ 0.65（接近下限）。
-          </p>
+              ))}
+            </tbody>
+          </table>
         </div>
-      </Section>
+      </section>
 
-      {/* Period-specific indicators */}
-      <Section title="各期指標與感應寬度（ε）" color="slate">
-        <p className="text-gray-500 mb-4 text-sm">
-          三期用相同的演算架構，差異在於：使用的指標不同、ε（聚類感應寬度）不同。點選各期別查看詳細指標與權重。
-        </p>
+      {/* ── § 3 技術指標庫 ── */}
+      <section>
+        <SectionHeader num="3" title="技術指標庫"
+          sub="依訊號有效天數分為短 / 中 / 長期，共 32 個指標。點選期別展開清單。" />
 
-        <div className="space-y-3">
-          {PERIOD_INDICATORS.map(({ period, label, tagCls, eps, epsNote, indicators }) => {
-            const isOpen = expandedPeriod === period;
+        <div className="space-y-2">
+          {(['short', 'mid', 'long'] as Period[]).map(key => {
+            const def = PERIOD_DEFS[key];
+            const isOpen = openPeriod === key;
             return (
-              <div key={period} className="border border-gray-200 rounded-xl overflow-hidden">
+              <div key={key} className={`rounded-xl border overflow-hidden ${isOpen ? `border-l-4 ${def.borderCls} border-gray-200` : 'border-gray-200'}`}>
                 <button
-                  className="w-full flex items-center gap-3 px-4 py-3 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
-                  onClick={() => setExpandedPeriod(isOpen ? null : period)}
+                  className="w-full flex items-center gap-3 px-5 py-3.5 bg-white hover:bg-gray-50 text-left transition-colors"
+                  onClick={() => setOpenPeriod(isOpen ? null : key)}
                 >
-                  <PeriodTag label={label.split('（')[0]} cls={tagCls} />
-                  <span className="font-semibold text-gray-800">{label}</span>
-                  <span className="ml-auto text-xs text-gray-400 font-mono">{eps}</span>
-                  <span className="text-gray-400 text-sm">{isOpen ? '▲' : '▼'}</span>
+                  <span className={`text-xs font-bold px-2.5 py-1 rounded border ${def.tagCls}`}>{def.label}</span>
+                  <span className="text-sm text-gray-500">{def.range}</span>
+                  <span className="text-xs text-gray-400 ml-1">— {def.indicators.length} 個指標</span>
+                  <span className="ml-auto text-gray-400 text-xs">{isOpen ? '▲' : '▼'}</span>
                 </button>
-
                 {isOpen && (
-                  <div className="p-4 space-y-3">
-                    <InfoBox color={period === 'short' ? 'yellow' : period === 'medium' ? 'purple' : 'blue'}>
-                      <strong>感應寬度：{eps}</strong>　{epsNote}
-                    </InfoBox>
-                    <div className="overflow-x-auto rounded-lg border border-gray-200">
-                      <table className="w-full text-sm">
-                        <thead className="bg-gray-50 border-b border-gray-200">
-                          <tr>
-                            <th className="px-4 py-2.5 text-left font-semibold text-gray-700">指標名稱</th>
-                            <th className="px-4 py-2.5 text-left font-semibold text-gray-700">白話說明</th>
-                            <th className="px-4 py-2.5 text-center font-semibold text-gray-700 w-16">權重(W)</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-100">
-                          {indicators.map((r, i) => (
-                            <tr key={i} className="hover:bg-gray-50">
-                              <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">{r.name}</td>
-                              <td className="px-4 py-2 text-gray-600 text-xs">{r.desc}</td>
-                              <td className="px-4 py-2 text-center">
-                                <span className={`inline-block font-bold text-xs px-2 py-0.5 rounded-full ${
-                                  r.weight >= 5 ? 'bg-red-100 text-red-700' :
-                                  r.weight >= 3 ? 'bg-orange-100 text-orange-700' :
-                                  'bg-gray-100 text-gray-600'
-                                }`}>{r.weight}</span>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                  <div className="border-t border-gray-100 px-5 py-3">
+                    <div className="flex flex-wrap gap-1.5">
+                      {def.indicators.map((name, i) => (
+                        <span key={i} className="text-sm text-gray-800 bg-gray-50 border border-gray-200 rounded-md px-3 py-1">
+                          {name}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 )}
@@ -293,414 +298,305 @@ function LogicContent() {
             );
           })}
         </div>
-      </Section>
 
-      {/* Output types */}
-      <Section title="輸出結果說明" color="slate">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4">
-            <p className="font-bold text-red-700 mb-2">壓力（阻力位）</p>
-            <p className="text-xs text-red-600">收盤價上方 Zone_Score 最高的聚類。股價接近時，賣壓可能增加，上漲難度提高。</p>
-            <div className="mt-2 space-y-1 text-xs text-red-500">
-              <p>• 寬度 ≤ 0.3% → <strong>壓力線</strong>（精確單點）</p>
-              <p>• 寬度 &gt; 0.3% → <strong>壓力區</strong>（有上下邊界的範圍）</p>
-            </div>
-          </div>
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-            <p className="font-bold text-blue-700 mb-2">支撐（支撐位）</p>
-            <p className="text-xs text-blue-600">收盤價下方 Zone_Score 最高的聚類。股價接近時，買盤可能進場，下跌難度提高。</p>
-            <div className="mt-2 space-y-1 text-xs text-blue-500">
-              <p>• 寬度 ≤ 0.3% → <strong>支撐線</strong>（精確單點）</p>
-              <p>• 寬度 &gt; 0.3% → <strong>支撐區</strong>（有上下邊界的範圍）</p>
-            </div>
+        <div className="mt-3 rounded-lg border border-orange-200 bg-orange-50 px-4 py-3 text-xs text-orange-900 space-y-0.5">
+          <p className="font-semibold text-orange-800 mb-1">版本異動（v5.1）</p>
+          <p><span className="font-bold">短期</span>：移除 SAR、中關、CDP 系列（4 個）、線性回歸值</p>
+          <p><span className="font-bold">中期</span>：布林通道 3σ → 2σ</p>
+          <p><span className="font-bold">長期</span>：MA250 / 250日最高低 → MA240 / 240日最高低；移除整數關卡點、2500日均線</p>
+        </div>
+      </section>
+
+      {/* ── § 4 Cascade 三層選線 ── */}
+      <section>
+        <SectionHeader num="4" title="Cascade 三層選線機制"
+          sub="以含括率最高的候選對為優先，逐層遞補，確保每個期別都能產出一組 SR 對。" />
+
+        {/* 4-1 選線策略 */}
+        <div className="mb-5">
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">4-1 選線策略</p>
+          <div className="space-y-1.5">
+            {[
+              { tier:'主要邏輯', label:'逐一試候選', cond:'含括率 > 70%', detail:'R > S、最小寬度（短 1%、中 2%、長 5%）', cls:'border-green-300 bg-green-50', badge:'bg-green-600 text-white' },
+              { tier:'保底',    label:'N 日固定錨定對', cond:'無條件輸出', detail:'N 日最高 ≥ N 日最低由定義保證，R > S 必然成立，不依賴趨勢或 VP', cls:'border-orange-300 bg-orange-50', badge:'bg-orange-500 text-white' },
+            ].map((t, i) => (
+              <div key={i}>
+                <div className={`rounded-xl border px-5 py-3 ${t.cls}`}>
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span className={`text-xs font-bold px-2 py-0.5 rounded ${t.badge}`}>{t.tier}</span>
+                    <span className="text-xs font-semibold text-gray-600">{t.label}</span>
+                    <span className="text-sm font-bold text-gray-800 ml-1">— {t.cond}</span>
+                  </div>
+                  <p className="text-xs text-gray-600 pl-1">{t.detail}</p>
+                </div>
+                {i < 1 && <p className="text-xs text-gray-400 px-5 py-1">↓ 全部候選失效</p>}
+              </div>
+            ))}
+            <p className="text-xs text-gray-400 px-5 pt-1">↓ 保底無法計算（掛牌不足，N 日資料不夠）→ 靜默略過，不畫線</p>
           </div>
         </div>
-      </Section>
 
-      {/* Difference summary */}
-      <Section title="三期差異對照表" color="slate">
-        <div className="overflow-x-auto rounded-lg border border-gray-200">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50 border-b border-gray-200">
-              <tr>
-                <th className="px-4 py-2.5 text-left font-semibold text-gray-700">項目</th>
-                <th className="px-4 py-2.5 text-center font-semibold text-yellow-700">短期</th>
-                <th className="px-4 py-2.5 text-center font-semibold text-purple-700">中期</th>
-                <th className="px-4 py-2.5 text-center font-semibold text-blue-700">長期</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100 text-xs">
-              {[
-                ['指標數量', '12 個', '9 個', '9 個（+整數關卡）'],
-                ['感應寬度 ε', '0.5 × ATR', '1.0 × ATR', '2.0 × ATR'],
-                ['代表週期', '5–10 交易日', '20–60 交易日', '60–240 交易日'],
-                ['VP 計算期', '近 5 日', '近 20 日', '近 60 日'],
-                ['MA 主軸', 'MA5、MA10', 'MA20、MA30', 'MA60、MA120、MA240'],
-                ['顯示顏色', '黃色', '紫色', '藍色'],
-                ['適用情境', '短線、當沖、隔日', '波段、月線趨勢', '趨勢判斷、長線佈局'],
-              ].map(([item, s, m, l], i) => (
-                <tr key={i} className="hover:bg-gray-50">
-                  <td className="px-4 py-2 font-medium text-gray-700">{item}</td>
-                  <td className="px-4 py-2 text-center text-yellow-700">{s}</td>
-                  <td className="px-4 py-2 text-center text-purple-700">{m}</td>
-                  <td className="px-4 py-2 text-center text-blue-700">{l}</td>
-                </tr>
+        {/* 資料來源說明 */}
+        <div className="mb-5 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-700">
+          <span className="font-semibold">含括率來源：</span>
+          1,932 檔個股 K 線（2022-01-03 ～ 2026-04-28）× 408 檔 Volume Profile（2025-01-02 ～ 2026-04-20），
+          涵蓋 34 個產業 × 3 期別 × 3 趨勢組合。
+        </div>
+
+        {/* 4-2 候選清單 */}
+        <div className="mb-5">
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">4-2 候選組合</p>
+
+          {/* Period selector */}
+          <div className="flex gap-2 mb-3 flex-wrap">
+            {(['short', 'mid', 'long'] as Period[]).map(p => (
+              <button key={p}
+                onClick={() => { setSrPeriod(p); if (p === 'short') setSrTrend('bull'); }}
+                className={`px-4 py-1.5 text-sm font-bold rounded-lg border transition-all ${srPeriod === p ? periodActiveCls[p] : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400'}`}
+              >
+                {PERIOD_DEFS[p].label}
+              </button>
+            ))}
+          </div>
+
+          {/* Trend selector (mid/long only) */}
+          {srPeriod !== 'short' && (
+            <div className="flex gap-2 mb-3 flex-wrap">
+              {(['bull', 'bear', 'sideways'] as Trend[]).map(t => (
+                <button key={t}
+                  onClick={() => setSrTrend(t)}
+                  className={`px-4 py-2 text-sm rounded-lg border font-bold transition-all ${srTrend === t ? trendCls[t] + ' shadow-sm' : 'bg-white text-gray-500 border-gray-200 hover:border-gray-400'}`}
+                >
+                  {trendLabel[t]}
+                </button>
               ))}
-            </tbody>
-          </table>
+            </div>
+          )}
+
+          {srPeriod === 'short' && (
+            <div className="mb-3 text-xs text-gray-500 bg-amber-50 border border-amber-200 rounded-lg px-4 py-2">
+              短期三種趨勢<strong>通用同一份清單</strong>。VP5 可用時優先 #1 → #2 → #3；不可用時從 #3 開始。
+            </div>
+          )}
+
+          <CandidateTable rows={candidateRows} lastResort={LAST_RESORT_LABELS[srPeriod]} />
         </div>
-      </Section>
+
+        {/* 4-3 LAST_RESORT */}
+        <div>
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">4-3 保底錨定對（LAST_RESORT）</p>
+          <div className="rounded-xl border border-gray-200 overflow-hidden">
+            <table className="w-full text-sm">
+              <thead className="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th className="px-4 py-2.5 text-left font-semibold text-gray-600">期別</th>
+                  <th className="px-4 py-2.5 text-left font-semibold text-red-600">多頭</th>
+                  <th className="px-4 py-2.5 text-left font-semibold text-blue-600">空頭</th>
+                  <th className="px-4 py-2.5 text-left font-semibold text-gray-600">盤整</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100 text-xs">
+                {[
+                  { period:'短期', bull:'10日最低 ＋ 10日最高',   bear:'10日最低 ＋ 10日最高',   sw:'10日最低 ＋ 10日最高' },
+                  { period:'中期', bull:'20日最低 ＋ 20日最高',   bear:'20日最低 ＋ 20日最高',   sw:'20日最低 ＋ 20日最高' },
+                  { period:'長期', bull:'240日最低 ＋ 240日最高', bear:'240日最低 ＋ 240日最高', sw:'240日最低 ＋ 240日最高' },
+                ].map(r => (
+                  <tr key={r.period} className="hover:bg-gray-50">
+                    <td className="px-4 py-2.5 font-semibold text-gray-700">{r.period}</td>
+                    <td className="px-4 py-2.5 text-red-700">{r.bull}</td>
+                    <td className="px-4 py-2.5 text-blue-700">{r.bear}</td>
+                    <td className="px-4 py-2.5 text-gray-600">{r.sw}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-gray-500 mt-2 px-1">
+            最高 ≥ 最低由定義保證，R &gt; S 必然成立，不依賴趨勢或 VP。
+          </p>
+        </div>
+      </section>
+
+      {/* ── § 5 設計原則 ── */}
+      <section>
+        <SectionHeader num="5" title="設計原則：為何不分產業"
+          sub="以下三項實證說明，通用候選清單的效力等同分產業，但工程成本大幅降低。" />
+
+        <div className="grid grid-cols-3 gap-3 mb-4">
+          {[
+            { n:'1', title:'頂部候選完全重疊', body:'各期別 / 趨勢前幾名候選在 34 個產業的出現率均為 34/34，指標池完全相同。' },
+            { n:'2', title:'差異只在排名不在指標', body:'產業間 rank=1 有輕微分歧，但差異候選都在通用清單前幾位，Cascade 自動遞補。' },
+            { n:'3', title:'Cascade 本身即是軟性適配', body:'正常交易日大多在 #1 或 #2 候選命中（97–99%）。個股走勢異常時自動往下遞補。' },
+          ].map(e => (
+            <div key={e.n} className="bg-white border border-gray-200 rounded-xl px-4 py-4">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-5 h-5 rounded-full bg-slate-700 text-white flex items-center justify-center text-[10px] font-bold shrink-0">{e.n}</span>
+                <span className="text-sm font-semibold text-gray-800">{e.title}</span>
+              </div>
+              <p className="text-xs text-gray-600 leading-relaxed">{e.body}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-xl border border-slate-200 bg-slate-50 px-5 py-4">
+          <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-3">四項結論</p>
+          <div className="grid grid-cols-2 gap-2 text-sm text-slate-700">
+            {[
+              '指標池相同，無產業專屬指標',
+              'Cascade 自動涵蓋產業間排名差異',
+              '分產業僅讓命中率從 ~97% 升至 ~99%，但需維護 34 張 lookup table',
+              '通用邏輯自動適應新上市股、產業重分類、指標資料缺失',
+            ].map((c, i) => (
+              <div key={i} className="flex gap-2 items-start">
+                <span className="shrink-0 text-slate-400 font-bold mt-0.5">—</span>
+                <span className="text-xs">{c}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
 
-function PromptContent() {
+// ─── AITab ────────────────────────────────────────────────────────────────────
+function AITab() {
   return (
-    <div className="space-y-5 text-sm text-gray-700 leading-relaxed">
-      <InfoBox color="gray">
-        <p className="font-semibold text-gray-800 mb-1">這個功能做什麼？</p>
-        你是一位冷靜的量化交易分析師。根據短期／中期／長期決策邏輯樹，在 K 線圖上標註出最具意義的支撐與壓力，並提供「一句話客觀事實解釋」。AI 只陳述事實，不給出操作建議。
-      </InfoBox>
+    <div className="space-y-8 text-gray-700">
 
-      <Section title="核心邏輯規範" color="gray">
-        <div className="overflow-x-auto rounded-lg border border-gray-200">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50 border-b border-gray-200">
-              <tr>
-                <th className="px-4 py-2.5 text-left font-semibold text-gray-700">規則</th>
-                <th className="px-4 py-2.5 text-left font-semibold text-gray-700">說明</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {[
-                ['聚合共振', '若多個指標在感應寬度 ε（短 0.5／中 1.0／長 2.0 × ATR）內重疊，視為「共振區間」'],
-                ['去偽存真', '忽略低權重或孤立雜訊，僅鎖定 Zone_Score 最高的唯一目標'],
-                ['區間定義', '寬度 > 0.3% 顯示為「區間（Range）」；≤ 0.3% 顯示為「線（Line）」'],
-              ].map(([rule, desc], i) => (
-                <tr key={i} className="hover:bg-gray-50">
-                  <td className="px-4 py-2 font-medium">{rule}</td>
-                  <td className="px-4 py-2 text-xs text-gray-600">{desc}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <div className="bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 text-sm leading-relaxed">
+        <p className="font-semibold text-slate-800 mb-1">功能定義</p>
+        <p>依短 / 中 / 長期 Cascade 選線結果，各輸出一行客觀事實描述。<strong>嚴格禁止主觀建議</strong>，只陳述指標名稱與數值。</p>
+      </div>
+
+      <section>
+        <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3">輸出格式</h2>
+        <div className="bg-gray-900 rounded-xl p-5 font-mono text-sm space-y-2">
+          {[
+            { label:'短期', cls:'text-amber-400' },
+            { label:'中期', cls:'text-violet-400' },
+            { label:'長期', cls:'text-sky-400' },
+          ].map(({ label, cls }) => (
+            <div key={label} className="flex gap-2">
+              <span className={`font-bold ${cls} shrink-0`}>{label}：</span>
+              <span className="text-gray-300">在 XXX 元有壓力（指標名稱），在 XXX 元有支撐（指標名稱）。</span>
+            </div>
+          ))}
         </div>
-      </Section>
+      </section>
 
-      <Section title="顯示級距規則" color="gray">
-        <div className="overflow-x-auto rounded-lg border border-gray-200">
+      <section>
+        <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3">捨入規則</h2>
+        <div className="rounded-xl border border-gray-200 overflow-hidden">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
-                <th className="px-4 py-2.5 text-left font-semibold text-gray-700">股價區間 (TWD)</th>
-                <th className="px-4 py-2.5 text-left font-semibold text-gray-700">跳動單位 (Tick)</th>
-                <th className="px-4 py-2.5 text-left font-semibold text-gray-700">顯示級距</th>
+                <th className="px-5 py-2.5 text-left font-semibold text-gray-600">股價區間</th>
+                <th className="px-5 py-2.5 text-left font-semibold text-gray-600">Tick 單位</th>
+                <th className="px-5 py-2.5 text-left font-semibold text-gray-600">顯示精度</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100 text-xs">
+            <tbody className="divide-y divide-gray-100 text-sm">
               {[
-                ['< 10 元','0.01','0.05 元'],['10 – 50 元','0.05','0.1 元'],['50 – 100 元','0.1','0.5 元'],
-                ['100 – 500 元','0.5','1 元'],['500 – 1000 元','1.0','5 元'],['> 1000 元','5.0','10 元'],
+                ['< 10 元',        '0.01', '0.05'],
+                ['10 – 50 元',     '0.05', '0.1'],
+                ['50 – 100 元',    '0.1',  '0.5'],
+                ['100 – 500 元',   '0.5',  '1'],
+                ['500 – 1,000 元', '1.0',  '5'],
+                ['> 1,000 元',     '5.0',  '10'],
               ].map(([range, tick, disp], i) => (
                 <tr key={i} className="hover:bg-gray-50">
-                  <td className="px-4 py-2">{range}</td>
-                  <td className="px-4 py-2">{tick}</td>
-                  <td className="px-4 py-2 font-medium text-blue-700">{disp}</td>
+                  <td className="px-5 py-2 text-gray-700">{range}</td>
+                  <td className="px-5 py-2 text-gray-500 font-mono">{tick}</td>
+                  <td className="px-5 py-2 font-semibold text-slate-700">{disp}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-gray-500 mt-2">捨入方向：支撐取下捨（floor），壓力取上捨（ceil）。</p>
-      </Section>
+        <p className="text-xs text-gray-500 mt-2 px-1">
+          捨入方向：支撐取<strong>下捨（floor）</strong>，壓力取<strong>上捨（ceil）</strong>。
+        </p>
+      </section>
 
-      <Section title="輸出撰寫五條規則" color="gray">
-        <ol className="list-decimal list-inside space-y-1.5 pl-2">
-          <li><strong>禁止主觀：</strong>嚴禁出現「建議」「操作」「應」「看好」等詞彙</li>
-          <li><strong>數值先行：</strong>必須明確標註價格或區間邊界</li>
-          <li><strong>邏輯還原：</strong>說明是由哪些高權重指標聚合而成</li>
-          <li><strong>一句話準則：</strong>不超過 50 字，直接陳述物理數據意義</li>
-          <li><strong>顯示捨入：</strong>輸出數值依級距規則捨入</li>
-        </ol>
-      </Section>
-
-      <Section title="固定輸出模板" color="gray">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <p className="text-xs font-semibold text-gray-500 mb-1">區間型（寬度 &gt; 0.3%）</p>
-            <div className="bg-gray-900 text-green-400 rounded-lg p-3 font-mono text-xs space-y-1">
-              <div>壓力區 (XXX-XXX)：OOO、OOO...共振</div>
-              <div>支撐區 (XXX-XXX)：OOO、OOO...聚合</div>
-            </div>
-          </div>
-          <div>
-            <p className="text-xs font-semibold text-gray-500 mb-1">單線型（寬度 ≤ 0.3%）</p>
-            <div className="bg-gray-900 text-green-400 rounded-lg p-3 font-mono text-xs space-y-1">
-              <div>壓力線 (XXX)：OOO與OOO重合</div>
-              <div>支撐線 (XXX)：OOO與OOO重合</div>
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      <Section title="輸出範例" color="gray">
+      <section>
+        <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3">撰寫規則</h2>
         <div className="space-y-2">
           {[
-            { example: '壓力區 (153-154)：5日POC、5日VAH與10日最高共振', color: 'red' },
-            { example: '支撐區 (144-146)：20日POC、20日VAL與20MA聚合',   color: 'blue' },
-            { example: '壓力線 (145)：20日POC與布林通道上緣重合',         color: 'red' },
-            { example: '支撐線 (180)：240MA與整數180重合',                color: 'blue' },
-          ].map((ex, i) => (
-            <div key={i} className={`px-4 py-2.5 rounded-lg border text-sm font-medium
-              ${ex.color === 'red' ? 'bg-red-50 border-red-200 text-red-800' : 'bg-blue-50 border-blue-200 text-blue-800'}`}>
-              {ex.example}
-            </div>
-          ))}
-        </div>
-      </Section>
-    </div>
-  );
-}
-
-function HitRateContent() {
-  const dirLabel: Record<string, { label: string; cls: string }> = {
-    resistance: { label: '壓力', cls: 'bg-red-100 text-red-700' },
-    support:    { label: '支撐', cls: 'bg-blue-100 text-blue-700' },
-    dual:       { label: '雙向', cls: 'bg-gray-100 text-gray-600' },
-  };
-  return (
-    <div className="space-y-5 text-sm">
-
-      {/* Plain-language intro */}
-      <InfoBox color="green">
-        <p className="font-semibold text-gray-800 mb-2">命中率是什麼意思？</p>
-        <p>
-          回測台股 1,900+ 檔個股，統計每個技術指標在未來 n 個交易日內「有沒有被股價碰到」的比例。
-          例如「5日最高價命中率 42%」表示：在歷史資料中，約有 42% 的機率，股價在 3 個交易日內
-          會碰到（或突破）該指標位置。
-        </p>
-        <p className="mt-2 text-xs text-gray-600">
-          命中率 &gt; 50% 表示在統計上，這個指標有一定的阻力/支撐效果。但命中率不等於交易勝率，
-          僅反映「價格是否到達該指標附近」，不考慮到達後的方向。
-        </p>
-      </InfoBox>
-
-      {/* Column explanations */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4">
-        <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">欄位說明</p>
-        <div className="grid grid-cols-2 gap-2 text-xs">
-          {[
-            { col: '指標', desc: '技術指標名稱' },
-            { col: '方向', desc: '壓力：指標通常在股價上方。支撐：指標通常在下方。雙向：隨市況可能在上或下方。' },
-            { col: '窗口(n)', desc: '回測時的觀察天數。n=3 表示看未來 3 個交易日；n=5 表示 5 個交易日。' },
-            { col: '平均命中率', desc: '所有有效股票的命中率平均值。數字越高代表指標越容易被觸及。' },
-            { col: '中位數', desc: '命中率的中位數，較不受少數極端值影響。若中位數與平均值差距大，代表個股差異明顯。' },
-            { col: '標準差', desc: '各股命中率的分散程度。標準差越大代表「有些股票命中率高、有些很低」，指標穩定性較差。' },
-            { col: '有效股票數', desc: '納入回測的個股數量（資料足夠的股票）。數量越大，結果越有統計代表性。' },
-          ].map(({ col, desc }, i) => (
-            <div key={i} className="flex gap-2">
-              <span className="font-bold text-gray-700 shrink-0 w-20">{col}</span>
-              <span className="text-gray-500">{desc}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* How to read */}
-      <InfoBox color="gray">
-        <p className="font-semibold text-gray-800 mb-1">如何解讀這張表？</p>
-        <ul className="space-y-1 text-xs mt-1 list-none">
-          <li>🟢 命中率 ≥ 50%：指標有統計意義，長期而言超過一半的個股會碰到這個位置</li>
-          <li>🟡 命中率 45–50%：接近隨機，需搭配其他條件判斷</li>
-          <li>🔴 命中率 &lt; 45%：統計效果較弱，但不代表無效，需觀察個股特性</li>
-          <li>📊 標準差大（&gt;15）：個股差異大，使用前建議觀察個別股票的歷史行為</li>
-        </ul>
-      </InfoBox>
-
-      {/* Table */}
-      <div className="overflow-x-auto rounded-lg border border-gray-200">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-50 border-b border-gray-200 sticky top-0">
-            <tr>
-              <th className="px-4 py-3 text-left font-semibold text-gray-700">指標</th>
-              <th className="px-4 py-3 text-center font-semibold text-gray-700">方向</th>
-              <th className="px-4 py-3 text-center font-semibold text-gray-700">窗口(n)</th>
-              <th className="px-4 py-3 text-right font-semibold text-gray-700">平均命中率</th>
-              <th className="px-4 py-3 text-right font-semibold text-gray-700">中位數</th>
-              <th className="px-4 py-3 text-right font-semibold text-gray-700">標準差</th>
-              <th className="px-4 py-3 text-right font-semibold text-gray-700">有效股票數</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100">
-            {HIT_RATE_DATA.map((row, i) => {
-              const dir = dirLabel[row.dir];
-              const hitColor = row.hit >= 50 ? 'text-green-700 font-bold' :
-                               row.hit >= 45 ? 'text-yellow-700 font-semibold' : 'text-gray-600';
-              const bar = Math.round((row.hit / 60) * 100);
-              return (
-                <tr key={i} className="hover:bg-gray-50">
-                  <td className="px-4 py-2.5 font-medium text-gray-900">{row.name}</td>
-                  <td className="px-4 py-2.5 text-center">
-                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${dir.cls}`}>{dir.label}</span>
-                  </td>
-                  <td className="px-4 py-2.5 text-center text-gray-500">{row.n}</td>
-                  <td className="px-4 py-2.5 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                        <div
-                          className={`h-full rounded-full ${row.hit >= 50 ? 'bg-green-500' : row.hit >= 45 ? 'bg-yellow-400' : 'bg-gray-300'}`}
-                          style={{ width: `${bar}%` }}
-                        />
-                      </div>
-                      <span className={`tabular-nums ${hitColor}`}>{row.hit.toFixed(1)}%</span>
-                    </div>
-                  </td>
-                  <td className="px-4 py-2.5 text-right tabular-nums text-gray-600">{row.med.toFixed(1)}%</td>
-                  <td className="px-4 py-2.5 text-right tabular-nums text-gray-500">
-                    <span className={row.std > 15 ? 'text-orange-600 font-semibold' : ''}>{row.std.toFixed(1)}</span>
-                  </td>
-                  <td className="px-4 py-2.5 text-right tabular-nums text-gray-500">{row.stocks.toLocaleString()}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Calculation method */}
-      <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-4 text-sm text-gray-700">
-        <p className="font-bold text-gray-800 text-base">計算方式（詳細版）</p>
-
-        <div className="space-y-3">
-          <div className="flex gap-3">
-            <span className="shrink-0 w-6 h-6 rounded-full bg-green-600 text-white flex items-center justify-center text-xs font-bold">1</span>
-            <div>
-              <p className="font-semibold text-gray-800">建立歷史觀測點</p>
-              <p className="text-gray-600 text-xs mt-0.5">
-                對每一檔個股，以每個交易日收盤後為一個觀測點，計算當日所有技術指標的數值。
-                例如：2024-01-15 收盤後，計算 5日最高、MA5、5日POC…等所有指標值。
-              </p>
-            </div>
-          </div>
-
-          <div className="flex gap-3">
-            <span className="shrink-0 w-6 h-6 rounded-full bg-green-600 text-white flex items-center justify-center text-xs font-bold">2</span>
-            <div>
-              <p className="font-semibold text-gray-800">定義「命中」</p>
-              <p className="text-gray-600 text-xs mt-0.5 mb-1">
-                判斷未來 n 個交易日內，股價是否「碰到」該指標位置。碰到的定義因方向而異：
-              </p>
-              <div className="grid grid-cols-1 gap-1.5 text-xs">
-                <div className="bg-red-50 border border-red-100 rounded-lg px-3 py-2">
-                  <span className="font-bold text-red-700">壓力指標命中</span>
-                  <span className="text-red-600 ml-1">：未來 n 日最高價 ≥ 指標值 × (1 − 0.5%)</span>
-                  <p className="text-red-500 mt-0.5">意思：股價有沒有「摸到」壓力位附近（允許 0.5% 誤差）</p>
-                </div>
-                <div className="bg-blue-50 border border-blue-100 rounded-lg px-3 py-2">
-                  <span className="font-bold text-blue-700">支撐指標命中</span>
-                  <span className="text-blue-600 ml-1">：未來 n 日最低價 ≤ 指標值 × (1 + 0.5%)</span>
-                  <p className="text-blue-500 mt-0.5">意思：股價有沒有「測試到」支撐位附近（允許 0.5% 誤差）</p>
-                </div>
-                <div className="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2">
-                  <span className="font-bold text-gray-700">雙向指標（如均線）命中</span>
-                  <span className="text-gray-600 ml-1">：未來 n 日最高或最低價在指標值 ±0.5% 內</span>
-                </div>
+            { n:'1', title:'禁止主觀', desc:'嚴禁出現「建議」「操作」「應」「看好」等詞彙' },
+            { n:'2', title:'數值先行', desc:'必須明確標註價格或區間邊界' },
+            { n:'3', title:'指標來源', desc:'說明是由哪個高權重指標決定' },
+            { n:'4', title:'一句話準則', desc:'不超過 50 字，直接陳述物理數據意義' },
+            { n:'5', title:'顯示捨入', desc:'數值依上方級距規則捨入，支撐向下、壓力向上' },
+          ].map(r => (
+            <div key={r.n} className="flex gap-3 items-start bg-white border border-gray-200 rounded-xl px-4 py-3">
+              <span className="shrink-0 w-6 h-6 rounded-full bg-slate-700 text-white flex items-center justify-center text-[10px] font-bold mt-0.5">{r.n}</span>
+              <div className="text-sm">
+                <span className="font-semibold text-gray-800">{r.title}：</span>
+                <span className="text-gray-600">{r.desc}</span>
               </div>
-              <p className="text-gray-500 text-xs mt-1.5">
-                為什麼用 ±0.5%？因為現實中股價不會精確觸及某一點，允許小幅誤差可以過濾掉「差一點點」的情況。
-              </p>
             </div>
-          </div>
-
-          <div className="flex gap-3">
-            <span className="shrink-0 w-6 h-6 rounded-full bg-green-600 text-white flex items-center justify-center text-xs font-bold">3</span>
-            <div>
-              <p className="font-semibold text-gray-800">計算單一股票的命中率</p>
-              <p className="text-gray-600 text-xs mt-0.5">
-                對每一檔個股：命中率 = 命中次數 ÷ 總觀測次數。
-              </p>
-              <p className="text-gray-600 text-xs mt-0.5">
-                例：某股票 2 年內有 200 個觀測點，其中 5日最高命中了 88 次 → 命中率 = 88/200 = 44%。
-              </p>
-            </div>
-          </div>
-
-          <div className="flex gap-3">
-            <span className="shrink-0 w-6 h-6 rounded-full bg-green-600 text-white flex items-center justify-center text-xs font-bold">4</span>
-            <div>
-              <p className="font-semibold text-gray-800">跨股票統計</p>
-              <p className="text-gray-600 text-xs mt-0.5">
-                彙整台股 1,900+ 檔有效個股的命中率，計算：
-              </p>
-              <ul className="text-gray-600 text-xs mt-1 space-y-0.5 list-none pl-2">
-                <li>• <strong>平均命中率</strong>：所有個股命中率的算術平均</li>
-                <li>• <strong>中位數</strong>：排序後的中間值（較不受極端值影響）</li>
-                <li>• <strong>標準差</strong>：個股間命中率的分散程度</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="flex gap-3">
-            <span className="shrink-0 w-6 h-6 rounded-full bg-gray-400 text-white flex items-center justify-center text-xs font-bold">！</span>
-            <div>
-              <p className="font-semibold text-gray-700">重要限制</p>
-              <p className="text-gray-500 text-xs mt-0.5">
-                命中率只衡量「股價有沒有到達那個價位」，<strong>不代表到達後一定反彈或回落</strong>。
-                例如壓力命中率 55% 代表有 55% 的次數股價會碰到壓力位，但碰到後是突破還是反轉，
-                需要其他指標輔助判斷。回測數據不含交易成本，實際操作時須考慮摩擦成本。
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
+      </section>
 
-        <p className="text-xs text-gray-400 border-t border-gray-100 pt-3">
-          資料期間：台股上市上櫃個股歷史日K資料，資料足夠計算該指標者均納入。
-          有效股票數依各指標而異（部分股票因資料不足無法計算特定指標）。
-        </p>
-      </div>
+      <section>
+        <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-3">輸出範例</h2>
+        <div className="space-y-2">
+          {[
+            { ex:'短期：在 153 元有壓力（5日最高價），在 146 元有支撐（5日VAL）。',    cls:'bg-amber-50 border-amber-200 text-amber-900' },
+            { ex:'中期：在 175 元有壓力（上檔量密集區），在 162 元有支撐（MA20）。',   cls:'bg-violet-50 border-violet-200 text-violet-900' },
+            { ex:'長期：在 200 元有壓力（240日最高價），在 168 元有支撐（MA60）。',    cls:'bg-sky-50 border-sky-200 text-sky-900' },
+          ].map((e, i) => (
+            <div key={i} className={`px-5 py-3 rounded-xl border text-sm font-medium ${e.cls}`}>{e.ex}</div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
 
-const TAB_CONTENT: Record<TabKey, React.ReactNode> = {
-  logic:   <LogicContent />,
-  prompt:  <PromptContent />,
-  hitrate: <HitRateContent />,
-};
+// ─── Main ─────────────────────────────────────────────────────────────────────
+const TABS: { key: TabKey; label: string }[] = [
+  { key: 'sr', label: '選線邏輯' },
+  { key: 'ai', label: 'AI 判讀' },
+];
 
 export default function ManualPage({ onBack }: Props) {
-  const [activeTab, setActiveTab] = useState<TabKey>('logic');
+  const [activeTab, setActiveTab] = useState<TabKey>('sr');
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       <div className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
-        <div className="px-6 py-4 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-slate-900">支撐壓力決策邏輯說明書</h1>
-          <button
-            onClick={onBack}
-            className="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
-          >
+        <div className="px-6 py-3.5 flex items-center justify-between">
+          <div>
+            <h1 className="text-base font-bold text-slate-900">支撐壓力選線決策邏輯</h1>
+            <p className="text-xs text-gray-400 mt-0.5">34 支標的 · 資料日期 2026-04-17 · v5.1</p>
+          </div>
+          <button onClick={onBack}
+            className="px-4 py-2 bg-slate-700 text-white text-sm font-semibold rounded-lg hover:bg-slate-800 transition-colors">
             ← 返回
           </button>
         </div>
-        <div className="flex px-6 border-t border-gray-100">
+        <div className="flex px-6 gap-1 border-t border-gray-100">
           {TABS.map(({ key, label }) => (
-            <button
-              key={key}
-              onClick={() => setActiveTab(key)}
-              className={`px-5 py-2.5 text-sm font-bold border-b-2 transition-all ${
-                activeTab === key ? TAB_ACTIVE[key] : 'border-transparent text-gray-500 hover:text-gray-700'
-              }`}
-            >
+            <button key={key} onClick={() => setActiveTab(key)}
+              className={`px-5 py-3 text-sm font-semibold border-b-2 transition-all ${
+                activeTab === key
+                  ? 'border-slate-700 text-slate-900'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}>
               {label}
             </button>
           ))}
         </div>
       </div>
+
       <div className="flex-1 overflow-y-auto">
-        <div className="max-w-4xl mx-auto px-8 py-8">
+        <div className="max-w-4xl mx-auto px-6 py-8">
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
-            {TAB_CONTENT[activeTab]}
+            {activeTab === 'sr' && <SRTab />}
+            {activeTab === 'ai' && <AITab />}
           </div>
         </div>
       </div>
