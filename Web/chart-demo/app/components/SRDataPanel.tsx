@@ -176,7 +176,7 @@ function TooltipIcon({ colorCls, period, trend, supInd, resInd }: TooltipProps) 
         ?
       </span>
       {show && (
-        <div className="absolute right-0 top-full mt-1.5 w-64 bg-gray-900 text-white text-xs rounded-lg shadow-2xl p-3 z-50 leading-relaxed whitespace-normal pointer-events-none">
+        <div className="absolute right-0 bottom-full mb-1.5 w-64 bg-gray-900 text-white text-xs rounded-lg shadow-2xl p-3 z-50 leading-relaxed whitespace-normal pointer-events-none">
           {cand
             ? `近4年歷史資料顯示，含括率為${cand.cont}，平均寬度${cand.width}。含括率為收盤價落在支撐與壓力預估區間內的天數比例。平均寬度為支撐到壓力的平均價差範圍百分比。`
             : '含括率與平均寬度詳見說明書 4-2 候選組合。含括率為收盤價落在支撐與壓力預估區間內的天數比例。平均寬度為支撐到壓力的平均價差範圍百分比。'}
