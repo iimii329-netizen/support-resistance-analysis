@@ -571,7 +571,6 @@ export default function ManualPage({ onBack }: Props) {
         <div className="px-6 py-3.5 flex items-center justify-between">
           <div>
             <h1 className="text-base font-bold text-slate-900">支撐壓力選線決策邏輯</h1>
-            <p className="text-xs text-gray-400 mt-0.5">34 支標的 · 資料日期 2026-04-17 · v5.1</p>
           </div>
           <button onClick={onBack}
             className="px-4 py-2 bg-slate-700 text-white text-sm font-semibold rounded-lg hover:bg-slate-800 transition-colors">
