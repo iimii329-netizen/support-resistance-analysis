@@ -483,6 +483,10 @@ function AITab() {
             </div>
           ))}
         </div>
+        <div className="mt-3 rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 font-mono text-sm">
+          <span className="text-gray-500 mr-2">資料不足時：</span>
+          <span className="text-orange-400">數據不足，無法計算支撐壓力</span>
+        </div>
       </section>
 
       <section>
