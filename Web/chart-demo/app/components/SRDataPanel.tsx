@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { PeriodName } from '../types';
 
 // ── New SR Levels format ───────────────────────────────────────────────────
@@ -164,23 +165,44 @@ interface TooltipProps {
 }
 function TooltipIcon({ colorCls, period, trend, supInd, resInd }: TooltipProps) {
   const [show, setShow] = useState(false);
+  const [style, setStyle] = useState<React.CSSProperties>({});
+  const iconRef = useRef<HTMLSpanElement>(null);
   const cand = lookupCandidate(period, trend, supInd, resInd);
+
+  const handleEnter = () => {
+    if (iconRef.current) {
+      const r = iconRef.current.getBoundingClientRect();
+      const tooltipW = 256; // w-64
+      const left = Math.max(8, Math.min(r.right - tooltipW, window.innerWidth - tooltipW - 8));
+      setStyle({ position: 'fixed', top: r.top, left, transform: 'translateY(calc(-100% - 6px))' });
+    }
+    setShow(true);
+  };
+
+  const text = cand
+    ? `近4年歷史資料顯示，含括率為${cand.cont}，平均寬度${cand.width}。含括率為收盤價落在支撐與壓力預估區間內的天數比例。平均寬度為支撐到壓力的平均價差範圍百分比。`
+    : '含括率與平均寬度詳見說明書 4-2 候選組合。含括率為收盤價落在支撐與壓力預估區間內的天數比例。平均寬度為支撐到壓力的平均價差範圍百分比。';
 
   return (
     <div
-      className="relative inline-flex shrink-0 mt-0.5"
-      onMouseEnter={() => setShow(true)}
+      className="inline-flex shrink-0 mt-0.5"
+      onMouseEnter={handleEnter}
       onMouseLeave={() => setShow(false)}
     >
-      <span className={`inline-flex items-center justify-center w-4 h-4 rounded-full border text-[10px] font-bold cursor-help select-none opacity-50 hover:opacity-90 transition-opacity ${colorCls}`}>
+      <span
+        ref={iconRef}
+        className={`inline-flex items-center justify-center w-4 h-4 rounded-full border text-[10px] font-bold cursor-help select-none opacity-50 hover:opacity-90 transition-opacity ${colorCls}`}
+      >
         ?
       </span>
-      {show && (
-        <div className="absolute right-0 bottom-full mb-1.5 w-64 bg-gray-900 text-white text-xs rounded-lg shadow-2xl p-3 z-50 leading-relaxed whitespace-normal pointer-events-none">
-          {cand
-            ? `近4年歷史資料顯示，含括率為${cand.cont}，平均寬度${cand.width}。含括率為收盤價落在支撐與壓力預估區間內的天數比例。平均寬度為支撐到壓力的平均價差範圍百分比。`
-            : '含括率與平均寬度詳見說明書 4-2 候選組合。含括率為收盤價落在支撐與壓力預估區間內的天數比例。平均寬度為支撐到壓力的平均價差範圍百分比。'}
-        </div>
+      {show && createPortal(
+        <div
+          className="w-64 bg-gray-900 text-white text-xs rounded-lg shadow-2xl p-3 leading-relaxed whitespace-normal pointer-events-none"
+          style={{ ...style, zIndex: 9999 }}
+        >
+          {text}
+        </div>,
+        document.body
       )}
     </div>
   );
