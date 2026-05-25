@@ -180,7 +180,7 @@ function TooltipIcon({ colorCls, period, trend, supInd, resInd }: TooltipProps) 
   };
 
   const text = cand
-    ? `近4年歷史資料顯示，含括率為${cand.cont}，平均寬度${cand.width}。含括率為收盤價落在支撐與壓力預估區間內的天數比例。平均寬度為支撐到壓力的平均價差範圍百分比。`
+    ? `根據歷史資料，含括率為${cand.cont}，平均寬度${cand.width}。含括率為收盤價落在支撐與壓力預估區間內的天數比例。平均寬度為支撐到壓力的平均價差範圍百分比。`
     : '含括率與平均寬度詳見說明書 4-2 候選組合。含括率為收盤價落在支撐與壓力預估區間內的天數比例。平均寬度為支撐到壓力的平均價差範圍百分比。';
 
   return (
