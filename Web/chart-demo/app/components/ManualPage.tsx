@@ -563,7 +563,7 @@ function AITab() {
 // ─── Main ─────────────────────────────────────────────────────────────────────
 const TABS: { key: TabKey; label: string }[] = [
   { key: 'sr', label: '選線邏輯' },
-  { key: 'ai', label: 'AI 判讀' },
+  { key: 'ai', label: '一句話規格說明' },
 ];
 
 export default function ManualPage({ onBack }: Props) {
