@@ -54,6 +54,12 @@ const EXCLUDED_NAMES = new Set([
   'CDP追買點', 'CDP追賣點', 'CDP買進點', 'CDP賣出點', '線性回歸值',
 ]);
 
+const MA_DISPLAY: Record<string, string> = {
+  'MA5': '5日均線', 'MA10': '10日均線', 'MA20': '20日均線', 'MA30': '30日均線',
+  'MA60': '60日均線', 'MA120': '120日均線', 'MA240': '240日均線',
+};
+function getDisplayName(name: string): string { return MA_DISPLAY[name] ?? name; }
+
 // ── Candidate lookup (mirrors ManualPage §4-2) ─────────────────────────────
 // Maps JSON display names → CANDIDATES code keys
 const NAME_TO_CODE: Record<string, string> = {
@@ -241,7 +247,7 @@ export default function SRDataPanel({ srData }: Props) {
       <span className={`font-bold text-sm tabular-nums shrink-0 w-16 text-right ${isResistance ? 'text-red-600' : 'text-blue-600'}`}>
         {fmtRaw(ind.value)}
       </span>
-      <span className="text-sm text-gray-500 min-w-0 truncate">{ind.name}</span>
+      <span className="text-sm text-gray-900 min-w-0 truncate">{getDisplayName(ind.name)}</span>
     </div>
   );
 

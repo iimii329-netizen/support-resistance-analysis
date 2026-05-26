@@ -1,0 +1,9325 @@
+{
+  "_meta": {
+    "description": "台股股票產業分類對照表",
+    "source": "股票產業分類.json",
+    "generated_date": "2026-05-11",
+    "total_stocks": 2286,
+    "total_industries": 34
+  },
+  "industries": {
+    "光電業": {
+      "count": 136,
+      "stocks": [
+        {
+          "symbol": "2323.TW",
+          "name": "中環"
+        },
+        {
+          "symbol": "2349.TW",
+          "name": "錸德"
+        },
+        {
+          "symbol": "2374.TW",
+          "name": "佳能"
+        },
+        {
+          "symbol": "2393.TW",
+          "name": "億光"
+        },
+        {
+          "symbol": "2406.TW",
+          "name": "國碩"
+        },
+        {
+          "symbol": "2409.TW",
+          "name": "友達"
+        },
+        {
+          "symbol": "2426.TW",
+          "name": "鼎元"
+        },
+        {
+          "symbol": "2429.TW",
+          "name": "銘旺科"
+        },
+        {
+          "symbol": "2438.TW",
+          "name": "翔耀"
+        },
+        {
+          "symbol": "2466.TW",
+          "name": "冠西電"
+        },
+        {
+          "symbol": "2486.TW",
+          "name": "一詮"
+        },
+        {
+          "symbol": "2489.TW",
+          "name": "瑞軒"
+        },
+        {
+          "symbol": "2491.TW",
+          "name": "吉祥全"
+        },
+        {
+          "symbol": "3008.TW",
+          "name": "大立光"
+        },
+        {
+          "symbol": "3019.TW",
+          "name": "亞光"
+        },
+        {
+          "symbol": "3024.TW",
+          "name": "憶聲"
+        },
+        {
+          "symbol": "3031.TW",
+          "name": "佰鴻"
+        },
+        {
+          "symbol": "3038.TW",
+          "name": "全台"
+        },
+        {
+          "symbol": "3049.TW",
+          "name": "精金"
+        },
+        {
+          "symbol": "3050.TW",
+          "name": "鈺德"
+        },
+        {
+          "symbol": "3051.TW",
+          "name": "力特"
+        },
+        {
+          "symbol": "3059.TW",
+          "name": "華晶科"
+        },
+        {
+          "symbol": "3066.TW",
+          "name": "李洲"
+        },
+        {
+          "symbol": "3128.TW",
+          "name": "昇銳"
+        },
+        {
+          "symbol": "3149.TW",
+          "name": "正達"
+        },
+        {
+          "symbol": "3168.TW",
+          "name": "眾福科"
+        },
+        {
+          "symbol": "3230.TW",
+          "name": "錦明"
+        },
+        {
+          "symbol": "3297.TW",
+          "name": "杭特"
+        },
+        {
+          "symbol": "3339.TW",
+          "name": "泰谷"
+        },
+        {
+          "symbol": "3356.TW",
+          "name": "奇偶"
+        },
+        {
+          "symbol": "3362.TW",
+          "name": "先進光"
+        },
+        {
+          "symbol": "3406.TW",
+          "name": "玉晶光"
+        },
+        {
+          "symbol": "3434.TW",
+          "name": "哲固"
+        },
+        {
+          "symbol": "3437.TW",
+          "name": "榮創"
+        },
+        {
+          "symbol": "3441.TW",
+          "name": "聯一光"
+        },
+        {
+          "symbol": "3455.TW",
+          "name": "由田"
+        },
+        {
+          "symbol": "3481.TW",
+          "name": "群創"
+        },
+        {
+          "symbol": "3490.TW",
+          "name": "單井"
+        },
+        {
+          "symbol": "3504.TW",
+          "name": "揚明光"
+        },
+        {
+          "symbol": "3516.TW",
+          "name": "亞帝歐"
+        },
+        {
+          "symbol": "3523.TW",
+          "name": "迎輝"
+        },
+        {
+          "symbol": "3531.TW",
+          "name": "先益"
+        },
+        {
+          "symbol": "3535.TW",
+          "name": "晶彩科"
+        },
+        {
+          "symbol": "3543.TW",
+          "name": "州巧"
+        },
+        {
+          "symbol": "3563.TW",
+          "name": "牧德"
+        },
+        {
+          "symbol": "3576.TW",
+          "name": "聯合再生"
+        },
+        {
+          "symbol": "3591.TW",
+          "name": "艾笛森"
+        },
+        {
+          "symbol": "3595.TW",
+          "name": "山太士"
+        },
+        {
+          "symbol": "3615.TW",
+          "name": "安可"
+        },
+        {
+          "symbol": "3622.TW",
+          "name": "洋華"
+        },
+        {
+          "symbol": "3623.TW",
+          "name": "富晶通"
+        },
+        {
+          "symbol": "3630.TW",
+          "name": "新鉅科"
+        },
+        {
+          "symbol": "3633.TW",
+          "name": "云光"
+        },
+        {
+          "symbol": "3659.TW",
+          "name": "百辰"
+        },
+        {
+          "symbol": "3666.TW",
+          "name": "光耀"
+        },
+        {
+          "symbol": "3673.TW",
+          "name": "TPK-KY"
+        },
+        {
+          "symbol": "3678.TW",
+          "name": "聯享"
+        },
+        {
+          "symbol": "3691.TW",
+          "name": "碩禾"
+        },
+        {
+          "symbol": "3714.TW",
+          "name": "富采"
+        },
+        {
+          "symbol": "4537.TW",
+          "name": "旭東"
+        },
+        {
+          "symbol": "4729.TW",
+          "name": "熒茂"
+        },
+        {
+          "symbol": "4933.TW",
+          "name": "友輝"
+        },
+        {
+          "symbol": "4934.TW",
+          "name": "太極"
+        },
+        {
+          "symbol": "4935.TW",
+          "name": "茂林-KY"
+        },
+        {
+          "symbol": "4942.TW",
+          "name": "嘉彰"
+        },
+        {
+          "symbol": "4949.TW",
+          "name": "有成精密"
+        },
+        {
+          "symbol": "4956.TW",
+          "name": "光鋐"
+        },
+        {
+          "symbol": "4960.TW",
+          "name": "誠美材"
+        },
+        {
+          "symbol": "4972.TW",
+          "name": "湯石照明"
+        },
+        {
+          "symbol": "4976.TW",
+          "name": "佳凌"
+        },
+        {
+          "symbol": "4995.TW",
+          "name": "晶達"
+        },
+        {
+          "symbol": "5220.TW",
+          "name": "萬達光電"
+        },
+        {
+          "symbol": "5230.TW",
+          "name": "雷笛克光學"
+        },
+        {
+          "symbol": "5234.TW",
+          "name": "達興材料"
+        },
+        {
+          "symbol": "5240.TW",
+          "name": "建騰"
+        },
+        {
+          "symbol": "5243.TW",
+          "name": "乙盛-KY"
+        },
+        {
+          "symbol": "5244.TW",
+          "name": "弘凱"
+        },
+        {
+          "symbol": "5245.TW",
+          "name": "智晶"
+        },
+        {
+          "symbol": "5248.TW",
+          "name": "景傳"
+        },
+        {
+          "symbol": "5251.TW",
+          "name": "天鉞電"
+        },
+        {
+          "symbol": "5267.TW",
+          "name": "龍翩"
+        },
+        {
+          "symbol": "5315.TW",
+          "name": "光聯"
+        },
+        {
+          "symbol": "5371.TW",
+          "name": "中光電"
+        },
+        {
+          "symbol": "5392.TW",
+          "name": "能率"
+        },
+        {
+          "symbol": "5484.TW",
+          "name": "慧友"
+        },
+        {
+          "symbol": "6116.TW",
+          "name": "彩晶"
+        },
+        {
+          "symbol": "6120.TW",
+          "name": "達運"
+        },
+        {
+          "symbol": "6125.TW",
+          "name": "廣運"
+        },
+        {
+          "symbol": "6164.TW",
+          "name": "華興"
+        },
+        {
+          "symbol": "6167.TW",
+          "name": "久正"
+        },
+        {
+          "symbol": "6168.TW",
+          "name": "宏齊"
+        },
+        {
+          "symbol": "6176.TW",
+          "name": "瑞儀"
+        },
+        {
+          "symbol": "6209.TW",
+          "name": "今國光"
+        },
+        {
+          "symbol": "6222.TW",
+          "name": "立軒"
+        },
+        {
+          "symbol": "6225.TW",
+          "name": "天瀚"
+        },
+        {
+          "symbol": "6226.TW",
+          "name": "光鼎"
+        },
+        {
+          "symbol": "6234.TW",
+          "name": "高僑"
+        },
+        {
+          "symbol": "6244.TW",
+          "name": "茂迪"
+        },
+        {
+          "symbol": "6246.TW",
+          "name": "臺龍"
+        },
+        {
+          "symbol": "6278.TW",
+          "name": "台表科"
+        },
+        {
+          "symbol": "6405.TW",
+          "name": "悅城"
+        },
+        {
+          "symbol": "6419.TW",
+          "name": "京晨科"
+        },
+        {
+          "symbol": "6434.TW",
+          "name": "達輝光電"
+        },
+        {
+          "symbol": "6443.TW",
+          "name": "元晶"
+        },
+        {
+          "symbol": "6456.TW",
+          "name": "GIS-KY"
+        },
+        {
+          "symbol": "6477.TW",
+          "name": "安集"
+        },
+        {
+          "symbol": "6498.TW",
+          "name": "久禾光"
+        },
+        {
+          "symbol": "6517.TW",
+          "name": "保勝光學"
+        },
+        {
+          "symbol": "6556.TW",
+          "name": "勝品"
+        },
+        {
+          "symbol": "6559.TW",
+          "name": "研晶"
+        },
+        {
+          "symbol": "6560.TW",
+          "name": "欣普羅"
+        },
+        {
+          "symbol": "6668.TW",
+          "name": "中揚光"
+        },
+        {
+          "symbol": "6673.TW",
+          "name": "和詮"
+        },
+        {
+          "symbol": "6682.TW",
+          "name": "華旭先進"
+        },
+        {
+          "symbol": "6706.TW",
+          "name": "惠特"
+        },
+        {
+          "symbol": "6729.TW",
+          "name": "機光科技"
+        },
+        {
+          "symbol": "6742.TW",
+          "name": "澤米"
+        },
+        {
+          "symbol": "6775.TW",
+          "name": "穎台科技"
+        },
+        {
+          "symbol": "6787.TW",
+          "name": "晶瑞光"
+        },
+        {
+          "symbol": "6812.TW",
+          "name": "梭特"
+        },
+        {
+          "symbol": "6859.TW",
+          "name": "伯特光"
+        },
+        {
+          "symbol": "6867.TW",
+          "name": "坦德科技"
+        },
+        {
+          "symbol": "6899.TW",
+          "name": "創為精密"
+        },
+        {
+          "symbol": "6916.TW",
+          "name": "華凌"
+        },
+        {
+          "symbol": "6979.TW",
+          "name": "勝釩"
+        },
+        {
+          "symbol": "7402.TW",
+          "name": "邑錡"
+        },
+        {
+          "symbol": "7753.TW",
+          "name": "星亞"
+        },
+        {
+          "symbol": "7771.TW",
+          "name": "綠基"
+        },
+        {
+          "symbol": "8049.TW",
+          "name": "晶采"
+        },
+        {
+          "symbol": "8064.TW",
+          "name": "東捷"
+        },
+        {
+          "symbol": "8069.TW",
+          "name": "元太"
+        },
+        {
+          "symbol": "8104.TW",
+          "name": "錸寶"
+        },
+        {
+          "symbol": "8105.TW",
+          "name": "凌巨"
+        },
+        {
+          "symbol": "8111.TW",
+          "name": "立碁"
+        },
+        {
+          "symbol": "8215.TW",
+          "name": "明基材"
+        },
+        {
+          "symbol": "8240.TW",
+          "name": "華宏"
+        }
+      ]
+    },
+    "其他業": {
+      "count": 116,
+      "stocks": [
+        {
+          "symbol": "1342.TW",
+          "name": "八貫"
+        },
+        {
+          "symbol": "1416.TW",
+          "name": "廣豐"
+        },
+        {
+          "symbol": "1435.TW",
+          "name": "中福"
+        },
+        {
+          "symbol": "1437.TW",
+          "name": "勤益控"
+        },
+        {
+          "symbol": "1443.TW",
+          "name": "立益物流"
+        },
+        {
+          "symbol": "1516.TW",
+          "name": "川飛"
+        },
+        {
+          "symbol": "1584.TW",
+          "name": "精剛"
+        },
+        {
+          "symbol": "2221.TW",
+          "name": "大甲"
+        },
+        {
+          "symbol": "2348.TW",
+          "name": "海悅"
+        },
+        {
+          "symbol": "2496.TW",
+          "name": "卓越"
+        },
+        {
+          "symbol": "2514.TW",
+          "name": "龍邦"
+        },
+        {
+          "symbol": "2614.TW",
+          "name": "東森"
+        },
+        {
+          "symbol": "2724.TW",
+          "name": "藝舍-KY"
+        },
+        {
+          "symbol": "2904.TW",
+          "name": "匯僑"
+        },
+        {
+          "symbol": "3040.TW",
+          "name": "遠見"
+        },
+        {
+          "symbol": "3284.TW",
+          "name": "太普高"
+        },
+        {
+          "symbol": "3313.TW",
+          "name": "斐成"
+        },
+        {
+          "symbol": "4154.TW",
+          "name": "樂威科-KY"
+        },
+        {
+          "symbol": "4430.TW",
+          "name": "耀億"
+        },
+        {
+          "symbol": "4431.TW",
+          "name": "敏成健康"
+        },
+        {
+          "symbol": "4529.TW",
+          "name": "淳紳"
+        },
+        {
+          "symbol": "4541.TW",
+          "name": "晟田"
+        },
+        {
+          "symbol": "4556.TW",
+          "name": "旭然"
+        },
+        {
+          "symbol": "5209.TW",
+          "name": "新鼎"
+        },
+        {
+          "symbol": "5276.TW",
+          "name": "達輝-KY"
+        },
+        {
+          "symbol": "5284.TW",
+          "name": "jpp-KY"
+        },
+        {
+          "symbol": "5314.TW",
+          "name": "世紀*"
+        },
+        {
+          "symbol": "5345.TW",
+          "name": "馥鴻"
+        },
+        {
+          "symbol": "5398.TW",
+          "name": "慕康生醫"
+        },
+        {
+          "symbol": "5450.TW",
+          "name": "南良"
+        },
+        {
+          "symbol": "5481.TW",
+          "name": "新華"
+        },
+        {
+          "symbol": "5530.TW",
+          "name": "龍巖"
+        },
+        {
+          "symbol": "5604.TW",
+          "name": "中連"
+        },
+        {
+          "symbol": "5871.TW",
+          "name": "中租-KY"
+        },
+        {
+          "symbol": "6179.TW",
+          "name": "亞通"
+        },
+        {
+          "symbol": "6184.TW",
+          "name": "大豐電"
+        },
+        {
+          "symbol": "6199.TW",
+          "name": "天品"
+        },
+        {
+          "symbol": "6236.TW",
+          "name": "中湛"
+        },
+        {
+          "symbol": "6464.TW",
+          "name": "台數科"
+        },
+        {
+          "symbol": "6504.TW",
+          "name": "南六"
+        },
+        {
+          "symbol": "6585.TW",
+          "name": "鼎基"
+        },
+        {
+          "symbol": "6592.TW",
+          "name": "和潤企業"
+        },
+        {
+          "symbol": "6625.TW",
+          "name": "必應"
+        },
+        {
+          "symbol": "6655.TW",
+          "name": "科定"
+        },
+        {
+          "symbol": "6721.TW",
+          "name": "信實"
+        },
+        {
+          "symbol": "6793.TW",
+          "name": "天力離岸"
+        },
+        {
+          "symbol": "6832.TW",
+          "name": "金鼎科"
+        },
+        {
+          "symbol": "6881.TW",
+          "name": "潤德"
+        },
+        {
+          "symbol": "6901.TW",
+          "name": "鑽石投資"
+        },
+        {
+          "symbol": "6904.TW",
+          "name": "伯鑫"
+        },
+        {
+          "symbol": "6911.TW",
+          "name": "群運"
+        },
+        {
+          "symbol": "6914.TW",
+          "name": "阜爾運通"
+        },
+        {
+          "symbol": "6952.TW",
+          "name": "大武山"
+        },
+        {
+          "symbol": "6957.TW",
+          "name": "裕慶-KY"
+        },
+        {
+          "symbol": "6958.TW",
+          "name": "日盛台駿"
+        },
+        {
+          "symbol": "6995.TW",
+          "name": "野獸國"
+        },
+        {
+          "symbol": "7443.TW",
+          "name": "凡事康"
+        },
+        {
+          "symbol": "7516.TW",
+          "name": "清淨海"
+        },
+        {
+          "symbol": "7558.TW",
+          "name": "群利"
+        },
+        {
+          "symbol": "7578.TW",
+          "name": "利百景"
+        },
+        {
+          "symbol": "7590.TW",
+          "name": "怡和國際"
+        },
+        {
+          "symbol": "7706.TW",
+          "name": "宏碁創達"
+        },
+        {
+          "symbol": "7719.TW",
+          "name": "碳基"
+        },
+        {
+          "symbol": "7748.TW",
+          "name": "鑫囍創業"
+        },
+        {
+          "symbol": "7764.TW",
+          "name": "聖州"
+        },
+        {
+          "symbol": "7777.TW",
+          "name": "能率亞洲"
+        },
+        {
+          "symbol": "7818.TW",
+          "name": "溢泰實業"
+        },
+        {
+          "symbol": "7824.TW",
+          "name": "智寶"
+        },
+        {
+          "symbol": "7836.TW",
+          "name": "智生活"
+        },
+        {
+          "symbol": "7855.TW",
+          "name": "和運租車"
+        },
+        {
+          "symbol": "7882.TW",
+          "name": "倍利創投"
+        },
+        {
+          "symbol": "8033.TW",
+          "name": "雷虎"
+        },
+        {
+          "symbol": "8342.TW",
+          "name": "益張"
+        },
+        {
+          "symbol": "8354.TW",
+          "name": "冠好"
+        },
+        {
+          "symbol": "8401.TW",
+          "name": "白紗科"
+        },
+        {
+          "symbol": "8404.TW",
+          "name": "百和興業-KY"
+        },
+        {
+          "symbol": "8411.TW",
+          "name": "福貞-KY"
+        },
+        {
+          "symbol": "8421.TW",
+          "name": "旭源"
+        },
+        {
+          "symbol": "8426.TW",
+          "name": "紅木-KY"
+        },
+        {
+          "symbol": "8435.TW",
+          "name": "鉅邁"
+        },
+        {
+          "symbol": "8437.TW",
+          "name": "大地-KY"
+        },
+        {
+          "symbol": "8442.TW",
+          "name": "威宏-KY"
+        },
+        {
+          "symbol": "8444.TW",
+          "name": "綠河-KY"
+        },
+        {
+          "symbol": "8463.TW",
+          "name": "潤泰材"
+        },
+        {
+          "symbol": "8466.TW",
+          "name": "美吉吉-KY"
+        },
+        {
+          "symbol": "8481.TW",
+          "name": "政伸"
+        },
+        {
+          "symbol": "8488.TW",
+          "name": "吉源-KY"
+        },
+        {
+          "symbol": "8489.TW",
+          "name": "三貝德"
+        },
+        {
+          "symbol": "8905.TW",
+          "name": "裕國"
+        },
+        {
+          "symbol": "8906.TW",
+          "name": "花王"
+        },
+        {
+          "symbol": "8916.TW",
+          "name": "光隆"
+        },
+        {
+          "symbol": "8921.TW",
+          "name": "沈氏"
+        },
+        {
+          "symbol": "8929.TW",
+          "name": "富堡"
+        },
+        {
+          "symbol": "8932.TW",
+          "name": "智通*"
+        },
+        {
+          "symbol": "8935.TW",
+          "name": "邦泰"
+        },
+        {
+          "symbol": "8936.TW",
+          "name": "國統"
+        },
+        {
+          "symbol": "8937.TW",
+          "name": "合騏*"
+        },
+        {
+          "symbol": "8942.TW",
+          "name": "森鉅"
+        },
+        {
+          "symbol": "8999.TW",
+          "name": "台灣積層"
+        },
+        {
+          "symbol": "9902.TW",
+          "name": "台火"
+        },
+        {
+          "symbol": "9905.TW",
+          "name": "大華"
+        },
+        {
+          "symbol": "9907.TW",
+          "name": "統一實"
+        },
+        {
+          "symbol": "9917.TW",
+          "name": "中保科"
+        },
+        {
+          "symbol": "9919.TW",
+          "name": "康那香"
+        },
+        {
+          "symbol": "9925.TW",
+          "name": "新保"
+        },
+        {
+          "symbol": "9927.TW",
+          "name": "泰銘"
+        },
+        {
+          "symbol": "9928.TW",
+          "name": "中視"
+        },
+        {
+          "symbol": "9929.TW",
+          "name": "秋雨"
+        },
+        {
+          "symbol": "9933.TW",
+          "name": "中鼎"
+        },
+        {
+          "symbol": "9938.TW",
+          "name": "百和"
+        },
+        {
+          "symbol": "9939.TW",
+          "name": "宏全"
+        },
+        {
+          "symbol": "9940.TW",
+          "name": "信義"
+        },
+        {
+          "symbol": "9941.TW",
+          "name": "裕融"
+        },
+        {
+          "symbol": "9942.TW",
+          "name": "茂順"
+        },
+        {
+          "symbol": "9944.TW",
+          "name": "新麗"
+        },
+        {
+          "symbol": "9945.TW",
+          "name": "潤泰新"
+        }
+      ]
+    },
+    "其他電子業": {
+      "count": 110,
+      "stocks": [
+        {
+          "symbol": "1785.TW",
+          "name": "光洋科"
+        },
+        {
+          "symbol": "2252.TW",
+          "name": "為昇科"
+        },
+        {
+          "symbol": "2255.TW",
+          "name": "凱銳光電"
+        },
+        {
+          "symbol": "2256.TW",
+          "name": "歐特明"
+        },
+        {
+          "symbol": "2312.TW",
+          "name": "金寶"
+        },
+        {
+          "symbol": "2317.TW",
+          "name": "鴻海"
+        },
+        {
+          "symbol": "2354.TW",
+          "name": "鴻準"
+        },
+        {
+          "symbol": "2359.TW",
+          "name": "所羅門"
+        },
+        {
+          "symbol": "2360.TW",
+          "name": "致茂"
+        },
+        {
+          "symbol": "2373.TW",
+          "name": "震旦行"
+        },
+        {
+          "symbol": "2390.TW",
+          "name": "云辰"
+        },
+        {
+          "symbol": "2404.TW",
+          "name": "漢唐"
+        },
+        {
+          "symbol": "2423.TW",
+          "name": "固緯"
+        },
+        {
+          "symbol": "2433.TW",
+          "name": "互盛電"
+        },
+        {
+          "symbol": "2459.TW",
+          "name": "敦吉"
+        },
+        {
+          "symbol": "2461.TW",
+          "name": "光群雷"
+        },
+        {
+          "symbol": "2464.TW",
+          "name": "盟立"
+        },
+        {
+          "symbol": "2474.TW",
+          "name": "可成"
+        },
+        {
+          "symbol": "2477.TW",
+          "name": "美隆電"
+        },
+        {
+          "symbol": "2482.TW",
+          "name": "連宇"
+        },
+        {
+          "symbol": "2488.TW",
+          "name": "漢平"
+        },
+        {
+          "symbol": "3018.TW",
+          "name": "隆銘綠能"
+        },
+        {
+          "symbol": "3030.TW",
+          "name": "德律"
+        },
+        {
+          "symbol": "3043.TW",
+          "name": "科風"
+        },
+        {
+          "symbol": "3067.TW",
+          "name": "全域"
+        },
+        {
+          "symbol": "3093.TW",
+          "name": "港建*"
+        },
+        {
+          "symbol": "3131.TW",
+          "name": "弘塑"
+        },
+        {
+          "symbol": "3219.TW",
+          "name": "倚強科"
+        },
+        {
+          "symbol": "3285.TW",
+          "name": "微端"
+        },
+        {
+          "symbol": "3289.TW",
+          "name": "宜特"
+        },
+        {
+          "symbol": "3303.TW",
+          "name": "岱稜"
+        },
+        {
+          "symbol": "3305.TW",
+          "name": "昇貿"
+        },
+        {
+          "symbol": "3324.TW",
+          "name": "雙鴻"
+        },
+        {
+          "symbol": "3373.TW",
+          "name": "熱映"
+        },
+        {
+          "symbol": "3402.TW",
+          "name": "漢科"
+        },
+        {
+          "symbol": "3465.TW",
+          "name": "進泰電子"
+        },
+        {
+          "symbol": "3498.TW",
+          "name": "陽程"
+        },
+        {
+          "symbol": "3508.TW",
+          "name": "位速"
+        },
+        {
+          "symbol": "3518.TW",
+          "name": "柏騰"
+        },
+        {
+          "symbol": "3541.TW",
+          "name": "西柏"
+        },
+        {
+          "symbol": "3552.TW",
+          "name": "同致"
+        },
+        {
+          "symbol": "3580.TW",
+          "name": "友威科"
+        },
+        {
+          "symbol": "3587.TW",
+          "name": "閎康"
+        },
+        {
+          "symbol": "3617.TW",
+          "name": "碩天"
+        },
+        {
+          "symbol": "3628.TW",
+          "name": "盈正"
+        },
+        {
+          "symbol": "3663.TW",
+          "name": "鑫科"
+        },
+        {
+          "symbol": "3665.TW",
+          "name": "貿聯-KY"
+        },
+        {
+          "symbol": "4554.TW",
+          "name": "橙的"
+        },
+        {
+          "symbol": "4577.TW",
+          "name": "達航科技"
+        },
+        {
+          "symbol": "4585.TW",
+          "name": "達明"
+        },
+        {
+          "symbol": "4588.TW",
+          "name": "玖鼎電力"
+        },
+        {
+          "symbol": "4760.TW",
+          "name": "勤凱"
+        },
+        {
+          "symbol": "5225.TW",
+          "name": "東科-KY"
+        },
+        {
+          "symbol": "5452.TW",
+          "name": "佶優"
+        },
+        {
+          "symbol": "5489.TW",
+          "name": "彩富"
+        },
+        {
+          "symbol": "5493.TW",
+          "name": "三聯"
+        },
+        {
+          "symbol": "5536.TW",
+          "name": "聖暉*"
+        },
+        {
+          "symbol": "6139.TW",
+          "name": "亞翔"
+        },
+        {
+          "symbol": "6146.TW",
+          "name": "耕興"
+        },
+        {
+          "symbol": "6151.TW",
+          "name": "晉倫"
+        },
+        {
+          "symbol": "6192.TW",
+          "name": "巨路"
+        },
+        {
+          "symbol": "6196.TW",
+          "name": "帆宣"
+        },
+        {
+          "symbol": "6201.TW",
+          "name": "亞弘電"
+        },
+        {
+          "symbol": "6215.TW",
+          "name": "和椿"
+        },
+        {
+          "symbol": "6283.TW",
+          "name": "淳安"
+        },
+        {
+          "symbol": "6409.TW",
+          "name": "旭隼"
+        },
+        {
+          "symbol": "6438.TW",
+          "name": "迅得"
+        },
+        {
+          "symbol": "6512.TW",
+          "name": "啟發電"
+        },
+        {
+          "symbol": "6558.TW",
+          "name": "興能高"
+        },
+        {
+          "symbol": "6613.TW",
+          "name": "朋億*"
+        },
+        {
+          "symbol": "6648.TW",
+          "name": "斯其大"
+        },
+        {
+          "symbol": "6654.TW",
+          "name": "天正國際"
+        },
+        {
+          "symbol": "6658.TW",
+          "name": "聯策"
+        },
+        {
+          "symbol": "6667.TW",
+          "name": "信紘科"
+        },
+        {
+          "symbol": "6691.TW",
+          "name": "洋基工程"
+        },
+        {
+          "symbol": "6698.TW",
+          "name": "旭暉應材"
+        },
+        {
+          "symbol": "6722.TW",
+          "name": "輝創"
+        },
+        {
+          "symbol": "6725.TW",
+          "name": "矽科宏晟"
+        },
+        {
+          "symbol": "6735.TW",
+          "name": "美達科技"
+        },
+        {
+          "symbol": "6739.TW",
+          "name": "竹陞科技"
+        },
+        {
+          "symbol": "6743.TW",
+          "name": "安普新"
+        },
+        {
+          "symbol": "6750.TW",
+          "name": "泰創工程"
+        },
+        {
+          "symbol": "6826.TW",
+          "name": "和淞"
+        },
+        {
+          "symbol": "6830.TW",
+          "name": "汎銓"
+        },
+        {
+          "symbol": "6840.TW",
+          "name": "東研信超"
+        },
+        {
+          "symbol": "6849.TW",
+          "name": "奇鼎科技"
+        },
+        {
+          "symbol": "6855.TW",
+          "name": "數泓科"
+        },
+        {
+          "symbol": "6877.TW",
+          "name": "鏵友益"
+        },
+        {
+          "symbol": "6903.TW",
+          "name": "巨漢"
+        },
+        {
+          "symbol": "6983.TW",
+          "name": "華洋精機"
+        },
+        {
+          "symbol": "7703.TW",
+          "name": "銳澤"
+        },
+        {
+          "symbol": "7728.TW",
+          "name": "光焱科技"
+        },
+        {
+          "symbol": "7792.TW",
+          "name": "安葆"
+        },
+        {
+          "symbol": "7813.TW",
+          "name": "宇辰系統"
+        },
+        {
+          "symbol": "7825.TW",
+          "name": "和亞智慧"
+        },
+        {
+          "symbol": "7848.TW",
+          "name": "騏億鑫"
+        },
+        {
+          "symbol": "7849.TW",
+          "name": "旭誼"
+        },
+        {
+          "symbol": "7870.TW",
+          "name": "聯剛科技"
+        },
+        {
+          "symbol": "7885.TW",
+          "name": "宏羚"
+        },
+        {
+          "symbol": "7907.TW",
+          "name": "錸恩帕斯"
+        },
+        {
+          "symbol": "8021.TW",
+          "name": "尖點"
+        },
+        {
+          "symbol": "8047.TW",
+          "name": "星雲"
+        },
+        {
+          "symbol": "8058.TW",
+          "name": "耐特"
+        },
+        {
+          "symbol": "8085.TW",
+          "name": "福華"
+        },
+        {
+          "symbol": "8092.TW",
+          "name": "建暐"
+        },
+        {
+          "symbol": "8183.TW",
+          "name": "精星"
+        },
+        {
+          "symbol": "8201.TW",
+          "name": "無敵"
+        },
+        {
+          "symbol": "8431.TW",
+          "name": "匯鑽科"
+        },
+        {
+          "symbol": "8455.TW",
+          "name": "大拓-KY"
+        },
+        {
+          "symbol": "8499.TW",
+          "name": "鼎炫-KY"
+        }
+      ]
+    },
+    "化學工業": {
+      "count": 50,
+      "stocks": [
+        {
+          "symbol": "1708.TW",
+          "name": "東鹼"
+        },
+        {
+          "symbol": "1709.TW",
+          "name": "和益"
+        },
+        {
+          "symbol": "1710.TW",
+          "name": "東聯"
+        },
+        {
+          "symbol": "1711.TW",
+          "name": "永光"
+        },
+        {
+          "symbol": "1712.TW",
+          "name": "興農"
+        },
+        {
+          "symbol": "1713.TW",
+          "name": "國化"
+        },
+        {
+          "symbol": "1714.TW",
+          "name": "和桐"
+        },
+        {
+          "symbol": "1717.TW",
+          "name": "長興"
+        },
+        {
+          "symbol": "1718.TW",
+          "name": "中纖"
+        },
+        {
+          "symbol": "1721.TW",
+          "name": "三晃"
+        },
+        {
+          "symbol": "1722.TW",
+          "name": "台肥"
+        },
+        {
+          "symbol": "1723.TW",
+          "name": "中碳"
+        },
+        {
+          "symbol": "1725.TW",
+          "name": "元禎"
+        },
+        {
+          "symbol": "1726.TW",
+          "name": "永記"
+        },
+        {
+          "symbol": "1727.TW",
+          "name": "中華化"
+        },
+        {
+          "symbol": "1730.TW",
+          "name": "花仙子"
+        },
+        {
+          "symbol": "1732.TW",
+          "name": "毛寶"
+        },
+        {
+          "symbol": "1735.TW",
+          "name": "日勝化"
+        },
+        {
+          "symbol": "1742.TW",
+          "name": "台蠟"
+        },
+        {
+          "symbol": "1773.TW",
+          "name": "勝一"
+        },
+        {
+          "symbol": "1776.TW",
+          "name": "展宇"
+        },
+        {
+          "symbol": "3430.TW",
+          "name": "奇鈦科"
+        },
+        {
+          "symbol": "4706.TW",
+          "name": "大恭"
+        },
+        {
+          "symbol": "4707.TW",
+          "name": "磐亞"
+        },
+        {
+          "symbol": "4711.TW",
+          "name": "永純"
+        },
+        {
+          "symbol": "4714.TW",
+          "name": "永捷"
+        },
+        {
+          "symbol": "4716.TW",
+          "name": "大立"
+        },
+        {
+          "symbol": "4720.TW",
+          "name": "德淵"
+        },
+        {
+          "symbol": "4721.TW",
+          "name": "美琪瑪"
+        },
+        {
+          "symbol": "4722.TW",
+          "name": "國精化"
+        },
+        {
+          "symbol": "4738.TW",
+          "name": "大同精化"
+        },
+        {
+          "symbol": "4739.TW",
+          "name": "康普"
+        },
+        {
+          "symbol": "4741.TW",
+          "name": "泓瀚"
+        },
+        {
+          "symbol": "4754.TW",
+          "name": "國碳科"
+        },
+        {
+          "symbol": "4755.TW",
+          "name": "三福化"
+        },
+        {
+          "symbol": "4763.TW",
+          "name": "材料*-KY"
+        },
+        {
+          "symbol": "4764.TW",
+          "name": "雙鍵"
+        },
+        {
+          "symbol": "4765.TW",
+          "name": "磐采"
+        },
+        {
+          "symbol": "4766.TW",
+          "name": "南寶"
+        },
+        {
+          "symbol": "4767.TW",
+          "name": "誠泰科技"
+        },
+        {
+          "symbol": "4768.TW",
+          "name": "晶呈科技"
+        },
+        {
+          "symbol": "4770.TW",
+          "name": "上品"
+        },
+        {
+          "symbol": "4772.TW",
+          "name": "台特化"
+        },
+        {
+          "symbol": "6509.TW",
+          "name": "聚和"
+        },
+        {
+          "symbol": "6618.TW",
+          "name": "永虹先進"
+        },
+        {
+          "symbol": "6959.TW",
+          "name": "兆捷科技"
+        },
+        {
+          "symbol": "6972.TW",
+          "name": "博瑞達應材"
+        },
+        {
+          "symbol": "7742.TW",
+          "name": "天弘化"
+        },
+        {
+          "symbol": "7763.TW",
+          "name": "崇舜"
+        },
+        {
+          "symbol": "7858.TW",
+          "name": "芝普"
+        }
+      ]
+    },
+    "半導體業": {
+      "count": 227,
+      "stocks": [
+        {
+          "symbol": "2302.TW",
+          "name": "麗正"
+        },
+        {
+          "symbol": "2303.TW",
+          "name": "聯電"
+        },
+        {
+          "symbol": "2329.TW",
+          "name": "華泰"
+        },
+        {
+          "symbol": "2330.TW",
+          "name": "台積電"
+        },
+        {
+          "symbol": "2337.TW",
+          "name": "旺宏"
+        },
+        {
+          "symbol": "2338.TW",
+          "name": "光罩"
+        },
+        {
+          "symbol": "2340.TW",
+          "name": "台亞"
+        },
+        {
+          "symbol": "2342.TW",
+          "name": "茂矽"
+        },
+        {
+          "symbol": "2344.TW",
+          "name": "華邦電"
+        },
+        {
+          "symbol": "2351.TW",
+          "name": "順德"
+        },
+        {
+          "symbol": "2363.TW",
+          "name": "矽統"
+        },
+        {
+          "symbol": "2369.TW",
+          "name": "菱生"
+        },
+        {
+          "symbol": "2379.TW",
+          "name": "瑞昱"
+        },
+        {
+          "symbol": "2388.TW",
+          "name": "威盛"
+        },
+        {
+          "symbol": "2401.TW",
+          "name": "凌陽"
+        },
+        {
+          "symbol": "2408.TW",
+          "name": "南亞科"
+        },
+        {
+          "symbol": "2434.TW",
+          "name": "統懋"
+        },
+        {
+          "symbol": "2436.TW",
+          "name": "偉詮電"
+        },
+        {
+          "symbol": "2441.TW",
+          "name": "超豐"
+        },
+        {
+          "symbol": "2449.TW",
+          "name": "京元電子"
+        },
+        {
+          "symbol": "2451.TW",
+          "name": "創見"
+        },
+        {
+          "symbol": "2454.TW",
+          "name": "聯發科"
+        },
+        {
+          "symbol": "2458.TW",
+          "name": "義隆"
+        },
+        {
+          "symbol": "2481.TW",
+          "name": "強茂"
+        },
+        {
+          "symbol": "3006.TW",
+          "name": "晶豪科"
+        },
+        {
+          "symbol": "3014.TW",
+          "name": "聯陽"
+        },
+        {
+          "symbol": "3016.TW",
+          "name": "嘉晶"
+        },
+        {
+          "symbol": "3034.TW",
+          "name": "聯詠"
+        },
+        {
+          "symbol": "3035.TW",
+          "name": "智原"
+        },
+        {
+          "symbol": "3041.TW",
+          "name": "揚智"
+        },
+        {
+          "symbol": "3094.TW",
+          "name": "聯傑"
+        },
+        {
+          "symbol": "3105.TW",
+          "name": "穩懋"
+        },
+        {
+          "symbol": "3122.TW",
+          "name": "笙泉"
+        },
+        {
+          "symbol": "3135.TW",
+          "name": "凌航"
+        },
+        {
+          "symbol": "3141.TW",
+          "name": "晶宏"
+        },
+        {
+          "symbol": "3169.TW",
+          "name": "亞信"
+        },
+        {
+          "symbol": "3178.TW",
+          "name": "公準"
+        },
+        {
+          "symbol": "3189.TW",
+          "name": "景碩"
+        },
+        {
+          "symbol": "3227.TW",
+          "name": "原相"
+        },
+        {
+          "symbol": "3228.TW",
+          "name": "金麗科"
+        },
+        {
+          "symbol": "3257.TW",
+          "name": "虹冠電"
+        },
+        {
+          "symbol": "3259.TW",
+          "name": "鑫創"
+        },
+        {
+          "symbol": "3260.TW",
+          "name": "威剛"
+        },
+        {
+          "symbol": "3264.TW",
+          "name": "欣銓"
+        },
+        {
+          "symbol": "3265.TW",
+          "name": "台星科"
+        },
+        {
+          "symbol": "3268.TW",
+          "name": "海德威"
+        },
+        {
+          "symbol": "3317.TW",
+          "name": "尼克森"
+        },
+        {
+          "symbol": "3372.TW",
+          "name": "典範"
+        },
+        {
+          "symbol": "3374.TW",
+          "name": "精材"
+        },
+        {
+          "symbol": "3413.TW",
+          "name": "京鼎"
+        },
+        {
+          "symbol": "3438.TW",
+          "name": "類比科"
+        },
+        {
+          "symbol": "3443.TW",
+          "name": "創意"
+        },
+        {
+          "symbol": "3450.TW",
+          "name": "聯鈞"
+        },
+        {
+          "symbol": "3467.TW",
+          "name": "台灣精材"
+        },
+        {
+          "symbol": "3527.TW",
+          "name": "聚積"
+        },
+        {
+          "symbol": "3529.TW",
+          "name": "力旺"
+        },
+        {
+          "symbol": "3530.TW",
+          "name": "晶相光"
+        },
+        {
+          "symbol": "3532.TW",
+          "name": "台勝科"
+        },
+        {
+          "symbol": "3545.TW",
+          "name": "敦泰"
+        },
+        {
+          "symbol": "3555.TW",
+          "name": "博士旺"
+        },
+        {
+          "symbol": "3556.TW",
+          "name": "禾瑞亞"
+        },
+        {
+          "symbol": "3567.TW",
+          "name": "逸昌"
+        },
+        {
+          "symbol": "3581.TW",
+          "name": "博磊"
+        },
+        {
+          "symbol": "3583.TW",
+          "name": "辛耘"
+        },
+        {
+          "symbol": "3588.TW",
+          "name": "通嘉"
+        },
+        {
+          "symbol": "3592.TW",
+          "name": "瑞鼎"
+        },
+        {
+          "symbol": "3661.TW",
+          "name": "世芯-KY"
+        },
+        {
+          "symbol": "3675.TW",
+          "name": "德微"
+        },
+        {
+          "symbol": "3680.TW",
+          "name": "家登"
+        },
+        {
+          "symbol": "3686.TW",
+          "name": "達能"
+        },
+        {
+          "symbol": "3707.TW",
+          "name": "漢磊"
+        },
+        {
+          "symbol": "3711.TW",
+          "name": "日月光投控"
+        },
+        {
+          "symbol": "4749.TW",
+          "name": "新應材"
+        },
+        {
+          "symbol": "4919.TW",
+          "name": "新唐"
+        },
+        {
+          "symbol": "4923.TW",
+          "name": "力士"
+        },
+        {
+          "symbol": "4925.TW",
+          "name": "智微"
+        },
+        {
+          "symbol": "4951.TW",
+          "name": "精拓科"
+        },
+        {
+          "symbol": "4952.TW",
+          "name": "凌通"
+        },
+        {
+          "symbol": "4961.TW",
+          "name": "天鈺"
+        },
+        {
+          "symbol": "4966.TW",
+          "name": "譜瑞-KY"
+        },
+        {
+          "symbol": "4967.TW",
+          "name": "十銓"
+        },
+        {
+          "symbol": "4968.TW",
+          "name": "立積"
+        },
+        {
+          "symbol": "4971.TW",
+          "name": "IET-KY"
+        },
+        {
+          "symbol": "4973.TW",
+          "name": "廣穎"
+        },
+        {
+          "symbol": "4991.TW",
+          "name": "環宇-KY"
+        },
+        {
+          "symbol": "5222.TW",
+          "name": "全訊"
+        },
+        {
+          "symbol": "5236.TW",
+          "name": "凌陽創新"
+        },
+        {
+          "symbol": "5246.TW",
+          "name": "勵威"
+        },
+        {
+          "symbol": "5262.TW",
+          "name": "立達"
+        },
+        {
+          "symbol": "5269.TW",
+          "name": "祥碩"
+        },
+        {
+          "symbol": "5272.TW",
+          "name": "笙科"
+        },
+        {
+          "symbol": "5274.TW",
+          "name": "信驊"
+        },
+        {
+          "symbol": "5285.TW",
+          "name": "界霖"
+        },
+        {
+          "symbol": "5297.TW",
+          "name": "廣化"
+        },
+        {
+          "symbol": "5299.TW",
+          "name": "杰力"
+        },
+        {
+          "symbol": "5302.TW",
+          "name": "太欣"
+        },
+        {
+          "symbol": "5344.TW",
+          "name": "立衛"
+        },
+        {
+          "symbol": "5347.TW",
+          "name": "世界"
+        },
+        {
+          "symbol": "5351.TW",
+          "name": "鈺創"
+        },
+        {
+          "symbol": "5425.TW",
+          "name": "台半"
+        },
+        {
+          "symbol": "5443.TW",
+          "name": "均豪"
+        },
+        {
+          "symbol": "5468.TW",
+          "name": "凱鈺"
+        },
+        {
+          "symbol": "5471.TW",
+          "name": "松翰"
+        },
+        {
+          "symbol": "5483.TW",
+          "name": "中美晶"
+        },
+        {
+          "symbol": "5487.TW",
+          "name": "通泰"
+        },
+        {
+          "symbol": "6103.TW",
+          "name": "合邦"
+        },
+        {
+          "symbol": "6104.TW",
+          "name": "創惟"
+        },
+        {
+          "symbol": "6129.TW",
+          "name": "普誠"
+        },
+        {
+          "symbol": "6138.TW",
+          "name": "茂達"
+        },
+        {
+          "symbol": "6147.TW",
+          "name": "頎邦"
+        },
+        {
+          "symbol": "6182.TW",
+          "name": "合晶"
+        },
+        {
+          "symbol": "6187.TW",
+          "name": "萬潤"
+        },
+        {
+          "symbol": "6202.TW",
+          "name": "盛群"
+        },
+        {
+          "symbol": "6208.TW",
+          "name": "日揚"
+        },
+        {
+          "symbol": "6223.TW",
+          "name": "旺矽"
+        },
+        {
+          "symbol": "6229.TW",
+          "name": "研通"
+        },
+        {
+          "symbol": "6233.TW",
+          "name": "旺玖"
+        },
+        {
+          "symbol": "6237.TW",
+          "name": "驊訊"
+        },
+        {
+          "symbol": "6239.TW",
+          "name": "力成"
+        },
+        {
+          "symbol": "6243.TW",
+          "name": "迅杰"
+        },
+        {
+          "symbol": "6257.TW",
+          "name": "矽格"
+        },
+        {
+          "symbol": "6261.TW",
+          "name": "久元"
+        },
+        {
+          "symbol": "6271.TW",
+          "name": "同欣電"
+        },
+        {
+          "symbol": "6291.TW",
+          "name": "沛亨"
+        },
+        {
+          "symbol": "6411.TW",
+          "name": "晶焱"
+        },
+        {
+          "symbol": "6415.TW",
+          "name": "矽力*-KY"
+        },
+        {
+          "symbol": "6423.TW",
+          "name": "億而得"
+        },
+        {
+          "symbol": "6435.TW",
+          "name": "大中"
+        },
+        {
+          "symbol": "6451.TW",
+          "name": "訊芯-KY"
+        },
+        {
+          "symbol": "6462.TW",
+          "name": "神盾"
+        },
+        {
+          "symbol": "6485.TW",
+          "name": "點序"
+        },
+        {
+          "symbol": "6488.TW",
+          "name": "環球晶"
+        },
+        {
+          "symbol": "6494.TW",
+          "name": "九齊"
+        },
+        {
+          "symbol": "6510.TW",
+          "name": "精測"
+        },
+        {
+          "symbol": "6515.TW",
+          "name": "穎崴"
+        },
+        {
+          "symbol": "6525.TW",
+          "name": "捷敏-KY"
+        },
+        {
+          "symbol": "6526.TW",
+          "name": "達發"
+        },
+        {
+          "symbol": "6531.TW",
+          "name": "愛普*"
+        },
+        {
+          "symbol": "6532.TW",
+          "name": "瑞耘"
+        },
+        {
+          "symbol": "6533.TW",
+          "name": "晶心科"
+        },
+        {
+          "symbol": "6548.TW",
+          "name": "長科*"
+        },
+        {
+          "symbol": "6552.TW",
+          "name": "易華電"
+        },
+        {
+          "symbol": "6563.TW",
+          "name": "映智"
+        },
+        {
+          "symbol": "6568.TW",
+          "name": "宏觀"
+        },
+        {
+          "symbol": "6573.TW",
+          "name": "虹揚-KY"
+        },
+        {
+          "symbol": "6640.TW",
+          "name": "均華"
+        },
+        {
+          "symbol": "6643.TW",
+          "name": "M31"
+        },
+        {
+          "symbol": "6651.TW",
+          "name": "全宇昕"
+        },
+        {
+          "symbol": "6679.TW",
+          "name": "鈺太"
+        },
+        {
+          "symbol": "6683.TW",
+          "name": "雍智科技"
+        },
+        {
+          "symbol": "6684.TW",
+          "name": "安格"
+        },
+        {
+          "symbol": "6693.TW",
+          "name": "廣閎科"
+        },
+        {
+          "symbol": "6695.TW",
+          "name": "芯鼎"
+        },
+        {
+          "symbol": "6708.TW",
+          "name": "天擎"
+        },
+        {
+          "symbol": "6716.TW",
+          "name": "應廣"
+        },
+        {
+          "symbol": "6719.TW",
+          "name": "力智"
+        },
+        {
+          "symbol": "6720.TW",
+          "name": "久昌"
+        },
+        {
+          "symbol": "6732.TW",
+          "name": "昇佳電子"
+        },
+        {
+          "symbol": "6756.TW",
+          "name": "威鋒電子"
+        },
+        {
+          "symbol": "6770.TW",
+          "name": "力積電"
+        },
+        {
+          "symbol": "6786.TW",
+          "name": "芯測"
+        },
+        {
+          "symbol": "6788.TW",
+          "name": "華景電"
+        },
+        {
+          "symbol": "6789.TW",
+          "name": "采鈺"
+        },
+        {
+          "symbol": "6799.TW",
+          "name": "來頡"
+        },
+        {
+          "symbol": "6819.TW",
+          "name": "眾智"
+        },
+        {
+          "symbol": "6823.TW",
+          "name": "濾能"
+        },
+        {
+          "symbol": "6829.TW",
+          "name": "千附精密"
+        },
+        {
+          "symbol": "6842.TW",
+          "name": "瑞宇"
+        },
+        {
+          "symbol": "6854.TW",
+          "name": "錼創科技-KY創"
+        },
+        {
+          "symbol": "6895.TW",
+          "name": "宏碩系統"
+        },
+        {
+          "symbol": "6907.TW",
+          "name": "雅特力-KY"
+        },
+        {
+          "symbol": "6909.TW",
+          "name": "創控"
+        },
+        {
+          "symbol": "6920.TW",
+          "name": "恆勁科技"
+        },
+        {
+          "symbol": "6927.TW",
+          "name": "聯合聚晶"
+        },
+        {
+          "symbol": "6937.TW",
+          "name": "天虹"
+        },
+        {
+          "symbol": "6953.TW",
+          "name": "家碩"
+        },
+        {
+          "symbol": "6962.TW",
+          "name": "奕力-KY"
+        },
+        {
+          "symbol": "6996.TW",
+          "name": "力領科技"
+        },
+        {
+          "symbol": "7530.TW",
+          "name": "鋒魁科技"
+        },
+        {
+          "symbol": "7556.TW",
+          "name": "意德士"
+        },
+        {
+          "symbol": "7669.TW",
+          "name": "碩正科技"
+        },
+        {
+          "symbol": "7704.TW",
+          "name": "明遠精密"
+        },
+        {
+          "symbol": "7707.TW",
+          "name": "益芯科"
+        },
+        {
+          "symbol": "7712.TW",
+          "name": "博盛半導體"
+        },
+        {
+          "symbol": "7734.TW",
+          "name": "印能科技"
+        },
+        {
+          "symbol": "7749.TW",
+          "name": "意騰-KY"
+        },
+        {
+          "symbol": "7751.TW",
+          "name": "竑騰"
+        },
+        {
+          "symbol": "7768.TW",
+          "name": "頌勝科技"
+        },
+        {
+          "symbol": "7769.TW",
+          "name": "鴻勁"
+        },
+        {
+          "symbol": "7770.TW",
+          "name": "君曜"
+        },
+        {
+          "symbol": "7772.TW",
+          "name": "耀穎"
+        },
+        {
+          "symbol": "7796.TW",
+          "name": "擷發科"
+        },
+        {
+          "symbol": "7810.TW",
+          "name": "捷創科技"
+        },
+        {
+          "symbol": "7815.TW",
+          "name": "新特"
+        },
+        {
+          "symbol": "7822.TW",
+          "name": "倍利科"
+        },
+        {
+          "symbol": "7828.TW",
+          "name": "創新服務"
+        },
+        {
+          "symbol": "7843.TW",
+          "name": "英柏得"
+        },
+        {
+          "symbol": "7853.TW",
+          "name": "政美應用"
+        },
+        {
+          "symbol": "7856.TW",
+          "name": "漢測"
+        },
+        {
+          "symbol": "7866.TW",
+          "name": "丹立"
+        },
+        {
+          "symbol": "7872.TW",
+          "name": "登豐"
+        },
+        {
+          "symbol": "7880.TW",
+          "name": "聖凰"
+        },
+        {
+          "symbol": "7886.TW",
+          "name": "科建"
+        },
+        {
+          "symbol": "7887.TW",
+          "name": "宇川精材"
+        },
+        {
+          "symbol": "7899.TW",
+          "name": "景美"
+        },
+        {
+          "symbol": "7909.TW",
+          "name": "鈺祥"
+        },
+        {
+          "symbol": "7918.TW",
+          "name": "創鉅材料"
+        },
+        {
+          "symbol": "8016.TW",
+          "name": "矽創"
+        },
+        {
+          "symbol": "8024.TW",
+          "name": "佑華"
+        },
+        {
+          "symbol": "8028.TW",
+          "name": "昇陽半導體"
+        },
+        {
+          "symbol": "8040.TW",
+          "name": "九暘"
+        },
+        {
+          "symbol": "8054.TW",
+          "name": "安國"
+        },
+        {
+          "symbol": "8081.TW",
+          "name": "致新"
+        },
+        {
+          "symbol": "8086.TW",
+          "name": "宏捷科"
+        },
+        {
+          "symbol": "8088.TW",
+          "name": "品安"
+        },
+        {
+          "symbol": "8091.TW",
+          "name": "翔名"
+        },
+        {
+          "symbol": "8098.TW",
+          "name": "慶康科技"
+        },
+        {
+          "symbol": "8102.TW",
+          "name": "傑霖科技"
+        },
+        {
+          "symbol": "8110.TW",
+          "name": "華東"
+        },
+        {
+          "symbol": "8131.TW",
+          "name": "福懋科"
+        },
+        {
+          "symbol": "8150.TW",
+          "name": "南茂"
+        },
+        {
+          "symbol": "8227.TW",
+          "name": "巨有科技"
+        },
+        {
+          "symbol": "8261.TW",
+          "name": "富鼎"
+        },
+        {
+          "symbol": "8271.TW",
+          "name": "宇瞻"
+        },
+        {
+          "symbol": "8277.TW",
+          "name": "商丞"
+        },
+        {
+          "symbol": "8299.TW",
+          "name": "群聯"
+        },
+        {
+          "symbol": "8383.TW",
+          "name": "千附"
+        }
+      ]
+    },
+    "塑膠工業": {
+      "count": 25,
+      "stocks": [
+        {
+          "symbol": "1301.TW",
+          "name": "台塑"
+        },
+        {
+          "symbol": "1303.TW",
+          "name": "南亞"
+        },
+        {
+          "symbol": "1304.TW",
+          "name": "台聚"
+        },
+        {
+          "symbol": "1305.TW",
+          "name": "華夏"
+        },
+        {
+          "symbol": "1307.TW",
+          "name": "三芳"
+        },
+        {
+          "symbol": "1308.TW",
+          "name": "亞聚"
+        },
+        {
+          "symbol": "1309.TW",
+          "name": "台達化"
+        },
+        {
+          "symbol": "1310.TW",
+          "name": "台苯"
+        },
+        {
+          "symbol": "1312.TW",
+          "name": "國喬"
+        },
+        {
+          "symbol": "1313.TW",
+          "name": "聯成"
+        },
+        {
+          "symbol": "1314.TW",
+          "name": "中石化"
+        },
+        {
+          "symbol": "1315.TW",
+          "name": "達新"
+        },
+        {
+          "symbol": "1321.TW",
+          "name": "大洋"
+        },
+        {
+          "symbol": "1323.TW",
+          "name": "永裕"
+        },
+        {
+          "symbol": "1324.TW",
+          "name": "地球"
+        },
+        {
+          "symbol": "1325.TW",
+          "name": "恆大"
+        },
+        {
+          "symbol": "1326.TW",
+          "name": "台化"
+        },
+        {
+          "symbol": "1337.TW",
+          "name": "再生-KY"
+        },
+        {
+          "symbol": "1340.TW",
+          "name": "勝悅-KY"
+        },
+        {
+          "symbol": "1341.TW",
+          "name": "富林-KY"
+        },
+        {
+          "symbol": "4303.TW",
+          "name": "信立"
+        },
+        {
+          "symbol": "4304.TW",
+          "name": "勝昱"
+        },
+        {
+          "symbol": "4305.TW",
+          "name": "世坤"
+        },
+        {
+          "symbol": "4306.TW",
+          "name": "炎洲"
+        },
+        {
+          "symbol": "9950.TW",
+          "name": "萬國通"
+        }
+      ]
+    },
+    "居家生活": {
+      "count": 37,
+      "stocks": [
+        {
+          "symbol": "2062.TW",
+          "name": "橋椿"
+        },
+        {
+          "symbol": "2916.TW",
+          "name": "滿心"
+        },
+        {
+          "symbol": "2924.TW",
+          "name": "宏太-KY"
+        },
+        {
+          "symbol": "2937.TW",
+          "name": "集雅社"
+        },
+        {
+          "symbol": "2938.TW",
+          "name": "床的世界"
+        },
+        {
+          "symbol": "2941.TW",
+          "name": "米斯特"
+        },
+        {
+          "symbol": "2942.TW",
+          "name": "京站"
+        },
+        {
+          "symbol": "2947.TW",
+          "name": "振宇五金"
+        },
+        {
+          "symbol": "2948.TW",
+          "name": "寶陞"
+        },
+        {
+          "symbol": "3171.TW",
+          "name": "炎洲流通"
+        },
+        {
+          "symbol": "3557.TW",
+          "name": "嘉威"
+        },
+        {
+          "symbol": "4609.TW",
+          "name": "唐鋒"
+        },
+        {
+          "symbol": "4702.TW",
+          "name": "中美實"
+        },
+        {
+          "symbol": "5902.TW",
+          "name": "德記"
+        },
+        {
+          "symbol": "5903.TW",
+          "name": "全家"
+        },
+        {
+          "symbol": "5904.TW",
+          "name": "寶雅"
+        },
+        {
+          "symbol": "6195.TW",
+          "name": "詩肯"
+        },
+        {
+          "symbol": "6616.TW",
+          "name": "特昇-KY"
+        },
+        {
+          "symbol": "6629.TW",
+          "name": "泰金-KY"
+        },
+        {
+          "symbol": "6671.TW",
+          "name": "三能-KY"
+        },
+        {
+          "symbol": "6728.TW",
+          "name": "上洋"
+        },
+        {
+          "symbol": "6754.TW",
+          "name": "匯僑設計"
+        },
+        {
+          "symbol": "6807.TW",
+          "name": "峰源-KY"
+        },
+        {
+          "symbol": "6968.TW",
+          "name": "萬達寵物"
+        },
+        {
+          "symbol": "7782.TW",
+          "name": "光速火箭"
+        },
+        {
+          "symbol": "7794.TW",
+          "name": "宏碁智新"
+        },
+        {
+          "symbol": "7831.TW",
+          "name": "捷博"
+        },
+        {
+          "symbol": "7867.TW",
+          "name": "特力屋"
+        },
+        {
+          "symbol": "8066.TW",
+          "name": "來思達"
+        },
+        {
+          "symbol": "8433.TW",
+          "name": "弘帆"
+        },
+        {
+          "symbol": "8464.TW",
+          "name": "億豐"
+        },
+        {
+          "symbol": "8482.TW",
+          "name": "商億-KY"
+        },
+        {
+          "symbol": "8941.TW",
+          "name": "關中"
+        },
+        {
+          "symbol": "9911.TW",
+          "name": "櫻花"
+        },
+        {
+          "symbol": "9924.TW",
+          "name": "福興"
+        },
+        {
+          "symbol": "9934.TW",
+          "name": "成霖"
+        },
+        {
+          "symbol": "9935.TW",
+          "name": "慶豐富"
+        }
+      ]
+    },
+    "建材營造業": {
+      "count": 88,
+      "stocks": [
+        {
+          "symbol": "1316.TW",
+          "name": "上曜"
+        },
+        {
+          "symbol": "1436.TW",
+          "name": "華友聯"
+        },
+        {
+          "symbol": "1438.TW",
+          "name": "三地開發"
+        },
+        {
+          "symbol": "1439.TW",
+          "name": "雋揚"
+        },
+        {
+          "symbol": "1442.TW",
+          "name": "名軒"
+        },
+        {
+          "symbol": "1453.TW",
+          "name": "大將"
+        },
+        {
+          "symbol": "1456.TW",
+          "name": "怡華"
+        },
+        {
+          "symbol": "1472.TW",
+          "name": "三洋實業"
+        },
+        {
+          "symbol": "1805.TW",
+          "name": "寶徠"
+        },
+        {
+          "symbol": "1808.TW",
+          "name": "潤隆"
+        },
+        {
+          "symbol": "2442.TW",
+          "name": "新美齊"
+        },
+        {
+          "symbol": "2501.TW",
+          "name": "國建"
+        },
+        {
+          "symbol": "2504.TW",
+          "name": "國產"
+        },
+        {
+          "symbol": "2505.TW",
+          "name": "國揚"
+        },
+        {
+          "symbol": "2506.TW",
+          "name": "太設"
+        },
+        {
+          "symbol": "2509.TW",
+          "name": "全坤建"
+        },
+        {
+          "symbol": "2511.TW",
+          "name": "太子"
+        },
+        {
+          "symbol": "2515.TW",
+          "name": "中工"
+        },
+        {
+          "symbol": "2516.TW",
+          "name": "新建"
+        },
+        {
+          "symbol": "2520.TW",
+          "name": "冠德"
+        },
+        {
+          "symbol": "2524.TW",
+          "name": "京城"
+        },
+        {
+          "symbol": "2527.TW",
+          "name": "宏璟"
+        },
+        {
+          "symbol": "2528.TW",
+          "name": "皇普"
+        },
+        {
+          "symbol": "2530.TW",
+          "name": "華建"
+        },
+        {
+          "symbol": "2534.TW",
+          "name": "宏盛"
+        },
+        {
+          "symbol": "2535.TW",
+          "name": "達欣工"
+        },
+        {
+          "symbol": "2536.TW",
+          "name": "宏普"
+        },
+        {
+          "symbol": "2537.TW",
+          "name": "聯上發"
+        },
+        {
+          "symbol": "2538.TW",
+          "name": "基泰"
+        },
+        {
+          "symbol": "2539.TW",
+          "name": "櫻花建"
+        },
+        {
+          "symbol": "2540.TW",
+          "name": "愛山林"
+        },
+        {
+          "symbol": "2542.TW",
+          "name": "興富發"
+        },
+        {
+          "symbol": "2543.TW",
+          "name": "皇昌"
+        },
+        {
+          "symbol": "2545.TW",
+          "name": "皇翔"
+        },
+        {
+          "symbol": "2546.TW",
+          "name": "根基"
+        },
+        {
+          "symbol": "2547.TW",
+          "name": "日勝生"
+        },
+        {
+          "symbol": "2548.TW",
+          "name": "華固"
+        },
+        {
+          "symbol": "2596.TW",
+          "name": "綠意"
+        },
+        {
+          "symbol": "2597.TW",
+          "name": "潤弘"
+        },
+        {
+          "symbol": "2718.TW",
+          "name": "全心投控"
+        },
+        {
+          "symbol": "2923.TW",
+          "name": "鼎固-KY"
+        },
+        {
+          "symbol": "3052.TW",
+          "name": "夆典"
+        },
+        {
+          "symbol": "3056.TW",
+          "name": "富華新"
+        },
+        {
+          "symbol": "3188.TW",
+          "name": "鑫龍騰"
+        },
+        {
+          "symbol": "3266.TW",
+          "name": "昇陽"
+        },
+        {
+          "symbol": "3489.TW",
+          "name": "森寶"
+        },
+        {
+          "symbol": "3512.TW",
+          "name": "皇龍"
+        },
+        {
+          "symbol": "3521.TW",
+          "name": "台鋼建設"
+        },
+        {
+          "symbol": "3703.TW",
+          "name": "欣陸"
+        },
+        {
+          "symbol": "4113.TW",
+          "name": "聯上"
+        },
+        {
+          "symbol": "4416.TW",
+          "name": "三圓"
+        },
+        {
+          "symbol": "4907.TW",
+          "name": "富宇"
+        },
+        {
+          "symbol": "5206.TW",
+          "name": "坤悅"
+        },
+        {
+          "symbol": "5213.TW",
+          "name": "亞昕"
+        },
+        {
+          "symbol": "5324.TW",
+          "name": "士開"
+        },
+        {
+          "symbol": "5455.TW",
+          "name": "昇益"
+        },
+        {
+          "symbol": "5508.TW",
+          "name": "永信建"
+        },
+        {
+          "symbol": "5511.TW",
+          "name": "德昌"
+        },
+        {
+          "symbol": "5512.TW",
+          "name": "力麒"
+        },
+        {
+          "symbol": "5514.TW",
+          "name": "三豐"
+        },
+        {
+          "symbol": "5515.TW",
+          "name": "建國"
+        },
+        {
+          "symbol": "5516.TW",
+          "name": "雙喜"
+        },
+        {
+          "symbol": "5519.TW",
+          "name": "隆大"
+        },
+        {
+          "symbol": "5520.TW",
+          "name": "力泰"
+        },
+        {
+          "symbol": "5521.TW",
+          "name": "工信"
+        },
+        {
+          "symbol": "5522.TW",
+          "name": "遠雄"
+        },
+        {
+          "symbol": "5523.TW",
+          "name": "豐謙"
+        },
+        {
+          "symbol": "5525.TW",
+          "name": "順天"
+        },
+        {
+          "symbol": "5529.TW",
+          "name": "鉅陞"
+        },
+        {
+          "symbol": "5531.TW",
+          "name": "鄉林"
+        },
+        {
+          "symbol": "5533.TW",
+          "name": "皇鼎"
+        },
+        {
+          "symbol": "5534.TW",
+          "name": "長虹"
+        },
+        {
+          "symbol": "5543.TW",
+          "name": "桓鼎-KY"
+        },
+        {
+          "symbol": "5546.TW",
+          "name": "永固-KY"
+        },
+        {
+          "symbol": "5547.TW",
+          "name": "久舜"
+        },
+        {
+          "symbol": "5548.TW",
+          "name": "安倉"
+        },
+        {
+          "symbol": "6171.TW",
+          "name": "大城地產"
+        },
+        {
+          "symbol": "6177.TW",
+          "name": "達麗"
+        },
+        {
+          "symbol": "6186.TW",
+          "name": "新潤"
+        },
+        {
+          "symbol": "6198.TW",
+          "name": "瑞築"
+        },
+        {
+          "symbol": "6212.TW",
+          "name": "理銘"
+        },
+        {
+          "symbol": "6219.TW",
+          "name": "富旺"
+        },
+        {
+          "symbol": "6264.TW",
+          "name": "富裔"
+        },
+        {
+          "symbol": "7798.TW",
+          "name": "將捷"
+        },
+        {
+          "symbol": "8080.TW",
+          "name": "泰霖"
+        },
+        {
+          "symbol": "8424.TW",
+          "name": "惠普"
+        },
+        {
+          "symbol": "9906.TW",
+          "name": "欣巴巴"
+        },
+        {
+          "symbol": "9946.TW",
+          "name": "三發地產"
+        }
+      ]
+    },
+    "數位雲端": {
+      "count": 45,
+      "stocks": [
+        {
+          "symbol": "2640.TW",
+          "name": "大車隊"
+        },
+        {
+          "symbol": "2949.TW",
+          "name": "欣新網"
+        },
+        {
+          "symbol": "3085.TW",
+          "name": "新零售"
+        },
+        {
+          "symbol": "3130.TW",
+          "name": "一零四"
+        },
+        {
+          "symbol": "3687.TW",
+          "name": "歐買尬"
+        },
+        {
+          "symbol": "5278.TW",
+          "name": "尚凡*"
+        },
+        {
+          "symbol": "5287.TW",
+          "name": "數字"
+        },
+        {
+          "symbol": "5321.TW",
+          "name": "美而快"
+        },
+        {
+          "symbol": "6165.TW",
+          "name": "浪凡"
+        },
+        {
+          "symbol": "6473.TW",
+          "name": "美賣*"
+        },
+        {
+          "symbol": "6565.TW",
+          "name": "物聯"
+        },
+        {
+          "symbol": "6614.TW",
+          "name": "資拓宏宇"
+        },
+        {
+          "symbol": "6689.TW",
+          "name": "伊雲谷"
+        },
+        {
+          "symbol": "6690.TW",
+          "name": "安碁資訊"
+        },
+        {
+          "symbol": "6741.TW",
+          "name": "91APP*-KY"
+        },
+        {
+          "symbol": "6763.TW",
+          "name": "綠界科技*"
+        },
+        {
+          "symbol": "6811.TW",
+          "name": "宏碁資訊"
+        },
+        {
+          "symbol": "6865.TW",
+          "name": "偉康科技"
+        },
+        {
+          "symbol": "6870.TW",
+          "name": "騰雲"
+        },
+        {
+          "symbol": "6902.TW",
+          "name": "GOGOLOOK"
+        },
+        {
+          "symbol": "6906.TW",
+          "name": "現觀科"
+        },
+        {
+          "symbol": "6910.TW",
+          "name": "德鴻"
+        },
+        {
+          "symbol": "6925.TW",
+          "name": "意藍"
+        },
+        {
+          "symbol": "6984.TW",
+          "name": "ACPAY"
+        },
+        {
+          "symbol": "6997.TW",
+          "name": "博弘"
+        },
+        {
+          "symbol": "7547.TW",
+          "name": "碩網"
+        },
+        {
+          "symbol": "7551.TW",
+          "name": "知識科技"
+        },
+        {
+          "symbol": "7714.TW",
+          "name": "創泓科技"
+        },
+        {
+          "symbol": "7721.TW",
+          "name": "微程式"
+        },
+        {
+          "symbol": "7722.TW",
+          "name": "LINEPAY"
+        },
+        {
+          "symbol": "7737.TW",
+          "name": "凱鈿"
+        },
+        {
+          "symbol": "7738.TW",
+          "name": "東聯互動"
+        },
+        {
+          "symbol": "7745.TW",
+          "name": "紅陽"
+        },
+        {
+          "symbol": "7747.TW",
+          "name": "昕奇雲端"
+        },
+        {
+          "symbol": "7765.TW",
+          "name": "中華資安"
+        },
+        {
+          "symbol": "7781.TW",
+          "name": "昕力資*"
+        },
+        {
+          "symbol": "7785.TW",
+          "name": "北祥科服"
+        },
+        {
+          "symbol": "7805.TW",
+          "name": "威聯通"
+        },
+        {
+          "symbol": "7826.TW",
+          "name": "極風雲創"
+        },
+        {
+          "symbol": "7839.TW",
+          "name": "達人網"
+        },
+        {
+          "symbol": "7904.TW",
+          "name": "任開數位"
+        },
+        {
+          "symbol": "8044.TW",
+          "name": "網家"
+        },
+        {
+          "symbol": "8454.TW",
+          "name": "富邦媒"
+        },
+        {
+          "symbol": "8472.TW",
+          "name": "夠麻吉"
+        },
+        {
+          "symbol": "8477.TW",
+          "name": "創業家"
+        }
+      ]
+    },
+    "文化創意業": {
+      "count": 34,
+      "stocks": [
+        {
+          "symbol": "2926.TW",
+          "name": "誠品生活"
+        },
+        {
+          "symbol": "3064.TW",
+          "name": "泰偉"
+        },
+        {
+          "symbol": "3083.TW",
+          "name": "網龍"
+        },
+        {
+          "symbol": "3086.TW",
+          "name": "華義*"
+        },
+        {
+          "symbol": "3293.TW",
+          "name": "鈊象"
+        },
+        {
+          "symbol": "3546.TW",
+          "name": "宇峻"
+        },
+        {
+          "symbol": "3629.TW",
+          "name": "地心引力"
+        },
+        {
+          "symbol": "4806.TW",
+          "name": "桂田文創"
+        },
+        {
+          "symbol": "4946.TW",
+          "name": "辣椒"
+        },
+        {
+          "symbol": "5263.TW",
+          "name": "智崴"
+        },
+        {
+          "symbol": "5478.TW",
+          "name": "智冠"
+        },
+        {
+          "symbol": "6101.TW",
+          "name": "寬魚國際"
+        },
+        {
+          "symbol": "6111.TW",
+          "name": "光聚晶電"
+        },
+        {
+          "symbol": "6144.TW",
+          "name": "得利影"
+        },
+        {
+          "symbol": "6169.TW",
+          "name": "昱泉"
+        },
+        {
+          "symbol": "6180.TW",
+          "name": "橘子"
+        },
+        {
+          "symbol": "6294.TW",
+          "name": "智基"
+        },
+        {
+          "symbol": "6428.TW",
+          "name": "淘米"
+        },
+        {
+          "symbol": "6482.TW",
+          "name": "弘煜科"
+        },
+        {
+          "symbol": "6542.TW",
+          "name": "隆中"
+        },
+        {
+          "symbol": "6583.TW",
+          "name": "友松"
+        },
+        {
+          "symbol": "6595.TW",
+          "name": "光禹國際"
+        },
+        {
+          "symbol": "6596.TW",
+          "name": "寬宏藝術"
+        },
+        {
+          "symbol": "6622.TW",
+          "name": "百聿數碼"
+        },
+        {
+          "symbol": "6650.TW",
+          "name": "帝圖"
+        },
+        {
+          "symbol": "6780.TW",
+          "name": "學習王"
+        },
+        {
+          "symbol": "6856.TW",
+          "name": "鑫傳"
+        },
+        {
+          "symbol": "7584.TW",
+          "name": "樂意"
+        },
+        {
+          "symbol": "8329.TW",
+          "name": "台視"
+        },
+        {
+          "symbol": "8446.TW",
+          "name": "華研"
+        },
+        {
+          "symbol": "8450.TW",
+          "name": "霹靂"
+        },
+        {
+          "symbol": "8458.TW",
+          "name": "影一"
+        },
+        {
+          "symbol": "8923.TW",
+          "name": "時報"
+        },
+        {
+          "symbol": "9949.TW",
+          "name": "琉園"
+        }
+      ]
+    },
+    "橡膠工業": {
+      "count": 11,
+      "stocks": [
+        {
+          "symbol": "2101.TW",
+          "name": "南港"
+        },
+        {
+          "symbol": "2102.TW",
+          "name": "泰豐"
+        },
+        {
+          "symbol": "2103.TW",
+          "name": "台橡"
+        },
+        {
+          "symbol": "2104.TW",
+          "name": "國際中橡"
+        },
+        {
+          "symbol": "2105.TW",
+          "name": "正新"
+        },
+        {
+          "symbol": "2106.TW",
+          "name": "建大"
+        },
+        {
+          "symbol": "2107.TW",
+          "name": "厚生"
+        },
+        {
+          "symbol": "2108.TW",
+          "name": "南帝"
+        },
+        {
+          "symbol": "2109.TW",
+          "name": "華豐"
+        },
+        {
+          "symbol": "2114.TW",
+          "name": "鑫永銓"
+        },
+        {
+          "symbol": "6582.TW",
+          "name": "申豐"
+        }
+      ]
+    },
+    "水泥工業": {
+      "count": 7,
+      "stocks": [
+        {
+          "symbol": "1101.TW",
+          "name": "台泥"
+        },
+        {
+          "symbol": "1102.TW",
+          "name": "亞泥"
+        },
+        {
+          "symbol": "1103.TW",
+          "name": "嘉泥"
+        },
+        {
+          "symbol": "1104.TW",
+          "name": "環泥"
+        },
+        {
+          "symbol": "1108.TW",
+          "name": "幸福"
+        },
+        {
+          "symbol": "1109.TW",
+          "name": "信大"
+        },
+        {
+          "symbol": "1110.TW",
+          "name": "東泥"
+        }
+      ]
+    },
+    "汽車工業": {
+      "count": 40,
+      "stocks": [
+        {
+          "symbol": "1319.TW",
+          "name": "東陽"
+        },
+        {
+          "symbol": "1338.TW",
+          "name": "廣華-KY"
+        },
+        {
+          "symbol": "1339.TW",
+          "name": "昭輝"
+        },
+        {
+          "symbol": "1512.TW",
+          "name": "瑞利"
+        },
+        {
+          "symbol": "1521.TW",
+          "name": "大億"
+        },
+        {
+          "symbol": "1522.TW",
+          "name": "堤維西"
+        },
+        {
+          "symbol": "1524.TW",
+          "name": "耿鼎"
+        },
+        {
+          "symbol": "1525.TW",
+          "name": "江申"
+        },
+        {
+          "symbol": "1533.TW",
+          "name": "車王電"
+        },
+        {
+          "symbol": "1536.TW",
+          "name": "和大"
+        },
+        {
+          "symbol": "1563.TW",
+          "name": "巧新"
+        },
+        {
+          "symbol": "1568.TW",
+          "name": "倉佑"
+        },
+        {
+          "symbol": "1587.TW",
+          "name": "吉茂"
+        },
+        {
+          "symbol": "2115.TW",
+          "name": "六暉-KY"
+        },
+        {
+          "symbol": "2201.TW",
+          "name": "裕隆"
+        },
+        {
+          "symbol": "2204.TW",
+          "name": "中華"
+        },
+        {
+          "symbol": "2206.TW",
+          "name": "三陽工業"
+        },
+        {
+          "symbol": "2207.TW",
+          "name": "和泰車"
+        },
+        {
+          "symbol": "2227.TW",
+          "name": "裕日車"
+        },
+        {
+          "symbol": "2228.TW",
+          "name": "劍麟"
+        },
+        {
+          "symbol": "2231.TW",
+          "name": "為升"
+        },
+        {
+          "symbol": "2233.TW",
+          "name": "宇隆"
+        },
+        {
+          "symbol": "2236.TW",
+          "name": "百達-KY"
+        },
+        {
+          "symbol": "2239.TW",
+          "name": "英利-KY"
+        },
+        {
+          "symbol": "2241.TW",
+          "name": "艾姆勒"
+        },
+        {
+          "symbol": "2243.TW",
+          "name": "宏旭-KY"
+        },
+        {
+          "symbol": "2247.TW",
+          "name": "汎德永業"
+        },
+        {
+          "symbol": "2248.TW",
+          "name": "華勝-KY"
+        },
+        {
+          "symbol": "2250.TW",
+          "name": "IKKA-KY"
+        },
+        {
+          "symbol": "2497.TW",
+          "name": "怡利電"
+        },
+        {
+          "symbol": "3346.TW",
+          "name": "麗清"
+        },
+        {
+          "symbol": "3717.TW",
+          "name": "聯嘉投控"
+        },
+        {
+          "symbol": "4551.TW",
+          "name": "智伸科"
+        },
+        {
+          "symbol": "4557.TW",
+          "name": "永新-KY"
+        },
+        {
+          "symbol": "4569.TW",
+          "name": "六方科-KY"
+        },
+        {
+          "symbol": "4581.TW",
+          "name": "光隆精密-KY"
+        },
+        {
+          "symbol": "6605.TW",
+          "name": "帝寶"
+        },
+        {
+          "symbol": "7732.TW",
+          "name": "金興精密"
+        },
+        {
+          "symbol": "7736.TW",
+          "name": "虎山"
+        },
+        {
+          "symbol": "7821.TW",
+          "name": "神數"
+        }
+      ]
+    },
+    "油電燃氣業": {
+      "count": 13,
+      "stocks": [
+        {
+          "symbol": "2616.TW",
+          "name": "山隆"
+        },
+        {
+          "symbol": "6505.TW",
+          "name": "台塑化"
+        },
+        {
+          "symbol": "6639.TW",
+          "name": "源大環能"
+        },
+        {
+          "symbol": "8908.TW",
+          "name": "欣雄"
+        },
+        {
+          "symbol": "8917.TW",
+          "name": "欣泰"
+        },
+        {
+          "symbol": "8926.TW",
+          "name": "台汽電"
+        },
+        {
+          "symbol": "8927.TW",
+          "name": "北基"
+        },
+        {
+          "symbol": "8931.TW",
+          "name": "大汽電"
+        },
+        {
+          "symbol": "9908.TW",
+          "name": "大台北"
+        },
+        {
+          "symbol": "9918.TW",
+          "name": "欣天然"
+        },
+        {
+          "symbol": "9926.TW",
+          "name": "新海"
+        },
+        {
+          "symbol": "9931.TW",
+          "name": "欣高"
+        },
+        {
+          "symbol": "9937.TW",
+          "name": "全國"
+        }
+      ]
+    },
+    "玻璃陶瓷": {
+      "count": 5,
+      "stocks": [
+        {
+          "symbol": "1802.TW",
+          "name": "台玻"
+        },
+        {
+          "symbol": "1806.TW",
+          "name": "冠軍"
+        },
+        {
+          "symbol": "1809.TW",
+          "name": "中釉"
+        },
+        {
+          "symbol": "1810.TW",
+          "name": "和成"
+        },
+        {
+          "symbol": "1817.TW",
+          "name": "凱撒衛"
+        }
+      ]
+    },
+    "生技醫療業": {
+      "count": 245,
+      "stocks": [
+        {
+          "symbol": "1271.TW",
+          "name": "晨暉生技"
+        },
+        {
+          "symbol": "1565.TW",
+          "name": "精華"
+        },
+        {
+          "symbol": "1707.TW",
+          "name": "葡萄王"
+        },
+        {
+          "symbol": "1720.TW",
+          "name": "生達"
+        },
+        {
+          "symbol": "1731.TW",
+          "name": "美吾華"
+        },
+        {
+          "symbol": "1733.TW",
+          "name": "五鼎"
+        },
+        {
+          "symbol": "1734.TW",
+          "name": "杏輝"
+        },
+        {
+          "symbol": "1752.TW",
+          "name": "南光"
+        },
+        {
+          "symbol": "1760.TW",
+          "name": "寶齡富錦"
+        },
+        {
+          "symbol": "1762.TW",
+          "name": "中化生"
+        },
+        {
+          "symbol": "1777.TW",
+          "name": "生泰"
+        },
+        {
+          "symbol": "1780.TW",
+          "name": "立弘"
+        },
+        {
+          "symbol": "1781.TW",
+          "name": "合世"
+        },
+        {
+          "symbol": "1783.TW",
+          "name": "和康生"
+        },
+        {
+          "symbol": "1784.TW",
+          "name": "訊聯"
+        },
+        {
+          "symbol": "1786.TW",
+          "name": "科妍"
+        },
+        {
+          "symbol": "1788.TW",
+          "name": "杏昌"
+        },
+        {
+          "symbol": "1789.TW",
+          "name": "神隆"
+        },
+        {
+          "symbol": "1795.TW",
+          "name": "美時"
+        },
+        {
+          "symbol": "1799.TW",
+          "name": "易威"
+        },
+        {
+          "symbol": "1813.TW",
+          "name": "寶利徠"
+        },
+        {
+          "symbol": "3118.TW",
+          "name": "進階"
+        },
+        {
+          "symbol": "3164.TW",
+          "name": "景岳"
+        },
+        {
+          "symbol": "3176.TW",
+          "name": "基亞"
+        },
+        {
+          "symbol": "3184.TW",
+          "name": "微邦"
+        },
+        {
+          "symbol": "3205.TW",
+          "name": "佰研"
+        },
+        {
+          "symbol": "3218.TW",
+          "name": "大學光"
+        },
+        {
+          "symbol": "3705.TW",
+          "name": "永信"
+        },
+        {
+          "symbol": "3716.TW",
+          "name": "中化控股"
+        },
+        {
+          "symbol": "4102.TW",
+          "name": "永日"
+        },
+        {
+          "symbol": "4104.TW",
+          "name": "佳醫"
+        },
+        {
+          "symbol": "4105.TW",
+          "name": "東洋"
+        },
+        {
+          "symbol": "4106.TW",
+          "name": "雃博"
+        },
+        {
+          "symbol": "4107.TW",
+          "name": "邦特"
+        },
+        {
+          "symbol": "4108.TW",
+          "name": "懷特"
+        },
+        {
+          "symbol": "4109.TW",
+          "name": "加捷生醫"
+        },
+        {
+          "symbol": "4111.TW",
+          "name": "濟生"
+        },
+        {
+          "symbol": "4114.TW",
+          "name": "健喬"
+        },
+        {
+          "symbol": "4115.TW",
+          "name": "善德生技"
+        },
+        {
+          "symbol": "4116.TW",
+          "name": "明基醫"
+        },
+        {
+          "symbol": "4117.TW",
+          "name": "普生"
+        },
+        {
+          "symbol": "4119.TW",
+          "name": "旭富"
+        },
+        {
+          "symbol": "4120.TW",
+          "name": "友華"
+        },
+        {
+          "symbol": "4121.TW",
+          "name": "優盛"
+        },
+        {
+          "symbol": "4123.TW",
+          "name": "晟德"
+        },
+        {
+          "symbol": "4126.TW",
+          "name": "太醫"
+        },
+        {
+          "symbol": "4127.TW",
+          "name": "天良"
+        },
+        {
+          "symbol": "4128.TW",
+          "name": "中天"
+        },
+        {
+          "symbol": "4129.TW",
+          "name": "聯合"
+        },
+        {
+          "symbol": "4130.TW",
+          "name": "健亞"
+        },
+        {
+          "symbol": "4131.TW",
+          "name": "浩泰"
+        },
+        {
+          "symbol": "4133.TW",
+          "name": "亞諾法"
+        },
+        {
+          "symbol": "4137.TW",
+          "name": "麗豐-KY"
+        },
+        {
+          "symbol": "4138.TW",
+          "name": "曜亞"
+        },
+        {
+          "symbol": "4139.TW",
+          "name": "馬光-KY"
+        },
+        {
+          "symbol": "4142.TW",
+          "name": "國光生"
+        },
+        {
+          "symbol": "4147.TW",
+          "name": "中裕"
+        },
+        {
+          "symbol": "4148.TW",
+          "name": "全宇生技-KY"
+        },
+        {
+          "symbol": "4150.TW",
+          "name": "優你康"
+        },
+        {
+          "symbol": "4153.TW",
+          "name": "鈺緯"
+        },
+        {
+          "symbol": "4155.TW",
+          "name": "訊映"
+        },
+        {
+          "symbol": "4157.TW",
+          "name": "太景*-KY"
+        },
+        {
+          "symbol": "4160.TW",
+          "name": "訊聯基因"
+        },
+        {
+          "symbol": "4161.TW",
+          "name": "聿新科"
+        },
+        {
+          "symbol": "4162.TW",
+          "name": "智擎"
+        },
+        {
+          "symbol": "4163.TW",
+          "name": "鐿鈦"
+        },
+        {
+          "symbol": "4164.TW",
+          "name": "承業醫"
+        },
+        {
+          "symbol": "4166.TW",
+          "name": "友霖"
+        },
+        {
+          "symbol": "4167.TW",
+          "name": "松瑞藥"
+        },
+        {
+          "symbol": "4168.TW",
+          "name": "醣聯"
+        },
+        {
+          "symbol": "4169.TW",
+          "name": "泰宗"
+        },
+        {
+          "symbol": "4170.TW",
+          "name": "鑫品生醫"
+        },
+        {
+          "symbol": "4172.TW",
+          "name": "因華"
+        },
+        {
+          "symbol": "4173.TW",
+          "name": "久裕"
+        },
+        {
+          "symbol": "4174.TW",
+          "name": "浩鼎"
+        },
+        {
+          "symbol": "4175.TW",
+          "name": "杏一"
+        },
+        {
+          "symbol": "4178.TW",
+          "name": "永笙-KY"
+        },
+        {
+          "symbol": "4183.TW",
+          "name": "福永生技"
+        },
+        {
+          "symbol": "4186.TW",
+          "name": "尖端醫"
+        },
+        {
+          "symbol": "4188.TW",
+          "name": "安克"
+        },
+        {
+          "symbol": "4190.TW",
+          "name": "佐登-KY"
+        },
+        {
+          "symbol": "4192.TW",
+          "name": "杏國"
+        },
+        {
+          "symbol": "4194.TW",
+          "name": "禾生技"
+        },
+        {
+          "symbol": "4197.TW",
+          "name": "暐世"
+        },
+        {
+          "symbol": "4198.TW",
+          "name": "欣大健康"
+        },
+        {
+          "symbol": "4724.TW",
+          "name": "宣捷幹細胞"
+        },
+        {
+          "symbol": "4726.TW",
+          "name": "永昕"
+        },
+        {
+          "symbol": "4728.TW",
+          "name": "雙美"
+        },
+        {
+          "symbol": "4732.TW",
+          "name": "彥臣"
+        },
+        {
+          "symbol": "4735.TW",
+          "name": "豪展"
+        },
+        {
+          "symbol": "4736.TW",
+          "name": "泰博"
+        },
+        {
+          "symbol": "4737.TW",
+          "name": "華廣"
+        },
+        {
+          "symbol": "4743.TW",
+          "name": "合一"
+        },
+        {
+          "symbol": "4744.TW",
+          "name": "皇將"
+        },
+        {
+          "symbol": "4745.TW",
+          "name": "合富-KY"
+        },
+        {
+          "symbol": "4746.TW",
+          "name": "台耀"
+        },
+        {
+          "symbol": "4747.TW",
+          "name": "強生"
+        },
+        {
+          "symbol": "4771.TW",
+          "name": "望隼"
+        },
+        {
+          "symbol": "4911.TW",
+          "name": "德英"
+        },
+        {
+          "symbol": "5312.TW",
+          "name": "寶島科"
+        },
+        {
+          "symbol": "6130.TW",
+          "name": "上亞科技"
+        },
+        {
+          "symbol": "6242.TW",
+          "name": "立康"
+        },
+        {
+          "symbol": "6431.TW",
+          "name": "光麗-KY"
+        },
+        {
+          "symbol": "6446.TW",
+          "name": "藥華藥"
+        },
+        {
+          "symbol": "6461.TW",
+          "name": "益得"
+        },
+        {
+          "symbol": "6467.TW",
+          "name": "泰合"
+        },
+        {
+          "symbol": "6469.TW",
+          "name": "大樹"
+        },
+        {
+          "symbol": "6472.TW",
+          "name": "保瑞"
+        },
+        {
+          "symbol": "6483.TW",
+          "name": "原創生醫"
+        },
+        {
+          "symbol": "6491.TW",
+          "name": "晶碩"
+        },
+        {
+          "symbol": "6492.TW",
+          "name": "生華科"
+        },
+        {
+          "symbol": "6493.TW",
+          "name": "雷虎生"
+        },
+        {
+          "symbol": "6496.TW",
+          "name": "科懋"
+        },
+        {
+          "symbol": "6499.TW",
+          "name": "益安"
+        },
+        {
+          "symbol": "6518.TW",
+          "name": "康科特"
+        },
+        {
+          "symbol": "6523.TW",
+          "name": "達爾膚"
+        },
+        {
+          "symbol": "6527.TW",
+          "name": "明達醫"
+        },
+        {
+          "symbol": "6535.TW",
+          "name": "順藥"
+        },
+        {
+          "symbol": "6539.TW",
+          "name": "麗彤"
+        },
+        {
+          "symbol": "6541.TW",
+          "name": "泰福-KY"
+        },
+        {
+          "symbol": "6543.TW",
+          "name": "普惠醫工"
+        },
+        {
+          "symbol": "6547.TW",
+          "name": "高端疫苗"
+        },
+        {
+          "symbol": "6549.TW",
+          "name": "景凱"
+        },
+        {
+          "symbol": "6550.TW",
+          "name": "北極星藥業-KY"
+        },
+        {
+          "symbol": "6564.TW",
+          "name": "安特羅"
+        },
+        {
+          "symbol": "6569.TW",
+          "name": "醫揚"
+        },
+        {
+          "symbol": "6572.TW",
+          "name": "博錸"
+        },
+        {
+          "symbol": "6574.TW",
+          "name": "霈方"
+        },
+        {
+          "symbol": "6576.TW",
+          "name": "逸達"
+        },
+        {
+          "symbol": "6580.TW",
+          "name": "台睿"
+        },
+        {
+          "symbol": "6586.TW",
+          "name": "醣基"
+        },
+        {
+          "symbol": "6589.TW",
+          "name": "台康生技"
+        },
+        {
+          "symbol": "6598.TW",
+          "name": "ABC-KY"
+        },
+        {
+          "symbol": "6610.TW",
+          "name": "安成生技"
+        },
+        {
+          "symbol": "6612.TW",
+          "name": "奈米醫材"
+        },
+        {
+          "symbol": "6615.TW",
+          "name": "慧智"
+        },
+        {
+          "symbol": "6617.TW",
+          "name": "共信-KY"
+        },
+        {
+          "symbol": "6620.TW",
+          "name": "漢達"
+        },
+        {
+          "symbol": "6621.TW",
+          "name": "華宇藥"
+        },
+        {
+          "symbol": "6634.TW",
+          "name": "欣耀"
+        },
+        {
+          "symbol": "6637.TW",
+          "name": "醫影"
+        },
+        {
+          "symbol": "6649.TW",
+          "name": "台生材"
+        },
+        {
+          "symbol": "6657.TW",
+          "name": "華安"
+        },
+        {
+          "symbol": "6659.TW",
+          "name": "天明製藥"
+        },
+        {
+          "symbol": "6661.TW",
+          "name": "威健生技"
+        },
+        {
+          "symbol": "6662.TW",
+          "name": "樂斯科"
+        },
+        {
+          "symbol": "6665.TW",
+          "name": "康聯生醫"
+        },
+        {
+          "symbol": "6666.TW",
+          "name": "羅麗芬-KY"
+        },
+        {
+          "symbol": "6676.TW",
+          "name": "祥翊"
+        },
+        {
+          "symbol": "6677.TW",
+          "name": "瑩碩生技"
+        },
+        {
+          "symbol": "6696.TW",
+          "name": "仁新"
+        },
+        {
+          "symbol": "6703.TW",
+          "name": "軒郁"
+        },
+        {
+          "symbol": "6704.TW",
+          "name": "國璽幹細胞"
+        },
+        {
+          "symbol": "6709.TW",
+          "name": "昱厚生技"
+        },
+        {
+          "symbol": "6712.TW",
+          "name": "長聖"
+        },
+        {
+          "symbol": "6730.TW",
+          "name": "常廣"
+        },
+        {
+          "symbol": "6733.TW",
+          "name": "博晟生醫"
+        },
+        {
+          "symbol": "6734.TW",
+          "name": "安盛生"
+        },
+        {
+          "symbol": "6744.TW",
+          "name": "豐技生技"
+        },
+        {
+          "symbol": "6748.TW",
+          "name": "亞果生醫"
+        },
+        {
+          "symbol": "6758.TW",
+          "name": "冠亞"
+        },
+        {
+          "symbol": "6762.TW",
+          "name": "達亞"
+        },
+        {
+          "symbol": "6767.TW",
+          "name": "台微醫"
+        },
+        {
+          "symbol": "6782.TW",
+          "name": "視陽"
+        },
+        {
+          "symbol": "6785.TW",
+          "name": "昱展新藥"
+        },
+        {
+          "symbol": "6794.TW",
+          "name": "向榮生技"
+        },
+        {
+          "symbol": "6796.TW",
+          "name": "晉弘"
+        },
+        {
+          "symbol": "6797.TW",
+          "name": "圓點奈米"
+        },
+        {
+          "symbol": "6808.TW",
+          "name": "三鼎生技"
+        },
+        {
+          "symbol": "6810.TW",
+          "name": "新穎生醫"
+        },
+        {
+          "symbol": "6814.TW",
+          "name": "路迦生醫"
+        },
+        {
+          "symbol": "6815.TW",
+          "name": "晶鑽生醫"
+        },
+        {
+          "symbol": "6817.TW",
+          "name": "溫士頓"
+        },
+        {
+          "symbol": "6827.TW",
+          "name": "巨生醫"
+        },
+        {
+          "symbol": "6838.TW",
+          "name": "台新藥"
+        },
+        {
+          "symbol": "6841.TW",
+          "name": "長佳智能"
+        },
+        {
+          "symbol": "6844.TW",
+          "name": "諾貝兒"
+        },
+        {
+          "symbol": "6847.TW",
+          "name": "普瑞博"
+        },
+        {
+          "symbol": "6848.TW",
+          "name": "拉法醫"
+        },
+        {
+          "symbol": "6850.TW",
+          "name": "光鼎生技"
+        },
+        {
+          "symbol": "6857.TW",
+          "name": "宏碁智醫"
+        },
+        {
+          "symbol": "6861.TW",
+          "name": "睿生光電"
+        },
+        {
+          "symbol": "6864.TW",
+          "name": "元樟生技"
+        },
+        {
+          "symbol": "6872.TW",
+          "name": "浩宇生醫"
+        },
+        {
+          "symbol": "6875.TW",
+          "name": "國邑*"
+        },
+        {
+          "symbol": "6876.TW",
+          "name": "朗齊生醫*"
+        },
+        {
+          "symbol": "6879.TW",
+          "name": "大江基因"
+        },
+        {
+          "symbol": "6885.TW",
+          "name": "全福生技"
+        },
+        {
+          "symbol": "6891.TW",
+          "name": "樂迦再生"
+        },
+        {
+          "symbol": "6892.TW",
+          "name": "台寶生醫"
+        },
+        {
+          "symbol": "6917.TW",
+          "name": "竟天"
+        },
+        {
+          "symbol": "6918.TW",
+          "name": "愛派司"
+        },
+        {
+          "symbol": "6919.TW",
+          "name": "康霈*"
+        },
+        {
+          "symbol": "6926.TW",
+          "name": "聖安生醫"
+        },
+        {
+          "symbol": "6929.TW",
+          "name": "佑全"
+        },
+        {
+          "symbol": "6931.TW",
+          "name": "青松健康"
+        },
+        {
+          "symbol": "6932.TW",
+          "name": "水星生醫*"
+        },
+        {
+          "symbol": "6934.TW",
+          "name": "心誠鎂"
+        },
+        {
+          "symbol": "6936.TW",
+          "name": "永鴻生技"
+        },
+        {
+          "symbol": "6939.TW",
+          "name": "啟弘生技"
+        },
+        {
+          "symbol": "6945.TW",
+          "name": "圓祥生技"
+        },
+        {
+          "symbol": "6973.TW",
+          "name": "永立榮"
+        },
+        {
+          "symbol": "6976.TW",
+          "name": "育世博-KY"
+        },
+        {
+          "symbol": "6986.TW",
+          "name": "和迅"
+        },
+        {
+          "symbol": "6999.TW",
+          "name": "瀚醫生技"
+        },
+        {
+          "symbol": "7427.TW",
+          "name": "華上生醫"
+        },
+        {
+          "symbol": "7561.TW",
+          "name": "光晟生技"
+        },
+        {
+          "symbol": "7575.TW",
+          "name": "安美得"
+        },
+        {
+          "symbol": "7595.TW",
+          "name": "世基生醫"
+        },
+        {
+          "symbol": "7607.TW",
+          "name": "通用幹細胞*"
+        },
+        {
+          "symbol": "7713.TW",
+          "name": "威力德生醫"
+        },
+        {
+          "symbol": "7724.TW",
+          "name": "諾亞克"
+        },
+        {
+          "symbol": "7725.TW",
+          "name": "列特博"
+        },
+        {
+          "symbol": "7726.TW",
+          "name": "暄達"
+        },
+        {
+          "symbol": "7729.TW",
+          "name": "仲恩生醫"
+        },
+        {
+          "symbol": "7754.TW",
+          "name": "安基生技"
+        },
+        {
+          "symbol": "7759.TW",
+          "name": "視航生醫"
+        },
+        {
+          "symbol": "7762.TW",
+          "name": "吉晟生"
+        },
+        {
+          "symbol": "7773.TW",
+          "name": "富禾生醫"
+        },
+        {
+          "symbol": "7776.TW",
+          "name": "奧孟亞"
+        },
+        {
+          "symbol": "7784.TW",
+          "name": "安邦生技*"
+        },
+        {
+          "symbol": "7790.TW",
+          "name": "思必瑞特"
+        },
+        {
+          "symbol": "7799.TW",
+          "name": "禾榮科"
+        },
+        {
+          "symbol": "7803.TW",
+          "name": "雲象科技"
+        },
+        {
+          "symbol": "7808.TW",
+          "name": "訊聯智藥"
+        },
+        {
+          "symbol": "7814.TW",
+          "name": "海昌生技"
+        },
+        {
+          "symbol": "7827.TW",
+          "name": "漢康-KY"
+        },
+        {
+          "symbol": "7829.TW",
+          "name": "思捷優達-KY"
+        },
+        {
+          "symbol": "7832.TW",
+          "name": "智新生技*"
+        },
+        {
+          "symbol": "7837.TW",
+          "name": "啟新生"
+        },
+        {
+          "symbol": "7850.TW",
+          "name": "寶泰生醫"
+        },
+        {
+          "symbol": "7851.TW",
+          "name": "慧康生技*-KY"
+        },
+        {
+          "symbol": "7860.TW",
+          "name": "得生製藥"
+        },
+        {
+          "symbol": "7871.TW",
+          "name": "安立璽榮-KY"
+        },
+        {
+          "symbol": "7876.TW",
+          "name": "鼎晉生技"
+        },
+        {
+          "symbol": "7878.TW",
+          "name": "藥祇"
+        },
+        {
+          "symbol": "7881.TW",
+          "name": "科明"
+        },
+        {
+          "symbol": "7888.TW",
+          "name": "麗寶新藥"
+        },
+        {
+          "symbol": "7891.TW",
+          "name": "博研醫藥"
+        },
+        {
+          "symbol": "7902.TW",
+          "name": "宇越生醫*"
+        },
+        {
+          "symbol": "8279.TW",
+          "name": "生展"
+        },
+        {
+          "symbol": "8403.TW",
+          "name": "盛弘"
+        },
+        {
+          "symbol": "8409.TW",
+          "name": "商之器"
+        },
+        {
+          "symbol": "8432.TW",
+          "name": "東生華"
+        },
+        {
+          "symbol": "8436.TW",
+          "name": "大江"
+        }
+      ]
+    },
+    "紡織纖維": {
+      "count": 53,
+      "stocks": [
+        {
+          "symbol": "1402.TW",
+          "name": "遠東新"
+        },
+        {
+          "symbol": "1409.TW",
+          "name": "新纖"
+        },
+        {
+          "symbol": "1410.TW",
+          "name": "南染"
+        },
+        {
+          "symbol": "1413.TW",
+          "name": "宏洲"
+        },
+        {
+          "symbol": "1414.TW",
+          "name": "東和"
+        },
+        {
+          "symbol": "1417.TW",
+          "name": "嘉裕"
+        },
+        {
+          "symbol": "1418.TW",
+          "name": "東華"
+        },
+        {
+          "symbol": "1419.TW",
+          "name": "新紡"
+        },
+        {
+          "symbol": "1423.TW",
+          "name": "利華"
+        },
+        {
+          "symbol": "1434.TW",
+          "name": "福懋"
+        },
+        {
+          "symbol": "1440.TW",
+          "name": "南紡"
+        },
+        {
+          "symbol": "1441.TW",
+          "name": "大東"
+        },
+        {
+          "symbol": "1444.TW",
+          "name": "力麗"
+        },
+        {
+          "symbol": "1445.TW",
+          "name": "大宇"
+        },
+        {
+          "symbol": "1446.TW",
+          "name": "宏和"
+        },
+        {
+          "symbol": "1447.TW",
+          "name": "力鵬"
+        },
+        {
+          "symbol": "1449.TW",
+          "name": "佳和"
+        },
+        {
+          "symbol": "1451.TW",
+          "name": "年興"
+        },
+        {
+          "symbol": "1452.TW",
+          "name": "宏益"
+        },
+        {
+          "symbol": "1454.TW",
+          "name": "台富"
+        },
+        {
+          "symbol": "1455.TW",
+          "name": "集盛"
+        },
+        {
+          "symbol": "1457.TW",
+          "name": "宜進"
+        },
+        {
+          "symbol": "1459.TW",
+          "name": "聯發"
+        },
+        {
+          "symbol": "1460.TW",
+          "name": "宏遠"
+        },
+        {
+          "symbol": "1463.TW",
+          "name": "強盛新"
+        },
+        {
+          "symbol": "1464.TW",
+          "name": "得力"
+        },
+        {
+          "symbol": "1465.TW",
+          "name": "偉全"
+        },
+        {
+          "symbol": "1466.TW",
+          "name": "聚隆"
+        },
+        {
+          "symbol": "1467.TW",
+          "name": "南緯"
+        },
+        {
+          "symbol": "1468.TW",
+          "name": "昶和"
+        },
+        {
+          "symbol": "1470.TW",
+          "name": "大統新創"
+        },
+        {
+          "symbol": "1473.TW",
+          "name": "台南"
+        },
+        {
+          "symbol": "1474.TW",
+          "name": "弘裕"
+        },
+        {
+          "symbol": "1475.TW",
+          "name": "業旺"
+        },
+        {
+          "symbol": "1476.TW",
+          "name": "儒鴻"
+        },
+        {
+          "symbol": "1477.TW",
+          "name": "聚陽"
+        },
+        {
+          "symbol": "4401.TW",
+          "name": "東隆興"
+        },
+        {
+          "symbol": "4402.TW",
+          "name": "郡都開發"
+        },
+        {
+          "symbol": "4406.TW",
+          "name": "新昕纖"
+        },
+        {
+          "symbol": "4413.TW",
+          "name": "飛寶企業"
+        },
+        {
+          "symbol": "4414.TW",
+          "name": "如興"
+        },
+        {
+          "symbol": "4417.TW",
+          "name": "金洲"
+        },
+        {
+          "symbol": "4420.TW",
+          "name": "光明"
+        },
+        {
+          "symbol": "4426.TW",
+          "name": "利勤"
+        },
+        {
+          "symbol": "4432.TW",
+          "name": "銘旺實"
+        },
+        {
+          "symbol": "4433.TW",
+          "name": "興采"
+        },
+        {
+          "symbol": "4438.TW",
+          "name": "廣越"
+        },
+        {
+          "symbol": "4439.TW",
+          "name": "冠星-KY"
+        },
+        {
+          "symbol": "4440.TW",
+          "name": "宜新實業"
+        },
+        {
+          "symbol": "4441.TW",
+          "name": "振大環球"
+        },
+        {
+          "symbol": "4442.TW",
+          "name": "竣邦-KY"
+        },
+        {
+          "symbol": "6506.TW",
+          "name": "雙邦"
+        },
+        {
+          "symbol": "7862.TW",
+          "name": "聚泰"
+        }
+      ]
+    },
+    "綠能環保": {
+      "count": 63,
+      "stocks": [
+        {
+          "symbol": "1343.TW",
+          "name": "旭東環保"
+        },
+        {
+          "symbol": "2072.TW",
+          "name": "世紀風電"
+        },
+        {
+          "symbol": "3073.TW",
+          "name": "天方能源"
+        },
+        {
+          "symbol": "3551.TW",
+          "name": "世禾"
+        },
+        {
+          "symbol": "3708.TW",
+          "name": "上緯投控"
+        },
+        {
+          "symbol": "3713.TW",
+          "name": "新晶投控"
+        },
+        {
+          "symbol": "4582.TW",
+          "name": "聚恆"
+        },
+        {
+          "symbol": "5205.TW",
+          "name": "中茂"
+        },
+        {
+          "symbol": "5292.TW",
+          "name": "華懋"
+        },
+        {
+          "symbol": "5432.TW",
+          "name": "新門"
+        },
+        {
+          "symbol": "6581.TW",
+          "name": "鋼聯"
+        },
+        {
+          "symbol": "6624.TW",
+          "name": "萬年清"
+        },
+        {
+          "symbol": "6641.TW",
+          "name": "基士德-KY"
+        },
+        {
+          "symbol": "6692.TW",
+          "name": "進能服"
+        },
+        {
+          "symbol": "6723.TW",
+          "name": "傑智環境"
+        },
+        {
+          "symbol": "6803.TW",
+          "name": "崑鼎"
+        },
+        {
+          "symbol": "6806.TW",
+          "name": "森崴能源"
+        },
+        {
+          "symbol": "6839.TW",
+          "name": "開陽能源"
+        },
+        {
+          "symbol": "6869.TW",
+          "name": "雲豹能源"
+        },
+        {
+          "symbol": "6873.TW",
+          "name": "泓德能源"
+        },
+        {
+          "symbol": "6883.TW",
+          "name": "微電能源"
+        },
+        {
+          "symbol": "6887.TW",
+          "name": "寶綠特-KY"
+        },
+        {
+          "symbol": "6894.TW",
+          "name": "衛司特"
+        },
+        {
+          "symbol": "6912.TW",
+          "name": "益鈞環科*"
+        },
+        {
+          "symbol": "6923.TW",
+          "name": "中台"
+        },
+        {
+          "symbol": "6944.TW",
+          "name": "兆聯實業"
+        },
+        {
+          "symbol": "6946.TW",
+          "name": "三地能源"
+        },
+        {
+          "symbol": "6947.TW",
+          "name": "台鎔科技"
+        },
+        {
+          "symbol": "6971.TW",
+          "name": "惠民實業"
+        },
+        {
+          "symbol": "6977.TW",
+          "name": "聯純"
+        },
+        {
+          "symbol": "6987.TW",
+          "name": "寶晶能源*"
+        },
+        {
+          "symbol": "6990.TW",
+          "name": "華鉬"
+        },
+        {
+          "symbol": "6994.TW",
+          "name": "富威電力"
+        },
+        {
+          "symbol": "7507.TW",
+          "name": "環拓科技"
+        },
+        {
+          "symbol": "7583.TW",
+          "name": "國際海洋"
+        },
+        {
+          "symbol": "7702.TW",
+          "name": "前端風電"
+        },
+        {
+          "symbol": "7715.TW",
+          "name": "裕山"
+        },
+        {
+          "symbol": "7752.TW",
+          "name": "世紀樺欣"
+        },
+        {
+          "symbol": "7761.TW",
+          "name": "三大未來"
+        },
+        {
+          "symbol": "7783.TW",
+          "name": "佳運"
+        },
+        {
+          "symbol": "7786.TW",
+          "name": "東方風能"
+        },
+        {
+          "symbol": "7820.TW",
+          "name": "立盈"
+        },
+        {
+          "symbol": "7833.TW",
+          "name": "綠岩能源"
+        },
+        {
+          "symbol": "7842.TW",
+          "name": "天能綠電"
+        },
+        {
+          "symbol": "7846.TW",
+          "name": "德揚"
+        },
+        {
+          "symbol": "7857.TW",
+          "name": "合水先進"
+        },
+        {
+          "symbol": "7865.TW",
+          "name": "金聯成"
+        },
+        {
+          "symbol": "7877.TW",
+          "name": "海利普"
+        },
+        {
+          "symbol": "7890.TW",
+          "name": "明曜科技"
+        },
+        {
+          "symbol": "7897.TW",
+          "name": "禾迅綠電"
+        },
+        {
+          "symbol": "7911.TW",
+          "name": "阿波羅電力"
+        },
+        {
+          "symbol": "8087.TW",
+          "name": "麗升能源"
+        },
+        {
+          "symbol": "8171.TW",
+          "name": "天宇"
+        },
+        {
+          "symbol": "8341.TW",
+          "name": "日友"
+        },
+        {
+          "symbol": "8390.TW",
+          "name": "金益鼎"
+        },
+        {
+          "symbol": "8422.TW",
+          "name": "可寧衛*"
+        },
+        {
+          "symbol": "8423.TW",
+          "name": "保綠-KY"
+        },
+        {
+          "symbol": "8438.TW",
+          "name": "昶昕"
+        },
+        {
+          "symbol": "8440.TW",
+          "name": "綠電"
+        },
+        {
+          "symbol": "8473.TW",
+          "name": "山林水"
+        },
+        {
+          "symbol": "8476.TW",
+          "name": "台境*"
+        },
+        {
+          "symbol": "9930.TW",
+          "name": "中聯資源"
+        },
+        {
+          "symbol": "9955.TW",
+          "name": "佳龍"
+        }
+      ]
+    },
+    "航運業": {
+      "count": 35,
+      "stocks": [
+        {
+          "symbol": "2208.TW",
+          "name": "台船"
+        },
+        {
+          "symbol": "2603.TW",
+          "name": "長榮"
+        },
+        {
+          "symbol": "2605.TW",
+          "name": "新興"
+        },
+        {
+          "symbol": "2606.TW",
+          "name": "裕民"
+        },
+        {
+          "symbol": "2607.TW",
+          "name": "榮運"
+        },
+        {
+          "symbol": "2608.TW",
+          "name": "嘉里大榮"
+        },
+        {
+          "symbol": "2609.TW",
+          "name": "陽明"
+        },
+        {
+          "symbol": "2610.TW",
+          "name": "華航"
+        },
+        {
+          "symbol": "2611.TW",
+          "name": "志信"
+        },
+        {
+          "symbol": "2612.TW",
+          "name": "中航"
+        },
+        {
+          "symbol": "2613.TW",
+          "name": "中櫃"
+        },
+        {
+          "symbol": "2615.TW",
+          "name": "萬海"
+        },
+        {
+          "symbol": "2617.TW",
+          "name": "台航"
+        },
+        {
+          "symbol": "2618.TW",
+          "name": "長榮航"
+        },
+        {
+          "symbol": "2630.TW",
+          "name": "亞航"
+        },
+        {
+          "symbol": "2633.TW",
+          "name": "台灣高鐵"
+        },
+        {
+          "symbol": "2634.TW",
+          "name": "漢翔"
+        },
+        {
+          "symbol": "2636.TW",
+          "name": "台驊控股"
+        },
+        {
+          "symbol": "2637.TW",
+          "name": "慧洋-KY"
+        },
+        {
+          "symbol": "2641.TW",
+          "name": "正德"
+        },
+        {
+          "symbol": "2642.TW",
+          "name": "宅配通"
+        },
+        {
+          "symbol": "2643.TW",
+          "name": "捷迅"
+        },
+        {
+          "symbol": "2644.TW",
+          "name": "中信造船"
+        },
+        {
+          "symbol": "2645.TW",
+          "name": "長榮航太"
+        },
+        {
+          "symbol": "2646.TW",
+          "name": "星宇航空"
+        },
+        {
+          "symbol": "5601.TW",
+          "name": "台聯櫃"
+        },
+        {
+          "symbol": "5603.TW",
+          "name": "陸海"
+        },
+        {
+          "symbol": "5607.TW",
+          "name": "遠雄港"
+        },
+        {
+          "symbol": "5608.TW",
+          "name": "四維航"
+        },
+        {
+          "symbol": "5609.TW",
+          "name": "中菲行"
+        },
+        {
+          "symbol": "6753.TW",
+          "name": "龍德造船"
+        },
+        {
+          "symbol": "6757.TW",
+          "name": "台灣虎航"
+        },
+        {
+          "symbol": "7716.TW",
+          "name": "昱臺國際"
+        },
+        {
+          "symbol": "7863.TW",
+          "name": "中科物流"
+        },
+        {
+          "symbol": "8367.TW",
+          "name": "建新國際"
+        }
+      ]
+    },
+    "觀光餐旅": {
+      "count": 64,
+      "stocks": [
+        {
+          "symbol": "1259.TW",
+          "name": "安心"
+        },
+        {
+          "symbol": "1268.TW",
+          "name": "漢來美食"
+        },
+        {
+          "symbol": "1269.TW",
+          "name": "乾杯"
+        },
+        {
+          "symbol": "2701.TW",
+          "name": "萬企"
+        },
+        {
+          "symbol": "2702.TW",
+          "name": "華園"
+        },
+        {
+          "symbol": "2704.TW",
+          "name": "國賓"
+        },
+        {
+          "symbol": "2705.TW",
+          "name": "六福"
+        },
+        {
+          "symbol": "2706.TW",
+          "name": "第一店"
+        },
+        {
+          "symbol": "2707.TW",
+          "name": "晶華"
+        },
+        {
+          "symbol": "2712.TW",
+          "name": "遠雄來"
+        },
+        {
+          "symbol": "2719.TW",
+          "name": "燦星旅"
+        },
+        {
+          "symbol": "2722.TW",
+          "name": "夏都"
+        },
+        {
+          "symbol": "2723.TW",
+          "name": "美食-KY"
+        },
+        {
+          "symbol": "2726.TW",
+          "name": "雅茗-KY"
+        },
+        {
+          "symbol": "2727.TW",
+          "name": "王品"
+        },
+        {
+          "symbol": "2729.TW",
+          "name": "瓦城"
+        },
+        {
+          "symbol": "2731.TW",
+          "name": "雄獅"
+        },
+        {
+          "symbol": "2732.TW",
+          "name": "六角"
+        },
+        {
+          "symbol": "2733.TW",
+          "name": "維格餅家"
+        },
+        {
+          "symbol": "2734.TW",
+          "name": "易飛網"
+        },
+        {
+          "symbol": "2736.TW",
+          "name": "富野"
+        },
+        {
+          "symbol": "2739.TW",
+          "name": "寒舍"
+        },
+        {
+          "symbol": "2740.TW",
+          "name": "華軒"
+        },
+        {
+          "symbol": "2741.TW",
+          "name": "老四川"
+        },
+        {
+          "symbol": "2743.TW",
+          "name": "山富"
+        },
+        {
+          "symbol": "2745.TW",
+          "name": "五福"
+        },
+        {
+          "symbol": "2748.TW",
+          "name": "雲品"
+        },
+        {
+          "symbol": "2751.TW",
+          "name": "王座"
+        },
+        {
+          "symbol": "2752.TW",
+          "name": "豆府"
+        },
+        {
+          "symbol": "2753.TW",
+          "name": "八方雲集"
+        },
+        {
+          "symbol": "2754.TW",
+          "name": "亞洲藏壽司"
+        },
+        {
+          "symbol": "2755.TW",
+          "name": "揚秦"
+        },
+        {
+          "symbol": "2756.TW",
+          "name": "聯發國際"
+        },
+        {
+          "symbol": "2758.TW",
+          "name": "路易莎咖啡"
+        },
+        {
+          "symbol": "2760.TW",
+          "name": "巨宇翔"
+        },
+        {
+          "symbol": "2761.TW",
+          "name": "橘焱胡同"
+        },
+        {
+          "symbol": "3252.TW",
+          "name": "海灣"
+        },
+        {
+          "symbol": "3522.TW",
+          "name": "御嵿"
+        },
+        {
+          "symbol": "4419.TW",
+          "name": "皇家美食"
+        },
+        {
+          "symbol": "4530.TW",
+          "name": "宏易"
+        },
+        {
+          "symbol": "4804.TW",
+          "name": "大略-KY"
+        },
+        {
+          "symbol": "5301.TW",
+          "name": "寶得利"
+        },
+        {
+          "symbol": "5364.TW",
+          "name": "力麗店"
+        },
+        {
+          "symbol": "5701.TW",
+          "name": "劍湖山"
+        },
+        {
+          "symbol": "5703.TW",
+          "name": "亞都"
+        },
+        {
+          "symbol": "5704.TW",
+          "name": "老爺知"
+        },
+        {
+          "symbol": "5706.TW",
+          "name": "鳳凰"
+        },
+        {
+          "symbol": "5905.TW",
+          "name": "南仁湖"
+        },
+        {
+          "symbol": "6961.TW",
+          "name": "旅天下"
+        },
+        {
+          "symbol": "7566.TW",
+          "name": "亞果遊艇"
+        },
+        {
+          "symbol": "7705.TW",
+          "name": "三商餐飲"
+        },
+        {
+          "symbol": "7708.TW",
+          "name": "全家餐飲"
+        },
+        {
+          "symbol": "7723.TW",
+          "name": "築間"
+        },
+        {
+          "symbol": "7756.TW",
+          "name": "多那之"
+        },
+        {
+          "symbol": "7757.TW",
+          "name": "金色三麥"
+        },
+        {
+          "symbol": "7760.TW",
+          "name": "享溫馨"
+        },
+        {
+          "symbol": "7789.TW",
+          "name": "開展"
+        },
+        {
+          "symbol": "7797.TW",
+          "name": "Q"
+        },
+        {
+          "symbol": "7847.TW",
+          "name": "豊漁"
+        },
+        {
+          "symbol": "7883.TW",
+          "name": "饗賓"
+        },
+        {
+          "symbol": "8077.TW",
+          "name": "洛碁"
+        },
+        {
+          "symbol": "8359.TW",
+          "name": "錢櫃"
+        },
+        {
+          "symbol": "8940.TW",
+          "name": "新天地"
+        },
+        {
+          "symbol": "9943.TW",
+          "name": "好樂迪"
+        }
+      ]
+    },
+    "貿易百貨業": {
+      "count": 19,
+      "stocks": [
+        {
+          "symbol": "2601.TW",
+          "name": "益航"
+        },
+        {
+          "symbol": "2901.TW",
+          "name": "欣欣"
+        },
+        {
+          "symbol": "2903.TW",
+          "name": "遠百"
+        },
+        {
+          "symbol": "2905.TW",
+          "name": "三商"
+        },
+        {
+          "symbol": "2906.TW",
+          "name": "高林"
+        },
+        {
+          "symbol": "2908.TW",
+          "name": "特力"
+        },
+        {
+          "symbol": "2910.TW",
+          "name": "統領"
+        },
+        {
+          "symbol": "2911.TW",
+          "name": "麗嬰房"
+        },
+        {
+          "symbol": "2912.TW",
+          "name": "統一超"
+        },
+        {
+          "symbol": "2913.TW",
+          "name": "農林"
+        },
+        {
+          "symbol": "2915.TW",
+          "name": "潤泰全"
+        },
+        {
+          "symbol": "2929.TW",
+          "name": "淘帝-KY"
+        },
+        {
+          "symbol": "2939.TW",
+          "name": "永邑-KY"
+        },
+        {
+          "symbol": "2945.TW",
+          "name": "三商家購"
+        },
+        {
+          "symbol": "4807.TW",
+          "name": "日成-KY"
+        },
+        {
+          "symbol": "5906.TW",
+          "name": "台南-KY"
+        },
+        {
+          "symbol": "5907.TW",
+          "name": "大洋-KY"
+        },
+        {
+          "symbol": "8429.TW",
+          "name": "金麗-KY"
+        },
+        {
+          "symbol": "8443.TW",
+          "name": "阿瘦"
+        }
+      ]
+    },
+    "資訊服務業": {
+      "count": 56,
+      "stocks": [
+        {
+          "symbol": "2427.TW",
+          "name": "三商電"
+        },
+        {
+          "symbol": "2453.TW",
+          "name": "凌群"
+        },
+        {
+          "symbol": "2468.TW",
+          "name": "華經"
+        },
+        {
+          "symbol": "2471.TW",
+          "name": "資通"
+        },
+        {
+          "symbol": "2480.TW",
+          "name": "敦陽科"
+        },
+        {
+          "symbol": "3029.TW",
+          "name": "零壹"
+        },
+        {
+          "symbol": "3147.TW",
+          "name": "大綜"
+        },
+        {
+          "symbol": "3158.TW",
+          "name": "嘉實"
+        },
+        {
+          "symbol": "3570.TW",
+          "name": "大塚"
+        },
+        {
+          "symbol": "4953.TW",
+          "name": "緯軟"
+        },
+        {
+          "symbol": "4994.TW",
+          "name": "傳奇"
+        },
+        {
+          "symbol": "5201.TW",
+          "name": "凱衛"
+        },
+        {
+          "symbol": "5202.TW",
+          "name": "力新"
+        },
+        {
+          "symbol": "5203.TW",
+          "name": "訊連"
+        },
+        {
+          "symbol": "5210.TW",
+          "name": "寶碩"
+        },
+        {
+          "symbol": "5211.TW",
+          "name": "蒙恬"
+        },
+        {
+          "symbol": "5212.TW",
+          "name": "凌網"
+        },
+        {
+          "symbol": "5310.TW",
+          "name": "天剛"
+        },
+        {
+          "symbol": "5403.TW",
+          "name": "中菲"
+        },
+        {
+          "symbol": "5410.TW",
+          "name": "國眾"
+        },
+        {
+          "symbol": "6112.TW",
+          "name": "邁達特"
+        },
+        {
+          "symbol": "6123.TW",
+          "name": "上奇"
+        },
+        {
+          "symbol": "6140.TW",
+          "name": "訊達"
+        },
+        {
+          "symbol": "6148.TW",
+          "name": "驊宏資"
+        },
+        {
+          "symbol": "6183.TW",
+          "name": "關貿"
+        },
+        {
+          "symbol": "6214.TW",
+          "name": "精誠"
+        },
+        {
+          "symbol": "6221.TW",
+          "name": "晉泰"
+        },
+        {
+          "symbol": "6231.TW",
+          "name": "系微"
+        },
+        {
+          "symbol": "6240.TW",
+          "name": "松崗"
+        },
+        {
+          "symbol": "6516.TW",
+          "name": "勤崴國際"
+        },
+        {
+          "symbol": "6536.TW",
+          "name": "碩豐"
+        },
+        {
+          "symbol": "6590.TW",
+          "name": "普鴻"
+        },
+        {
+          "symbol": "6593.TW",
+          "name": "台灣銘板"
+        },
+        {
+          "symbol": "6697.TW",
+          "name": "東捷資訊"
+        },
+        {
+          "symbol": "6738.TW",
+          "name": "鼎恒"
+        },
+        {
+          "symbol": "6751.TW",
+          "name": "智聯服務"
+        },
+        {
+          "symbol": "6752.TW",
+          "name": "叡揚"
+        },
+        {
+          "symbol": "6791.TW",
+          "name": "虎門科技"
+        },
+        {
+          "symbol": "6816.TW",
+          "name": "捷智商訊"
+        },
+        {
+          "symbol": "6868.TW",
+          "name": "采威國際"
+        },
+        {
+          "symbol": "6874.TW",
+          "name": "倍力"
+        },
+        {
+          "symbol": "6882.TW",
+          "name": "甲尚"
+        },
+        {
+          "symbol": "6884.TW",
+          "name": "海柏特"
+        },
+        {
+          "symbol": "6898.TW",
+          "name": "程曦資訊"
+        },
+        {
+          "symbol": "6938.TW",
+          "name": "藍新資訊"
+        },
+        {
+          "symbol": "7767.TW",
+          "name": "仁大資訊"
+        },
+        {
+          "symbol": "7801.TW",
+          "name": "華芸科技"
+        },
+        {
+          "symbol": "7819.TW",
+          "name": "精誠金融"
+        },
+        {
+          "symbol": "7834.TW",
+          "name": "來毅數位"
+        },
+        {
+          "symbol": "7841.TW",
+          "name": "經貿聯網"
+        },
+        {
+          "symbol": "7868.TW",
+          "name": "聖育"
+        },
+        {
+          "symbol": "8099.TW",
+          "name": "大世科"
+        },
+        {
+          "symbol": "8272.TW",
+          "name": "全景軟體"
+        },
+        {
+          "symbol": "8284.TW",
+          "name": "三竹"
+        },
+        {
+          "symbol": "8298.TW",
+          "name": "威睿"
+        },
+        {
+          "symbol": "8416.TW",
+          "name": "實威"
+        }
+      ]
+    },
+    "農業科技業": {
+      "count": 7,
+      "stocks": [
+        {
+          "symbol": "1240.TW",
+          "name": "茂生農經"
+        },
+        {
+          "symbol": "4171.TW",
+          "name": "瑞基"
+        },
+        {
+          "symbol": "6508.TW",
+          "name": "惠光"
+        },
+        {
+          "symbol": "6578.TW",
+          "name": "達邦蛋白"
+        },
+        {
+          "symbol": "7840.TW",
+          "name": "祥圃"
+        },
+        {
+          "symbol": "7895.TW",
+          "name": "元進莊"
+        },
+        {
+          "symbol": "8345.TW",
+          "name": "超秦"
+        }
+      ]
+    },
+    "通信網路業": {
+      "count": 101,
+      "stocks": [
+        {
+          "symbol": "2314.TW",
+          "name": "台揚"
+        },
+        {
+          "symbol": "2321.TW",
+          "name": "東訊"
+        },
+        {
+          "symbol": "2332.TW",
+          "name": "友訊"
+        },
+        {
+          "symbol": "2345.TW",
+          "name": "智邦"
+        },
+        {
+          "symbol": "2412.TW",
+          "name": "中華電"
+        },
+        {
+          "symbol": "2419.TW",
+          "name": "仲琦"
+        },
+        {
+          "symbol": "2424.TW",
+          "name": "隴華"
+        },
+        {
+          "symbol": "2439.TW",
+          "name": "美律"
+        },
+        {
+          "symbol": "2444.TW",
+          "name": "兆勁"
+        },
+        {
+          "symbol": "2450.TW",
+          "name": "神腦"
+        },
+        {
+          "symbol": "2455.TW",
+          "name": "全新"
+        },
+        {
+          "symbol": "2485.TW",
+          "name": "兆赫"
+        },
+        {
+          "symbol": "2498.TW",
+          "name": "宏達電"
+        },
+        {
+          "symbol": "3025.TW",
+          "name": "星通"
+        },
+        {
+          "symbol": "3027.TW",
+          "name": "盛達"
+        },
+        {
+          "symbol": "3045.TW",
+          "name": "台灣大"
+        },
+        {
+          "symbol": "3047.TW",
+          "name": "訊舟"
+        },
+        {
+          "symbol": "3062.TW",
+          "name": "建漢"
+        },
+        {
+          "symbol": "3081.TW",
+          "name": "聯亞"
+        },
+        {
+          "symbol": "3095.TW",
+          "name": "及成"
+        },
+        {
+          "symbol": "3138.TW",
+          "name": "耀登"
+        },
+        {
+          "symbol": "3152.TW",
+          "name": "璟德"
+        },
+        {
+          "symbol": "3163.TW",
+          "name": "波若威"
+        },
+        {
+          "symbol": "3221.TW",
+          "name": "台嘉碩"
+        },
+        {
+          "symbol": "3234.TW",
+          "name": "光環"
+        },
+        {
+          "symbol": "3306.TW",
+          "name": "鼎天"
+        },
+        {
+          "symbol": "3311.TW",
+          "name": "閎暉"
+        },
+        {
+          "symbol": "3363.TW",
+          "name": "上詮"
+        },
+        {
+          "symbol": "3380.TW",
+          "name": "明泰"
+        },
+        {
+          "symbol": "3419.TW",
+          "name": "譁裕"
+        },
+        {
+          "symbol": "3447.TW",
+          "name": "展達"
+        },
+        {
+          "symbol": "3466.TW",
+          "name": "德晉"
+        },
+        {
+          "symbol": "3473.TW",
+          "name": "智通聯網"
+        },
+        {
+          "symbol": "3491.TW",
+          "name": "昇達科"
+        },
+        {
+          "symbol": "3499.TW",
+          "name": "環天科"
+        },
+        {
+          "symbol": "3558.TW",
+          "name": "神準"
+        },
+        {
+          "symbol": "3564.TW",
+          "name": "其陽"
+        },
+        {
+          "symbol": "3596.TW",
+          "name": "智易"
+        },
+        {
+          "symbol": "3632.TW",
+          "name": "研勤"
+        },
+        {
+          "symbol": "3664.TW",
+          "name": "安瑞-KY"
+        },
+        {
+          "symbol": "3669.TW",
+          "name": "圓展"
+        },
+        {
+          "symbol": "3672.TW",
+          "name": "康聯訊"
+        },
+        {
+          "symbol": "3684.TW",
+          "name": "榮昌"
+        },
+        {
+          "symbol": "3694.TW",
+          "name": "海華"
+        },
+        {
+          "symbol": "3704.TW",
+          "name": "合勤控"
+        },
+        {
+          "symbol": "4903.TW",
+          "name": "聯光通"
+        },
+        {
+          "symbol": "4904.TW",
+          "name": "遠傳"
+        },
+        {
+          "symbol": "4905.TW",
+          "name": "台聯電"
+        },
+        {
+          "symbol": "4906.TW",
+          "name": "正文"
+        },
+        {
+          "symbol": "4908.TW",
+          "name": "前鼎"
+        },
+        {
+          "symbol": "4909.TW",
+          "name": "新復興"
+        },
+        {
+          "symbol": "4977.TW",
+          "name": "眾達-KY"
+        },
+        {
+          "symbol": "4979.TW",
+          "name": "華星光"
+        },
+        {
+          "symbol": "5353.TW",
+          "name": "台林"
+        },
+        {
+          "symbol": "5388.TW",
+          "name": "中磊"
+        },
+        {
+          "symbol": "6109.TW",
+          "name": "亞元"
+        },
+        {
+          "symbol": "6136.TW",
+          "name": "富爾特"
+        },
+        {
+          "symbol": "6142.TW",
+          "name": "友勁"
+        },
+        {
+          "symbol": "6143.TW",
+          "name": "振曜"
+        },
+        {
+          "symbol": "6152.TW",
+          "name": "百一"
+        },
+        {
+          "symbol": "6163.TW",
+          "name": "華電網"
+        },
+        {
+          "symbol": "6170.TW",
+          "name": "統振"
+        },
+        {
+          "symbol": "6190.TW",
+          "name": "萬泰科"
+        },
+        {
+          "symbol": "6216.TW",
+          "name": "居易"
+        },
+        {
+          "symbol": "6218.TW",
+          "name": "豪勉"
+        },
+        {
+          "symbol": "6241.TW",
+          "name": "易通展"
+        },
+        {
+          "symbol": "6245.TW",
+          "name": "立端"
+        },
+        {
+          "symbol": "6263.TW",
+          "name": "普萊德"
+        },
+        {
+          "symbol": "6285.TW",
+          "name": "啟碁"
+        },
+        {
+          "symbol": "6416.TW",
+          "name": "瑞祺電通"
+        },
+        {
+          "symbol": "6417.TW",
+          "name": "韋僑"
+        },
+        {
+          "symbol": "6426.TW",
+          "name": "統新"
+        },
+        {
+          "symbol": "6442.TW",
+          "name": "光聖"
+        },
+        {
+          "symbol": "6465.TW",
+          "name": "威潤"
+        },
+        {
+          "symbol": "6470.TW",
+          "name": "宇智"
+        },
+        {
+          "symbol": "6486.TW",
+          "name": "互動"
+        },
+        {
+          "symbol": "6530.TW",
+          "name": "創威"
+        },
+        {
+          "symbol": "6546.TW",
+          "name": "正基"
+        },
+        {
+          "symbol": "6561.TW",
+          "name": "是方"
+        },
+        {
+          "symbol": "6588.TW",
+          "name": "東典光電"
+        },
+        {
+          "symbol": "6674.TW",
+          "name": "鋐寶科技"
+        },
+        {
+          "symbol": "6784.TW",
+          "name": "天凱科技"
+        },
+        {
+          "symbol": "6792.TW",
+          "name": "詠業"
+        },
+        {
+          "symbol": "6818.TW",
+          "name": "連騰"
+        },
+        {
+          "symbol": "6820.TW",
+          "name": "連訊"
+        },
+        {
+          "symbol": "6863.TW",
+          "name": "永道-KY"
+        },
+        {
+          "symbol": "6980.TW",
+          "name": "鐳洋科技"
+        },
+        {
+          "symbol": "7689.TW",
+          "name": "大鵬科CLMX"
+        },
+        {
+          "symbol": "7717.TW",
+          "name": "萊德光電-KY"
+        },
+        {
+          "symbol": "7812.TW",
+          "name": "稜研科技*"
+        },
+        {
+          "symbol": "7901.TW",
+          "name": "大大寬頻"
+        },
+        {
+          "symbol": "7915.TW",
+          "name": "廌家"
+        },
+        {
+          "symbol": "8011.TW",
+          "name": "台通"
+        },
+        {
+          "symbol": "8034.TW",
+          "name": "榮群"
+        },
+        {
+          "symbol": "8045.TW",
+          "name": "達運光電"
+        },
+        {
+          "symbol": "8048.TW",
+          "name": "德勝"
+        },
+        {
+          "symbol": "8059.TW",
+          "name": "凱碩"
+        },
+        {
+          "symbol": "8089.TW",
+          "name": "康全電訊"
+        },
+        {
+          "symbol": "8097.TW",
+          "name": "常珵"
+        },
+        {
+          "symbol": "8101.TW",
+          "name": "華冠"
+        },
+        {
+          "symbol": "8176.TW",
+          "name": "智捷"
+        }
+      ]
+    },
+    "造紙工業": {
+      "count": 7,
+      "stocks": [
+        {
+          "symbol": "1903.TW",
+          "name": "士紙"
+        },
+        {
+          "symbol": "1904.TW",
+          "name": "正隆"
+        },
+        {
+          "symbol": "1905.TW",
+          "name": "華紙"
+        },
+        {
+          "symbol": "1906.TW",
+          "name": "寶隆"
+        },
+        {
+          "symbol": "1907.TW",
+          "name": "永豐餘"
+        },
+        {
+          "symbol": "1909.TW",
+          "name": "榮成"
+        },
+        {
+          "symbol": "6790.TW",
+          "name": "永豐實"
+        }
+      ]
+    },
+    "運動休閒": {
+      "count": 31,
+      "stocks": [
+        {
+          "symbol": "1432.TW",
+          "name": "大魯閣"
+        },
+        {
+          "symbol": "1593.TW",
+          "name": "祺驊"
+        },
+        {
+          "symbol": "1598.TW",
+          "name": "岱宇"
+        },
+        {
+          "symbol": "1736.TW",
+          "name": "喬山"
+        },
+        {
+          "symbol": "2762.TW",
+          "name": "世界健身-KY"
+        },
+        {
+          "symbol": "2940.TW",
+          "name": "歐都納"
+        },
+        {
+          "symbol": "4536.TW",
+          "name": "拓凱"
+        },
+        {
+          "symbol": "4559.TW",
+          "name": "久裕興"
+        },
+        {
+          "symbol": "5306.TW",
+          "name": "桂盟"
+        },
+        {
+          "symbol": "5348.TW",
+          "name": "正能量智能"
+        },
+        {
+          "symbol": "6670.TW",
+          "name": "復盛應用"
+        },
+        {
+          "symbol": "6768.TW",
+          "name": "志強-KY"
+        },
+        {
+          "symbol": "6798.TW",
+          "name": "展逸"
+        },
+        {
+          "symbol": "6804.TW",
+          "name": "明係"
+        },
+        {
+          "symbol": "6890.TW",
+          "name": "來億-KY"
+        },
+        {
+          "symbol": "6965.TW",
+          "name": "中傑-KY"
+        },
+        {
+          "symbol": "7779.TW",
+          "name": "鍇睿國際"
+        },
+        {
+          "symbol": "7811.TW",
+          "name": "民盛"
+        },
+        {
+          "symbol": "8462.TW",
+          "name": "柏文"
+        },
+        {
+          "symbol": "8467.TW",
+          "name": "波力-KY"
+        },
+        {
+          "symbol": "8478.TW",
+          "name": "東哥遊艇"
+        },
+        {
+          "symbol": "8924.TW",
+          "name": "大田"
+        },
+        {
+          "symbol": "8928.TW",
+          "name": "鉅明"
+        },
+        {
+          "symbol": "8933.TW",
+          "name": "愛地雅"
+        },
+        {
+          "symbol": "8938.TW",
+          "name": "明安"
+        },
+        {
+          "symbol": "9802.TW",
+          "name": "鈺齊-KY"
+        },
+        {
+          "symbol": "9904.TW",
+          "name": "寶成"
+        },
+        {
+          "symbol": "9910.TW",
+          "name": "豐泰"
+        },
+        {
+          "symbol": "9914.TW",
+          "name": "美利達"
+        },
+        {
+          "symbol": "9921.TW",
+          "name": "巨大"
+        },
+        {
+          "symbol": "9960.TW",
+          "name": "邁達康"
+        }
+      ]
+    },
+    "金融保險業": {
+      "count": 46,
+      "stocks": [
+        {
+          "symbol": "2801.TW",
+          "name": "彰銀"
+        },
+        {
+          "symbol": "2812.TW",
+          "name": "台中銀"
+        },
+        {
+          "symbol": "2816.TW",
+          "name": "旺旺保"
+        },
+        {
+          "symbol": "2820.TW",
+          "name": "華票"
+        },
+        {
+          "symbol": "2832.TW",
+          "name": "台產"
+        },
+        {
+          "symbol": "2834.TW",
+          "name": "臺企銀"
+        },
+        {
+          "symbol": "2836.TW",
+          "name": "高雄銀"
+        },
+        {
+          "symbol": "2838.TW",
+          "name": "聯邦銀"
+        },
+        {
+          "symbol": "2845.TW",
+          "name": "遠東銀"
+        },
+        {
+          "symbol": "2849.TW",
+          "name": "安泰銀"
+        },
+        {
+          "symbol": "2850.TW",
+          "name": "新產"
+        },
+        {
+          "symbol": "2851.TW",
+          "name": "中再保"
+        },
+        {
+          "symbol": "2852.TW",
+          "name": "第一保"
+        },
+        {
+          "symbol": "2855.TW",
+          "name": "統一證"
+        },
+        {
+          "symbol": "2867.TW",
+          "name": "三商壽"
+        },
+        {
+          "symbol": "2880.TW",
+          "name": "華南金"
+        },
+        {
+          "symbol": "2881.TW",
+          "name": "富邦金"
+        },
+        {
+          "symbol": "2882.TW",
+          "name": "國泰金"
+        },
+        {
+          "symbol": "2883.TW",
+          "name": "凱基金"
+        },
+        {
+          "symbol": "2884.TW",
+          "name": "玉山金"
+        },
+        {
+          "symbol": "2885.TW",
+          "name": "元大金"
+        },
+        {
+          "symbol": "2886.TW",
+          "name": "兆豐金"
+        },
+        {
+          "symbol": "2887.TW",
+          "name": "台新新光金"
+        },
+        {
+          "symbol": "2889.TW",
+          "name": "國票金"
+        },
+        {
+          "symbol": "2890.TW",
+          "name": "永豐金"
+        },
+        {
+          "symbol": "2891.TW",
+          "name": "中信金"
+        },
+        {
+          "symbol": "2892.TW",
+          "name": "第一金"
+        },
+        {
+          "symbol": "2897.TW",
+          "name": "王道銀行"
+        },
+        {
+          "symbol": "5859.TW",
+          "name": "遠壽"
+        },
+        {
+          "symbol": "5863.TW",
+          "name": "瑞興銀"
+        },
+        {
+          "symbol": "5864.TW",
+          "name": "致和證"
+        },
+        {
+          "symbol": "5876.TW",
+          "name": "上海商銀"
+        },
+        {
+          "symbol": "5878.TW",
+          "name": "台名"
+        },
+        {
+          "symbol": "5880.TW",
+          "name": "合庫金"
+        },
+        {
+          "symbol": "6005.TW",
+          "name": "群益證"
+        },
+        {
+          "symbol": "6015.TW",
+          "name": "宏遠證"
+        },
+        {
+          "symbol": "6016.TW",
+          "name": "康和證"
+        },
+        {
+          "symbol": "6020.TW",
+          "name": "大展證"
+        },
+        {
+          "symbol": "6021.TW",
+          "name": "美好證"
+        },
+        {
+          "symbol": "6023.TW",
+          "name": "元大期"
+        },
+        {
+          "symbol": "6024.TW",
+          "name": "群益期"
+        },
+        {
+          "symbol": "6026.TW",
+          "name": "福邦證"
+        },
+        {
+          "symbol": "6027.TW",
+          "name": "德信"
+        },
+        {
+          "symbol": "6028.TW",
+          "name": "公勝保經"
+        },
+        {
+          "symbol": "6035.TW",
+          "name": "悠遊卡"
+        },
+        {
+          "symbol": "6878.TW",
+          "name": "歐付寶"
+        }
+      ]
+    },
+    "鋼鐵工業": {
+      "count": 52,
+      "stocks": [
+        {
+          "symbol": "1480.TW",
+          "name": "東盟開發"
+        },
+        {
+          "symbol": "2002.TW",
+          "name": "中鋼"
+        },
+        {
+          "symbol": "2006.TW",
+          "name": "東和鋼鐵"
+        },
+        {
+          "symbol": "2007.TW",
+          "name": "燁興"
+        },
+        {
+          "symbol": "2008.TW",
+          "name": "高興昌"
+        },
+        {
+          "symbol": "2009.TW",
+          "name": "第一銅"
+        },
+        {
+          "symbol": "2010.TW",
+          "name": "春源"
+        },
+        {
+          "symbol": "2012.TW",
+          "name": "春雨"
+        },
+        {
+          "symbol": "2013.TW",
+          "name": "中鋼構"
+        },
+        {
+          "symbol": "2014.TW",
+          "name": "中鴻"
+        },
+        {
+          "symbol": "2015.TW",
+          "name": "豐興"
+        },
+        {
+          "symbol": "2017.TW",
+          "name": "官田鋼"
+        },
+        {
+          "symbol": "2020.TW",
+          "name": "美亞"
+        },
+        {
+          "symbol": "2022.TW",
+          "name": "聚亨"
+        },
+        {
+          "symbol": "2023.TW",
+          "name": "燁輝"
+        },
+        {
+          "symbol": "2024.TW",
+          "name": "志聯"
+        },
+        {
+          "symbol": "2025.TW",
+          "name": "千興"
+        },
+        {
+          "symbol": "2027.TW",
+          "name": "大成鋼"
+        },
+        {
+          "symbol": "2028.TW",
+          "name": "威致"
+        },
+        {
+          "symbol": "2029.TW",
+          "name": "盛餘"
+        },
+        {
+          "symbol": "2030.TW",
+          "name": "彰源"
+        },
+        {
+          "symbol": "2031.TW",
+          "name": "新光鋼"
+        },
+        {
+          "symbol": "2032.TW",
+          "name": "新鋼"
+        },
+        {
+          "symbol": "2033.TW",
+          "name": "佳大"
+        },
+        {
+          "symbol": "2034.TW",
+          "name": "允強"
+        },
+        {
+          "symbol": "2035.TW",
+          "name": "唐榮"
+        },
+        {
+          "symbol": "2038.TW",
+          "name": "海光"
+        },
+        {
+          "symbol": "2063.TW",
+          "name": "世鎧"
+        },
+        {
+          "symbol": "2064.TW",
+          "name": "晉椿"
+        },
+        {
+          "symbol": "2065.TW",
+          "name": "世豐"
+        },
+        {
+          "symbol": "2069.TW",
+          "name": "運錩"
+        },
+        {
+          "symbol": "2071.TW",
+          "name": "震南鐵"
+        },
+        {
+          "symbol": "2073.TW",
+          "name": "雄順"
+        },
+        {
+          "symbol": "2211.TW",
+          "name": "長榮鋼"
+        },
+        {
+          "symbol": "3004.TW",
+          "name": "豐達科"
+        },
+        {
+          "symbol": "4950.TW",
+          "name": "金耘國際"
+        },
+        {
+          "symbol": "5007.TW",
+          "name": "三星"
+        },
+        {
+          "symbol": "5009.TW",
+          "name": "榮剛"
+        },
+        {
+          "symbol": "5011.TW",
+          "name": "久陽"
+        },
+        {
+          "symbol": "5013.TW",
+          "name": "強新"
+        },
+        {
+          "symbol": "5014.TW",
+          "name": "建錩"
+        },
+        {
+          "symbol": "5015.TW",
+          "name": "華祺"
+        },
+        {
+          "symbol": "5016.TW",
+          "name": "松和"
+        },
+        {
+          "symbol": "5538.TW",
+          "name": "東明-KY"
+        },
+        {
+          "symbol": "6248.TW",
+          "name": "沛波"
+        },
+        {
+          "symbol": "7718.TW",
+          "name": "友鋮"
+        },
+        {
+          "symbol": "8349.TW",
+          "name": "恒耀"
+        },
+        {
+          "symbol": "8415.TW",
+          "name": "大國鋼"
+        },
+        {
+          "symbol": "8930.TW",
+          "name": "青鋼"
+        },
+        {
+          "symbol": "9957.TW",
+          "name": "燁聯"
+        },
+        {
+          "symbol": "9958.TW",
+          "name": "世紀鋼"
+        },
+        {
+          "symbol": "9962.TW",
+          "name": "有益"
+        }
+      ]
+    },
+    "電器電纜": {
+      "count": 17,
+      "stocks": [
+        {
+          "symbol": "1603.TW",
+          "name": "華電"
+        },
+        {
+          "symbol": "1604.TW",
+          "name": "聲寶"
+        },
+        {
+          "symbol": "1605.TW",
+          "name": "華新"
+        },
+        {
+          "symbol": "1608.TW",
+          "name": "華榮"
+        },
+        {
+          "symbol": "1609.TW",
+          "name": "大亞"
+        },
+        {
+          "symbol": "1611.TW",
+          "name": "中電"
+        },
+        {
+          "symbol": "1612.TW",
+          "name": "宏泰"
+        },
+        {
+          "symbol": "1614.TW",
+          "name": "三洋電"
+        },
+        {
+          "symbol": "1615.TW",
+          "name": "大山"
+        },
+        {
+          "symbol": "1616.TW",
+          "name": "億泰"
+        },
+        {
+          "symbol": "1617.TW",
+          "name": "榮星"
+        },
+        {
+          "symbol": "1618.TW",
+          "name": "合機"
+        },
+        {
+          "symbol": "1623.TW",
+          "name": "大東電"
+        },
+        {
+          "symbol": "1626.TW",
+          "name": "艾美特-KY"
+        },
+        {
+          "symbol": "2061.TW",
+          "name": "風青"
+        },
+        {
+          "symbol": "4930.TW",
+          "name": "燦星網"
+        },
+        {
+          "symbol": "5283.TW",
+          "name": "禾聯碩"
+        }
+      ]
+    },
+    "電子通路業": {
+      "count": 38,
+      "stocks": [
+        {
+          "symbol": "2347.TW",
+          "name": "聯強"
+        },
+        {
+          "symbol": "2414.TW",
+          "name": "精技"
+        },
+        {
+          "symbol": "2430.TW",
+          "name": "燦坤"
+        },
+        {
+          "symbol": "3010.TW",
+          "name": "華立"
+        },
+        {
+          "symbol": "3028.TW",
+          "name": "增你強"
+        },
+        {
+          "symbol": "3033.TW",
+          "name": "威健"
+        },
+        {
+          "symbol": "3036.TW",
+          "name": "文曄"
+        },
+        {
+          "symbol": "3048.TW",
+          "name": "益登"
+        },
+        {
+          "symbol": "3055.TW",
+          "name": "蔚華科"
+        },
+        {
+          "symbol": "3209.TW",
+          "name": "全科"
+        },
+        {
+          "symbol": "3224.TW",
+          "name": "三顧"
+        },
+        {
+          "symbol": "3232.TW",
+          "name": "昱捷"
+        },
+        {
+          "symbol": "3312.TW",
+          "name": "弘憶股"
+        },
+        {
+          "symbol": "3360.TW",
+          "name": "尚立"
+        },
+        {
+          "symbol": "3444.TW",
+          "name": "利機"
+        },
+        {
+          "symbol": "3528.TW",
+          "name": "安馳"
+        },
+        {
+          "symbol": "3603.TW",
+          "name": "建祥國際"
+        },
+        {
+          "symbol": "3702.TW",
+          "name": "大聯大"
+        },
+        {
+          "symbol": "5434.TW",
+          "name": "崇越"
+        },
+        {
+          "symbol": "6113.TW",
+          "name": "亞矽"
+        },
+        {
+          "symbol": "6118.TW",
+          "name": "建達"
+        },
+        {
+          "symbol": "6154.TW",
+          "name": "順發"
+        },
+        {
+          "symbol": "6189.TW",
+          "name": "豐藝"
+        },
+        {
+          "symbol": "6227.TW",
+          "name": "茂綸"
+        },
+        {
+          "symbol": "6265.TW",
+          "name": "方土昶"
+        },
+        {
+          "symbol": "6270.TW",
+          "name": "倍微"
+        },
+        {
+          "symbol": "6281.TW",
+          "name": "全國電"
+        },
+        {
+          "symbol": "6474.TW",
+          "name": "華豫寧"
+        },
+        {
+          "symbol": "6707.TW",
+          "name": "富基電通"
+        },
+        {
+          "symbol": "6776.TW",
+          "name": "展碁國際"
+        },
+        {
+          "symbol": "8032.TW",
+          "name": "光菱"
+        },
+        {
+          "symbol": "8067.TW",
+          "name": "志旭"
+        },
+        {
+          "symbol": "8068.TW",
+          "name": "全達"
+        },
+        {
+          "symbol": "8070.TW",
+          "name": "長華*"
+        },
+        {
+          "symbol": "8072.TW",
+          "name": "陞泰"
+        },
+        {
+          "symbol": "8084.TW",
+          "name": "巨虹"
+        },
+        {
+          "symbol": "8096.TW",
+          "name": "擎亞"
+        },
+        {
+          "symbol": "8112.TW",
+          "name": "至上"
+        }
+      ]
+    },
+    "電子零組件業": {
+      "count": 229,
+      "stocks": [
+        {
+          "symbol": "1336.TW",
+          "name": "台翰"
+        },
+        {
+          "symbol": "1471.TW",
+          "name": "首利"
+        },
+        {
+          "symbol": "1582.TW",
+          "name": "信錦"
+        },
+        {
+          "symbol": "1595.TW",
+          "name": "川寶"
+        },
+        {
+          "symbol": "1815.TW",
+          "name": "富喬"
+        },
+        {
+          "symbol": "2059.TW",
+          "name": "川湖"
+        },
+        {
+          "symbol": "2308.TW",
+          "name": "台達電"
+        },
+        {
+          "symbol": "2313.TW",
+          "name": "華通"
+        },
+        {
+          "symbol": "2316.TW",
+          "name": "楠梓電"
+        },
+        {
+          "symbol": "2327.TW",
+          "name": "國巨*"
+        },
+        {
+          "symbol": "2328.TW",
+          "name": "廣宇"
+        },
+        {
+          "symbol": "2355.TW",
+          "name": "敬鵬"
+        },
+        {
+          "symbol": "2367.TW",
+          "name": "燿華"
+        },
+        {
+          "symbol": "2368.TW",
+          "name": "金像電"
+        },
+        {
+          "symbol": "2375.TW",
+          "name": "凱美"
+        },
+        {
+          "symbol": "2383.TW",
+          "name": "台光電"
+        },
+        {
+          "symbol": "2385.TW",
+          "name": "群光"
+        },
+        {
+          "symbol": "2392.TW",
+          "name": "正崴"
+        },
+        {
+          "symbol": "2402.TW",
+          "name": "毅嘉"
+        },
+        {
+          "symbol": "2413.TW",
+          "name": "環科"
+        },
+        {
+          "symbol": "2415.TW",
+          "name": "錩新"
+        },
+        {
+          "symbol": "2420.TW",
+          "name": "新巨"
+        },
+        {
+          "symbol": "2421.TW",
+          "name": "建準"
+        },
+        {
+          "symbol": "2428.TW",
+          "name": "興勤"
+        },
+        {
+          "symbol": "2431.TW",
+          "name": "聯昌"
+        },
+        {
+          "symbol": "2440.TW",
+          "name": "太空梭"
+        },
+        {
+          "symbol": "2457.TW",
+          "name": "飛宏"
+        },
+        {
+          "symbol": "2460.TW",
+          "name": "建通"
+        },
+        {
+          "symbol": "2462.TW",
+          "name": "良得電"
+        },
+        {
+          "symbol": "2467.TW",
+          "name": "志聖"
+        },
+        {
+          "symbol": "2472.TW",
+          "name": "立隆電"
+        },
+        {
+          "symbol": "2476.TW",
+          "name": "鉅祥"
+        },
+        {
+          "symbol": "2478.TW",
+          "name": "大毅"
+        },
+        {
+          "symbol": "2483.TW",
+          "name": "百容"
+        },
+        {
+          "symbol": "2484.TW",
+          "name": "希華"
+        },
+        {
+          "symbol": "2492.TW",
+          "name": "華新科"
+        },
+        {
+          "symbol": "2493.TW",
+          "name": "揚博"
+        },
+        {
+          "symbol": "3003.TW",
+          "name": "健和興"
+        },
+        {
+          "symbol": "3011.TW",
+          "name": "今皓"
+        },
+        {
+          "symbol": "3015.TW",
+          "name": "全漢"
+        },
+        {
+          "symbol": "3021.TW",
+          "name": "鴻名"
+        },
+        {
+          "symbol": "3023.TW",
+          "name": "信邦"
+        },
+        {
+          "symbol": "3026.TW",
+          "name": "禾伸堂"
+        },
+        {
+          "symbol": "3032.TW",
+          "name": "偉訓"
+        },
+        {
+          "symbol": "3037.TW",
+          "name": "欣興"
+        },
+        {
+          "symbol": "3042.TW",
+          "name": "晶技"
+        },
+        {
+          "symbol": "3044.TW",
+          "name": "健鼎"
+        },
+        {
+          "symbol": "3058.TW",
+          "name": "立德"
+        },
+        {
+          "symbol": "3078.TW",
+          "name": "僑威"
+        },
+        {
+          "symbol": "3090.TW",
+          "name": "日電貿"
+        },
+        {
+          "symbol": "3092.TW",
+          "name": "鴻碩"
+        },
+        {
+          "symbol": "3114.TW",
+          "name": "好德"
+        },
+        {
+          "symbol": "3115.TW",
+          "name": "富榮綱"
+        },
+        {
+          "symbol": "3117.TW",
+          "name": "年程"
+        },
+        {
+          "symbol": "3191.TW",
+          "name": "雲嘉南"
+        },
+        {
+          "symbol": "3206.TW",
+          "name": "志豐"
+        },
+        {
+          "symbol": "3207.TW",
+          "name": "耀勝"
+        },
+        {
+          "symbol": "3217.TW",
+          "name": "優群"
+        },
+        {
+          "symbol": "3229.TW",
+          "name": "晟鈦"
+        },
+        {
+          "symbol": "3236.TW",
+          "name": "千如"
+        },
+        {
+          "symbol": "3276.TW",
+          "name": "宇環"
+        },
+        {
+          "symbol": "3288.TW",
+          "name": "點晶"
+        },
+        {
+          "symbol": "3290.TW",
+          "name": "東浦"
+        },
+        {
+          "symbol": "3294.TW",
+          "name": "英濟"
+        },
+        {
+          "symbol": "3296.TW",
+          "name": "勝德"
+        },
+        {
+          "symbol": "3308.TW",
+          "name": "聯德"
+        },
+        {
+          "symbol": "3310.TW",
+          "name": "佳穎"
+        },
+        {
+          "symbol": "3321.TW",
+          "name": "同泰"
+        },
+        {
+          "symbol": "3322.TW",
+          "name": "建舜電"
+        },
+        {
+          "symbol": "3332.TW",
+          "name": "幸康"
+        },
+        {
+          "symbol": "3338.TW",
+          "name": "泰碩"
+        },
+        {
+          "symbol": "3354.TW",
+          "name": "律勝"
+        },
+        {
+          "symbol": "3357.TW",
+          "name": "臺慶科"
+        },
+        {
+          "symbol": "3376.TW",
+          "name": "新日興"
+        },
+        {
+          "symbol": "3388.TW",
+          "name": "崇越電"
+        },
+        {
+          "symbol": "3390.TW",
+          "name": "旭軟"
+        },
+        {
+          "symbol": "3432.TW",
+          "name": "台端"
+        },
+        {
+          "symbol": "3484.TW",
+          "name": "崧騰"
+        },
+        {
+          "symbol": "3485.TW",
+          "name": "敘豐"
+        },
+        {
+          "symbol": "3492.TW",
+          "name": "長盛"
+        },
+        {
+          "symbol": "3501.TW",
+          "name": "維熹"
+        },
+        {
+          "symbol": "3511.TW",
+          "name": "矽瑪"
+        },
+        {
+          "symbol": "3520.TW",
+          "name": "華盈"
+        },
+        {
+          "symbol": "3526.TW",
+          "name": "凡甲"
+        },
+        {
+          "symbol": "3533.TW",
+          "name": "嘉澤"
+        },
+        {
+          "symbol": "3537.TW",
+          "name": "堡達"
+        },
+        {
+          "symbol": "3548.TW",
+          "name": "兆利"
+        },
+        {
+          "symbol": "3550.TW",
+          "name": "聯穎"
+        },
+        {
+          "symbol": "3585.TW",
+          "name": "聯致"
+        },
+        {
+          "symbol": "3593.TW",
+          "name": "力銘"
+        },
+        {
+          "symbol": "3597.TW",
+          "name": "映興"
+        },
+        {
+          "symbol": "3605.TW",
+          "name": "宏致"
+        },
+        {
+          "symbol": "3607.TW",
+          "name": "谷崧"
+        },
+        {
+          "symbol": "3609.TW",
+          "name": "三一東林"
+        },
+        {
+          "symbol": "3624.TW",
+          "name": "光頡"
+        },
+        {
+          "symbol": "3631.TW",
+          "name": "晟楠"
+        },
+        {
+          "symbol": "3645.TW",
+          "name": "達邁"
+        },
+        {
+          "symbol": "3646.TW",
+          "name": "艾恩特"
+        },
+        {
+          "symbol": "3653.TW",
+          "name": "健策"
+        },
+        {
+          "symbol": "3679.TW",
+          "name": "新至陞"
+        },
+        {
+          "symbol": "3689.TW",
+          "name": "湧德"
+        },
+        {
+          "symbol": "3710.TW",
+          "name": "連展投控"
+        },
+        {
+          "symbol": "3715.TW",
+          "name": "定穎投控"
+        },
+        {
+          "symbol": "4542.TW",
+          "name": "科嶠"
+        },
+        {
+          "symbol": "4545.TW",
+          "name": "銘鈺"
+        },
+        {
+          "symbol": "4912.TW",
+          "name": "聯德控股-KY"
+        },
+        {
+          "symbol": "4915.TW",
+          "name": "致伸"
+        },
+        {
+          "symbol": "4927.TW",
+          "name": "泰鼎-KY"
+        },
+        {
+          "symbol": "4939.TW",
+          "name": "亞電"
+        },
+        {
+          "symbol": "4943.TW",
+          "name": "康控-KY"
+        },
+        {
+          "symbol": "4958.TW",
+          "name": "臻鼎-KY"
+        },
+        {
+          "symbol": "4974.TW",
+          "name": "亞泰"
+        },
+        {
+          "symbol": "4980.TW",
+          "name": "佐臻"
+        },
+        {
+          "symbol": "4989.TW",
+          "name": "榮科"
+        },
+        {
+          "symbol": "4999.TW",
+          "name": "鑫禾"
+        },
+        {
+          "symbol": "5227.TW",
+          "name": "立凱-KY"
+        },
+        {
+          "symbol": "5228.TW",
+          "name": "鈺鎧"
+        },
+        {
+          "symbol": "5254.TW",
+          "name": "欣訊科技"
+        },
+        {
+          "symbol": "5271.TW",
+          "name": "紘通"
+        },
+        {
+          "symbol": "5291.TW",
+          "name": "邑昇"
+        },
+        {
+          "symbol": "5309.TW",
+          "name": "系統電"
+        },
+        {
+          "symbol": "5328.TW",
+          "name": "華容"
+        },
+        {
+          "symbol": "5340.TW",
+          "name": "建榮"
+        },
+        {
+          "symbol": "5355.TW",
+          "name": "佳總"
+        },
+        {
+          "symbol": "5381.TW",
+          "name": "光譜"
+        },
+        {
+          "symbol": "5439.TW",
+          "name": "高技"
+        },
+        {
+          "symbol": "5457.TW",
+          "name": "宣德"
+        },
+        {
+          "symbol": "5460.TW",
+          "name": "同協"
+        },
+        {
+          "symbol": "5464.TW",
+          "name": "霖宏"
+        },
+        {
+          "symbol": "5469.TW",
+          "name": "瀚宇博"
+        },
+        {
+          "symbol": "5475.TW",
+          "name": "德宏"
+        },
+        {
+          "symbol": "5488.TW",
+          "name": "松普"
+        },
+        {
+          "symbol": "5498.TW",
+          "name": "凱崴"
+        },
+        {
+          "symbol": "6108.TW",
+          "name": "競國"
+        },
+        {
+          "symbol": "6114.TW",
+          "name": "久威"
+        },
+        {
+          "symbol": "6115.TW",
+          "name": "鎰勝"
+        },
+        {
+          "symbol": "6124.TW",
+          "name": "業強"
+        },
+        {
+          "symbol": "6126.TW",
+          "name": "信音"
+        },
+        {
+          "symbol": "6127.TW",
+          "name": "九豪"
+        },
+        {
+          "symbol": "6133.TW",
+          "name": "金橋"
+        },
+        {
+          "symbol": "6134.TW",
+          "name": "萬旭"
+        },
+        {
+          "symbol": "6141.TW",
+          "name": "柏承"
+        },
+        {
+          "symbol": "6153.TW",
+          "name": "嘉聯益"
+        },
+        {
+          "symbol": "6155.TW",
+          "name": "鈞寶"
+        },
+        {
+          "symbol": "6156.TW",
+          "name": "松上"
+        },
+        {
+          "symbol": "6158.TW",
+          "name": "禾昌"
+        },
+        {
+          "symbol": "6173.TW",
+          "name": "信昌電"
+        },
+        {
+          "symbol": "6174.TW",
+          "name": "安碁"
+        },
+        {
+          "symbol": "6175.TW",
+          "name": "立敦"
+        },
+        {
+          "symbol": "6185.TW",
+          "name": "幃翔"
+        },
+        {
+          "symbol": "6191.TW",
+          "name": "精成科"
+        },
+        {
+          "symbol": "6194.TW",
+          "name": "育富"
+        },
+        {
+          "symbol": "6197.TW",
+          "name": "佳必琪"
+        },
+        {
+          "symbol": "6203.TW",
+          "name": "海韻電"
+        },
+        {
+          "symbol": "6204.TW",
+          "name": "艾華"
+        },
+        {
+          "symbol": "6205.TW",
+          "name": "詮欣"
+        },
+        {
+          "symbol": "6207.TW",
+          "name": "雷科"
+        },
+        {
+          "symbol": "6210.TW",
+          "name": "慶生"
+        },
+        {
+          "symbol": "6213.TW",
+          "name": "聯茂"
+        },
+        {
+          "symbol": "6217.TW",
+          "name": "中探針"
+        },
+        {
+          "symbol": "6220.TW",
+          "name": "岳豐"
+        },
+        {
+          "symbol": "6224.TW",
+          "name": "聚鼎"
+        },
+        {
+          "symbol": "6259.TW",
+          "name": "百徽"
+        },
+        {
+          "symbol": "6266.TW",
+          "name": "泰詠"
+        },
+        {
+          "symbol": "6269.TW",
+          "name": "台郡"
+        },
+        {
+          "symbol": "6272.TW",
+          "name": "驊陞"
+        },
+        {
+          "symbol": "6274.TW",
+          "name": "台燿"
+        },
+        {
+          "symbol": "6275.TW",
+          "name": "元山"
+        },
+        {
+          "symbol": "6279.TW",
+          "name": "胡連"
+        },
+        {
+          "symbol": "6282.TW",
+          "name": "康舒"
+        },
+        {
+          "symbol": "6284.TW",
+          "name": "佳邦"
+        },
+        {
+          "symbol": "6290.TW",
+          "name": "良維"
+        },
+        {
+          "symbol": "6292.TW",
+          "name": "迅德"
+        },
+        {
+          "symbol": "6407.TW",
+          "name": "相互"
+        },
+        {
+          "symbol": "6412.TW",
+          "name": "群電"
+        },
+        {
+          "symbol": "6418.TW",
+          "name": "詠昇"
+        },
+        {
+          "symbol": "6432.TW",
+          "name": "今展科"
+        },
+        {
+          "symbol": "6449.TW",
+          "name": "鈺邦"
+        },
+        {
+          "symbol": "6538.TW",
+          "name": "倉和"
+        },
+        {
+          "symbol": "6555.TW",
+          "name": "榮炭"
+        },
+        {
+          "symbol": "6584.TW",
+          "name": "南俊國際"
+        },
+        {
+          "symbol": "6597.TW",
+          "name": "立誠"
+        },
+        {
+          "symbol": "6642.TW",
+          "name": "富致"
+        },
+        {
+          "symbol": "6664.TW",
+          "name": "群翊"
+        },
+        {
+          "symbol": "6672.TW",
+          "name": "騰輝電子-KY"
+        },
+        {
+          "symbol": "6715.TW",
+          "name": "嘉基"
+        },
+        {
+          "symbol": "6727.TW",
+          "name": "亞泰金屬"
+        },
+        {
+          "symbol": "6755.TW",
+          "name": "連鋐科技"
+        },
+        {
+          "symbol": "6761.TW",
+          "name": "穩得"
+        },
+        {
+          "symbol": "6781.TW",
+          "name": "AES-KY"
+        },
+        {
+          "symbol": "6805.TW",
+          "name": "富世達"
+        },
+        {
+          "symbol": "6821.TW",
+          "name": "聯寶"
+        },
+        {
+          "symbol": "6833.TW",
+          "name": "太康精密"
+        },
+        {
+          "symbol": "6834.TW",
+          "name": "天二科技"
+        },
+        {
+          "symbol": "6835.TW",
+          "name": "圓裕"
+        },
+        {
+          "symbol": "6862.TW",
+          "name": "三集瑞-KY"
+        },
+        {
+          "symbol": "6913.TW",
+          "name": "鴻呈"
+        },
+        {
+          "symbol": "6915.TW",
+          "name": "美強光"
+        },
+        {
+          "symbol": "6940.TW",
+          "name": "格斯科技*"
+        },
+        {
+          "symbol": "6967.TW",
+          "name": "汎瑋材料"
+        },
+        {
+          "symbol": "7419.TW",
+          "name": "達勝"
+        },
+        {
+          "symbol": "7744.TW",
+          "name": "崴寶"
+        },
+        {
+          "symbol": "7758.TW",
+          "name": "睿騰能源"
+        },
+        {
+          "symbol": "7788.TW",
+          "name": "松川精密"
+        },
+        {
+          "symbol": "7795.TW",
+          "name": "長廣"
+        },
+        {
+          "symbol": "7816.TW",
+          "name": "來穎"
+        },
+        {
+          "symbol": "7861.TW",
+          "name": "貝爾威勒"
+        },
+        {
+          "symbol": "7893.TW",
+          "name": "睿信"
+        },
+        {
+          "symbol": "7896.TW",
+          "name": "喬越"
+        },
+        {
+          "symbol": "7912.TW",
+          "name": "新聿科"
+        },
+        {
+          "symbol": "8038.TW",
+          "name": "長園科"
+        },
+        {
+          "symbol": "8039.TW",
+          "name": "台虹"
+        },
+        {
+          "symbol": "8042.TW",
+          "name": "金山電"
+        },
+        {
+          "symbol": "8043.TW",
+          "name": "蜜望實"
+        },
+        {
+          "symbol": "8046.TW",
+          "name": "南電"
+        },
+        {
+          "symbol": "8071.TW",
+          "name": "能率網通"
+        },
+        {
+          "symbol": "8074.TW",
+          "name": "鉅橡"
+        },
+        {
+          "symbol": "8093.TW",
+          "name": "保銳"
+        },
+        {
+          "symbol": "8103.TW",
+          "name": "瀚荃"
+        },
+        {
+          "symbol": "8109.TW",
+          "name": "博大"
+        },
+        {
+          "symbol": "8121.TW",
+          "name": "越峰"
+        },
+        {
+          "symbol": "8147.TW",
+          "name": "正淩"
+        },
+        {
+          "symbol": "8155.TW",
+          "name": "博智"
+        },
+        {
+          "symbol": "8182.TW",
+          "name": "加高"
+        },
+        {
+          "symbol": "8213.TW",
+          "name": "志超"
+        },
+        {
+          "symbol": "8249.TW",
+          "name": "菱光"
+        },
+        {
+          "symbol": "8289.TW",
+          "name": "泰藝"
+        },
+        {
+          "symbol": "8291.TW",
+          "name": "尚茂"
+        },
+        {
+          "symbol": "8358.TW",
+          "name": "金居"
+        }
+      ]
+    },
+    "電機機械": {
+      "count": 115,
+      "stocks": [
+        {
+          "symbol": "1503.TW",
+          "name": "士電"
+        },
+        {
+          "symbol": "1504.TW",
+          "name": "東元"
+        },
+        {
+          "symbol": "1506.TW",
+          "name": "正道"
+        },
+        {
+          "symbol": "1513.TW",
+          "name": "中興電"
+        },
+        {
+          "symbol": "1514.TW",
+          "name": "亞力"
+        },
+        {
+          "symbol": "1515.TW",
+          "name": "力山"
+        },
+        {
+          "symbol": "1517.TW",
+          "name": "利奇"
+        },
+        {
+          "symbol": "1519.TW",
+          "name": "華城"
+        },
+        {
+          "symbol": "1526.TW",
+          "name": "日馳"
+        },
+        {
+          "symbol": "1527.TW",
+          "name": "鑽全"
+        },
+        {
+          "symbol": "1528.TW",
+          "name": "恩德"
+        },
+        {
+          "symbol": "1529.TW",
+          "name": "樂事綠能"
+        },
+        {
+          "symbol": "1530.TW",
+          "name": "亞崴"
+        },
+        {
+          "symbol": "1531.TW",
+          "name": "高林股"
+        },
+        {
+          "symbol": "1532.TW",
+          "name": "勤美"
+        },
+        {
+          "symbol": "1535.TW",
+          "name": "中宇"
+        },
+        {
+          "symbol": "1537.TW",
+          "name": "廣隆"
+        },
+        {
+          "symbol": "1538.TW",
+          "name": "正峰"
+        },
+        {
+          "symbol": "1539.TW",
+          "name": "巨庭"
+        },
+        {
+          "symbol": "1540.TW",
+          "name": "喬福"
+        },
+        {
+          "symbol": "1541.TW",
+          "name": "錩泰"
+        },
+        {
+          "symbol": "1558.TW",
+          "name": "伸興"
+        },
+        {
+          "symbol": "1560.TW",
+          "name": "中砂"
+        },
+        {
+          "symbol": "1570.TW",
+          "name": "力肯"
+        },
+        {
+          "symbol": "1580.TW",
+          "name": "新麥"
+        },
+        {
+          "symbol": "1583.TW",
+          "name": "程泰"
+        },
+        {
+          "symbol": "1586.TW",
+          "name": "和勤"
+        },
+        {
+          "symbol": "1589.TW",
+          "name": "永冠-KY"
+        },
+        {
+          "symbol": "1590.TW",
+          "name": "亞德客-KY"
+        },
+        {
+          "symbol": "1591.TW",
+          "name": "駿吉-KY"
+        },
+        {
+          "symbol": "1594.TW",
+          "name": "日高"
+        },
+        {
+          "symbol": "1597.TW",
+          "name": "直得"
+        },
+        {
+          "symbol": "1599.TW",
+          "name": "宏佳騰"
+        },
+        {
+          "symbol": "2049.TW",
+          "name": "上銀"
+        },
+        {
+          "symbol": "2066.TW",
+          "name": "世德"
+        },
+        {
+          "symbol": "2067.TW",
+          "name": "嘉鋼"
+        },
+        {
+          "symbol": "2070.TW",
+          "name": "精湛"
+        },
+        {
+          "symbol": "2230.TW",
+          "name": "泰茂"
+        },
+        {
+          "symbol": "2235.TW",
+          "name": "謚源"
+        },
+        {
+          "symbol": "2237.TW",
+          "name": "華德動能"
+        },
+        {
+          "symbol": "2245.TW",
+          "name": "詠勝昌*"
+        },
+        {
+          "symbol": "2249.TW",
+          "name": "湧盛"
+        },
+        {
+          "symbol": "2371.TW",
+          "name": "大同"
+        },
+        {
+          "symbol": "3162.TW",
+          "name": "精確"
+        },
+        {
+          "symbol": "3167.TW",
+          "name": "大量"
+        },
+        {
+          "symbol": "3226.TW",
+          "name": "龍鋒"
+        },
+        {
+          "symbol": "3379.TW",
+          "name": "彬台"
+        },
+        {
+          "symbol": "3426.TW",
+          "name": "台興"
+        },
+        {
+          "symbol": "3685.TW",
+          "name": "元創精密"
+        },
+        {
+          "symbol": "4502.TW",
+          "name": "健信"
+        },
+        {
+          "symbol": "4503.TW",
+          "name": "金雨"
+        },
+        {
+          "symbol": "4506.TW",
+          "name": "崇友"
+        },
+        {
+          "symbol": "4510.TW",
+          "name": "高鋒"
+        },
+        {
+          "symbol": "4513.TW",
+          "name": "福裕"
+        },
+        {
+          "symbol": "4523.TW",
+          "name": "永彰"
+        },
+        {
+          "symbol": "4526.TW",
+          "name": "東台"
+        },
+        {
+          "symbol": "4527.TW",
+          "name": "方土霖"
+        },
+        {
+          "symbol": "4528.TW",
+          "name": "江興鍛"
+        },
+        {
+          "symbol": "4532.TW",
+          "name": "瑞智"
+        },
+        {
+          "symbol": "4533.TW",
+          "name": "協易機"
+        },
+        {
+          "symbol": "4534.TW",
+          "name": "慶騰"
+        },
+        {
+          "symbol": "4535.TW",
+          "name": "至興"
+        },
+        {
+          "symbol": "4538.TW",
+          "name": "大詠城"
+        },
+        {
+          "symbol": "4540.TW",
+          "name": "全球傳動"
+        },
+        {
+          "symbol": "4543.TW",
+          "name": "萬在"
+        },
+        {
+          "symbol": "4544.TW",
+          "name": "春日"
+        },
+        {
+          "symbol": "4546.TW",
+          "name": "長亨"
+        },
+        {
+          "symbol": "4549.TW",
+          "name": "桓達"
+        },
+        {
+          "symbol": "4550.TW",
+          "name": "長佳"
+        },
+        {
+          "symbol": "4552.TW",
+          "name": "力達-KY"
+        },
+        {
+          "symbol": "4553.TW",
+          "name": "盛復"
+        },
+        {
+          "symbol": "4555.TW",
+          "name": "氣立"
+        },
+        {
+          "symbol": "4558.TW",
+          "name": "寶緯"
+        },
+        {
+          "symbol": "4560.TW",
+          "name": "強信-KY"
+        },
+        {
+          "symbol": "4561.TW",
+          "name": "健椿"
+        },
+        {
+          "symbol": "4562.TW",
+          "name": "穎漢"
+        },
+        {
+          "symbol": "4563.TW",
+          "name": "百德"
+        },
+        {
+          "symbol": "4564.TW",
+          "name": "元翎"
+        },
+        {
+          "symbol": "4565.TW",
+          "name": "宏偉"
+        },
+        {
+          "symbol": "4566.TW",
+          "name": "時碩工業"
+        },
+        {
+          "symbol": "4568.TW",
+          "name": "科際精密"
+        },
+        {
+          "symbol": "4570.TW",
+          "name": "傑生"
+        },
+        {
+          "symbol": "4571.TW",
+          "name": "鈞興-KY"
+        },
+        {
+          "symbol": "4572.TW",
+          "name": "駐龍"
+        },
+        {
+          "symbol": "4573.TW",
+          "name": "高明鐵"
+        },
+        {
+          "symbol": "4575.TW",
+          "name": "銓寶"
+        },
+        {
+          "symbol": "4576.TW",
+          "name": "大銀微系統"
+        },
+        {
+          "symbol": "4580.TW",
+          "name": "捷流閥業"
+        },
+        {
+          "symbol": "4583.TW",
+          "name": "台灣精銳"
+        },
+        {
+          "symbol": "4584.TW",
+          "name": "君帆"
+        },
+        {
+          "symbol": "4587.TW",
+          "name": "寶元數控"
+        },
+        {
+          "symbol": "4589.TW",
+          "name": "碩陽電機"
+        },
+        {
+          "symbol": "5288.TW",
+          "name": "豐祥-KY"
+        },
+        {
+          "symbol": "6122.TW",
+          "name": "擎邦"
+        },
+        {
+          "symbol": "6425.TW",
+          "name": "易發"
+        },
+        {
+          "symbol": "6603.TW",
+          "name": "富強鑫"
+        },
+        {
+          "symbol": "6604.TW",
+          "name": "儒億"
+        },
+        {
+          "symbol": "6606.TW",
+          "name": "建德工業"
+        },
+        {
+          "symbol": "6609.TW",
+          "name": "瀧澤科"
+        },
+        {
+          "symbol": "6705.TW",
+          "name": "振躍精密"
+        },
+        {
+          "symbol": "6843.TW",
+          "name": "進典"
+        },
+        {
+          "symbol": "6982.TW",
+          "name": "大井泵浦"
+        },
+        {
+          "symbol": "7642.TW",
+          "name": "昶瑞機電"
+        },
+        {
+          "symbol": "7709.TW",
+          "name": "榮田"
+        },
+        {
+          "symbol": "7750.TW",
+          "name": "新代"
+        },
+        {
+          "symbol": "7869.TW",
+          "name": "宏于電機"
+        },
+        {
+          "symbol": "7879.TW",
+          "name": "益材科技"
+        },
+        {
+          "symbol": "8027.TW",
+          "name": "鈦昇"
+        },
+        {
+          "symbol": "8083.TW",
+          "name": "瑞穎"
+        },
+        {
+          "symbol": "8107.TW",
+          "name": "大億金茂"
+        },
+        {
+          "symbol": "8222.TW",
+          "name": "寶一"
+        },
+        {
+          "symbol": "8255.TW",
+          "name": "朋程"
+        },
+        {
+          "symbol": "8374.TW",
+          "name": "羅昇"
+        },
+        {
+          "symbol": "8996.TW",
+          "name": "高力"
+        },
+        {
+          "symbol": "9951.TW",
+          "name": "皇田"
+        }
+      ]
+    },
+    "電腦及週邊設備業": {
+      "count": 123,
+      "stocks": [
+        {
+          "symbol": "1569.TW",
+          "name": "濱川"
+        },
+        {
+          "symbol": "2301.TW",
+          "name": "光寶科"
+        },
+        {
+          "symbol": "2305.TW",
+          "name": "全友"
+        },
+        {
+          "symbol": "2324.TW",
+          "name": "仁寶"
+        },
+        {
+          "symbol": "2331.TW",
+          "name": "精英"
+        },
+        {
+          "symbol": "2352.TW",
+          "name": "佳世達"
+        },
+        {
+          "symbol": "2353.TW",
+          "name": "宏碁"
+        },
+        {
+          "symbol": "2356.TW",
+          "name": "英業達"
+        },
+        {
+          "symbol": "2357.TW",
+          "name": "華碩"
+        },
+        {
+          "symbol": "2362.TW",
+          "name": "藍天"
+        },
+        {
+          "symbol": "2364.TW",
+          "name": "倫飛"
+        },
+        {
+          "symbol": "2365.TW",
+          "name": "昆盈"
+        },
+        {
+          "symbol": "2376.TW",
+          "name": "技嘉"
+        },
+        {
+          "symbol": "2377.TW",
+          "name": "微星"
+        },
+        {
+          "symbol": "2380.TW",
+          "name": "虹光"
+        },
+        {
+          "symbol": "2382.TW",
+          "name": "廣達"
+        },
+        {
+          "symbol": "2387.TW",
+          "name": "精元"
+        },
+        {
+          "symbol": "2395.TW",
+          "name": "研華"
+        },
+        {
+          "symbol": "2397.TW",
+          "name": "友通"
+        },
+        {
+          "symbol": "2399.TW",
+          "name": "映泰"
+        },
+        {
+          "symbol": "2405.TW",
+          "name": "輔信"
+        },
+        {
+          "symbol": "2417.TW",
+          "name": "圓剛"
+        },
+        {
+          "symbol": "2425.TW",
+          "name": "承啟"
+        },
+        {
+          "symbol": "2465.TW",
+          "name": "麗臺"
+        },
+        {
+          "symbol": "2495.TW",
+          "name": "普安"
+        },
+        {
+          "symbol": "3002.TW",
+          "name": "歐格"
+        },
+        {
+          "symbol": "3005.TW",
+          "name": "神基"
+        },
+        {
+          "symbol": "3013.TW",
+          "name": "晟銘電"
+        },
+        {
+          "symbol": "3017.TW",
+          "name": "奇鋐"
+        },
+        {
+          "symbol": "3022.TW",
+          "name": "威強電"
+        },
+        {
+          "symbol": "3046.TW",
+          "name": "建碁"
+        },
+        {
+          "symbol": "3057.TW",
+          "name": "喬鼎"
+        },
+        {
+          "symbol": "3060.TW",
+          "name": "銘異"
+        },
+        {
+          "symbol": "3071.TW",
+          "name": "協禧"
+        },
+        {
+          "symbol": "3088.TW",
+          "name": "艾訊"
+        },
+        {
+          "symbol": "3097.TW",
+          "name": "拍檔"
+        },
+        {
+          "symbol": "3211.TW",
+          "name": "順達"
+        },
+        {
+          "symbol": "3213.TW",
+          "name": "茂訊"
+        },
+        {
+          "symbol": "3231.TW",
+          "name": "緯創"
+        },
+        {
+          "symbol": "3272.TW",
+          "name": "東碩"
+        },
+        {
+          "symbol": "3287.TW",
+          "name": "廣寰科"
+        },
+        {
+          "symbol": "3323.TW",
+          "name": "加百裕"
+        },
+        {
+          "symbol": "3325.TW",
+          "name": "旭品"
+        },
+        {
+          "symbol": "3349.TW",
+          "name": "寶德"
+        },
+        {
+          "symbol": "3416.TW",
+          "name": "融程電"
+        },
+        {
+          "symbol": "3479.TW",
+          "name": "安勤"
+        },
+        {
+          "symbol": "3483.TW",
+          "name": "力致"
+        },
+        {
+          "symbol": "3494.TW",
+          "name": "誠研"
+        },
+        {
+          "symbol": "3515.TW",
+          "name": "華擎"
+        },
+        {
+          "symbol": "3540.TW",
+          "name": "曜越"
+        },
+        {
+          "symbol": "3577.TW",
+          "name": "泓格"
+        },
+        {
+          "symbol": "3594.TW",
+          "name": "磐儀"
+        },
+        {
+          "symbol": "3611.TW",
+          "name": "鼎翰"
+        },
+        {
+          "symbol": "3625.TW",
+          "name": "西勝"
+        },
+        {
+          "symbol": "3652.TW",
+          "name": "精聯"
+        },
+        {
+          "symbol": "3693.TW",
+          "name": "營邦"
+        },
+        {
+          "symbol": "3701.TW",
+          "name": "大眾控"
+        },
+        {
+          "symbol": "3706.TW",
+          "name": "神達"
+        },
+        {
+          "symbol": "3709.TW",
+          "name": "鑫聯大投控"
+        },
+        {
+          "symbol": "3712.TW",
+          "name": "永崴投控"
+        },
+        {
+          "symbol": "4916.TW",
+          "name": "事欣科"
+        },
+        {
+          "symbol": "4924.TW",
+          "name": "欣厚-KY"
+        },
+        {
+          "symbol": "4931.TW",
+          "name": "新盛力"
+        },
+        {
+          "symbol": "4938.TW",
+          "name": "和碩"
+        },
+        {
+          "symbol": "4987.TW",
+          "name": "科誠"
+        },
+        {
+          "symbol": "5215.TW",
+          "name": "科嘉-KY"
+        },
+        {
+          "symbol": "5223.TW",
+          "name": "安力-KY"
+        },
+        {
+          "symbol": "5258.TW",
+          "name": "虹堡"
+        },
+        {
+          "symbol": "5289.TW",
+          "name": "宜鼎"
+        },
+        {
+          "symbol": "5356.TW",
+          "name": "協益"
+        },
+        {
+          "symbol": "5386.TW",
+          "name": "青雲"
+        },
+        {
+          "symbol": "5426.TW",
+          "name": "振發"
+        },
+        {
+          "symbol": "5438.TW",
+          "name": "東友"
+        },
+        {
+          "symbol": "5465.TW",
+          "name": "富驊"
+        },
+        {
+          "symbol": "5474.TW",
+          "name": "聰泰"
+        },
+        {
+          "symbol": "5490.TW",
+          "name": "同亨"
+        },
+        {
+          "symbol": "6117.TW",
+          "name": "迎廣"
+        },
+        {
+          "symbol": "6121.TW",
+          "name": "新普"
+        },
+        {
+          "symbol": "6128.TW",
+          "name": "上福"
+        },
+        {
+          "symbol": "6150.TW",
+          "name": "撼訊"
+        },
+        {
+          "symbol": "6160.TW",
+          "name": "欣技"
+        },
+        {
+          "symbol": "6161.TW",
+          "name": "捷波"
+        },
+        {
+          "symbol": "6166.TW",
+          "name": "凌華"
+        },
+        {
+          "symbol": "6188.TW",
+          "name": "廣明"
+        },
+        {
+          "symbol": "6206.TW",
+          "name": "飛捷"
+        },
+        {
+          "symbol": "6228.TW",
+          "name": "全譜"
+        },
+        {
+          "symbol": "6230.TW",
+          "name": "尼得科超眾"
+        },
+        {
+          "symbol": "6235.TW",
+          "name": "華孚"
+        },
+        {
+          "symbol": "6276.TW",
+          "name": "安鈦克"
+        },
+        {
+          "symbol": "6277.TW",
+          "name": "宏正"
+        },
+        {
+          "symbol": "6414.TW",
+          "name": "樺漢"
+        },
+        {
+          "symbol": "6441.TW",
+          "name": "廣錠"
+        },
+        {
+          "symbol": "6570.TW",
+          "name": "維田"
+        },
+        {
+          "symbol": "6577.TW",
+          "name": "勁豐"
+        },
+        {
+          "symbol": "6579.TW",
+          "name": "研揚"
+        },
+        {
+          "symbol": "6591.TW",
+          "name": "動力-KY"
+        },
+        {
+          "symbol": "6599.TW",
+          "name": "普達系統"
+        },
+        {
+          "symbol": "6638.TW",
+          "name": "沅聖"
+        },
+        {
+          "symbol": "6669.TW",
+          "name": "緯穎"
+        },
+        {
+          "symbol": "6680.TW",
+          "name": "鑫創電子"
+        },
+        {
+          "symbol": "6737.TW",
+          "name": "秀育"
+        },
+        {
+          "symbol": "6825.TW",
+          "name": "和暢科技"
+        },
+        {
+          "symbol": "6831.TW",
+          "name": "邁科"
+        },
+        {
+          "symbol": "6858.TW",
+          "name": "愛比科技"
+        },
+        {
+          "symbol": "6922.TW",
+          "name": "宸曜"
+        },
+        {
+          "symbol": "6928.TW",
+          "name": "攸泰科技"
+        },
+        {
+          "symbol": "6933.TW",
+          "name": "AMAX-KY"
+        },
+        {
+          "symbol": "7455.TW",
+          "name": "樺緯物聯"
+        },
+        {
+          "symbol": "7562.TW",
+          "name": "博來科技"
+        },
+        {
+          "symbol": "7710.TW",
+          "name": "東擎科技"
+        },
+        {
+          "symbol": "7711.TW",
+          "name": "永擎"
+        },
+        {
+          "symbol": "7854.TW",
+          "name": "佐茂"
+        },
+        {
+          "symbol": "7875.TW",
+          "name": "安圖斯"
+        },
+        {
+          "symbol": "7892.TW",
+          "name": "元鈦科"
+        },
+        {
+          "symbol": "8050.TW",
+          "name": "廣積"
+        },
+        {
+          "symbol": "8076.TW",
+          "name": "伍豐"
+        },
+        {
+          "symbol": "8114.TW",
+          "name": "振樺電"
+        },
+        {
+          "symbol": "8119.TW",
+          "name": "公信"
+        },
+        {
+          "symbol": "8163.TW",
+          "name": "達方"
+        },
+        {
+          "symbol": "8210.TW",
+          "name": "勤誠"
+        },
+        {
+          "symbol": "8234.TW",
+          "name": "新漢"
+        },
+        {
+          "symbol": "8410.TW",
+          "name": "森田"
+        },
+        {
+          "symbol": "9912.TW",
+          "name": "偉聯"
+        }
+      ]
+    },
+    "食品工業": {
+      "count": 41,
+      "stocks": [
+        {
+          "symbol": "1201.TW",
+          "name": "味全"
+        },
+        {
+          "symbol": "1203.TW",
+          "name": "味王"
+        },
+        {
+          "symbol": "1210.TW",
+          "name": "大成"
+        },
+        {
+          "symbol": "1213.TW",
+          "name": "大飲"
+        },
+        {
+          "symbol": "1215.TW",
+          "name": "卜蜂"
+        },
+        {
+          "symbol": "1216.TW",
+          "name": "統一"
+        },
+        {
+          "symbol": "1217.TW",
+          "name": "愛之味"
+        },
+        {
+          "symbol": "1218.TW",
+          "name": "泰山"
+        },
+        {
+          "symbol": "1219.TW",
+          "name": "福壽"
+        },
+        {
+          "symbol": "1220.TW",
+          "name": "台榮"
+        },
+        {
+          "symbol": "1225.TW",
+          "name": "福懋油"
+        },
+        {
+          "symbol": "1227.TW",
+          "name": "佳格"
+        },
+        {
+          "symbol": "1229.TW",
+          "name": "聯華"
+        },
+        {
+          "symbol": "1231.TW",
+          "name": "聯華食"
+        },
+        {
+          "symbol": "1232.TW",
+          "name": "大統益"
+        },
+        {
+          "symbol": "1233.TW",
+          "name": "天仁"
+        },
+        {
+          "symbol": "1234.TW",
+          "name": "黑松"
+        },
+        {
+          "symbol": "1235.TW",
+          "name": "興泰"
+        },
+        {
+          "symbol": "1236.TW",
+          "name": "宏亞"
+        },
+        {
+          "symbol": "1256.TW",
+          "name": "鮮活果汁-KY"
+        },
+        {
+          "symbol": "1260.TW",
+          "name": "富味鄉"
+        },
+        {
+          "symbol": "1264.TW",
+          "name": "德麥"
+        },
+        {
+          "symbol": "1293.TW",
+          "name": "利統"
+        },
+        {
+          "symbol": "1294.TW",
+          "name": "漢田生技"
+        },
+        {
+          "symbol": "1295.TW",
+          "name": "生合"
+        },
+        {
+          "symbol": "1702.TW",
+          "name": "南僑"
+        },
+        {
+          "symbol": "1737.TW",
+          "name": "臺鹽"
+        },
+        {
+          "symbol": "1796.TW",
+          "name": "金穎生技"
+        },
+        {
+          "symbol": "3054.TW",
+          "name": "立萬利"
+        },
+        {
+          "symbol": "4205.TW",
+          "name": "中華食"
+        },
+        {
+          "symbol": "4207.TW",
+          "name": "環泰"
+        },
+        {
+          "symbol": "6846.TW",
+          "name": "綠茵"
+        },
+        {
+          "symbol": "6886.TW",
+          "name": "遠東生技"
+        },
+        {
+          "symbol": "6935.TW",
+          "name": "王子製藥"
+        },
+        {
+          "symbol": "6963.TW",
+          "name": "品元"
+        },
+        {
+          "symbol": "7731.TW",
+          "name": "火星生技*"
+        },
+        {
+          "symbol": "7743.TW",
+          "name": "金利食安"
+        },
+        {
+          "symbol": "7780.TW",
+          "name": "大研生醫*"
+        },
+        {
+          "symbol": "7791.TW",
+          "name": "皇家可口"
+        },
+        {
+          "symbol": "7806.TW",
+          "name": "精華生醫"
+        },
+        {
+          "symbol": "7889.TW",
+          "name": "騰勢"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,445 @@
+{
+  "symbol": "2408.TW",
+  "date": "20260420",
+  "current_price": 207.0,
+  "periods": {
+    "short": {
+      "support": {
+        "price": 202.63,
+        "label": "5日VAL",
+        "layer": "L1",
+        "distance_pct": -2.11,
+        "indicators": [
+          {
+            "name": "上關",
+            "value": 221.58,
+            "distance_pct": 7.04,
+            "hitrate": 73.9
+          },
+          {
+            "name": "下關",
+            "value": 200.42,
+            "distance_pct": -3.18,
+            "hitrate": 70.0
+          },
+          {
+            "name": "CDP賣出點",
+            "value": 216.0,
+            "distance_pct": 4.35,
+            "hitrate": 74.3
+          },
+          {
+            "name": "CDP買進點",
+            "value": 204.0,
+            "distance_pct": -1.45,
+            "hitrate": 74.3
+          },
+          {
+            "name": "5日高點",
+            "value": 240.0,
+            "distance_pct": 15.94,
+            "hitrate": null
+          },
+          {
+            "name": "5日低點",
+            "value": 202.0,
+            "distance_pct": -2.42,
+            "hitrate": null
+          },
+          {
+            "name": "10日高點",
+            "value": 240.0,
+            "distance_pct": 15.94,
+            "hitrate": null
+          },
+          {
+            "name": "10日低點",
+            "value": 202.0,
+            "distance_pct": -2.42,
+            "hitrate": null
+          },
+          {
+            "name": "MA5",
+            "value": 212.4,
+            "distance_pct": 2.61,
+            "hitrate": null
+          },
+          {
+            "name": "MA10",
+            "value": 213.65,
+            "distance_pct": 3.21,
+            "hitrate": null
+          },
+          {
+            "name": "5日VAH",
+            "value": 225.43,
+            "distance_pct": 8.9,
+            "hitrate": null
+          },
+          {
+            "name": "5日POC",
+            "value": 212.76,
+            "distance_pct": 2.78,
+            "hitrate": null
+          },
+          {
+            "name": "5日VAL",
+            "value": 202.63,
+            "distance_pct": -2.11,
+            "hitrate": null
+          }
+        ]
+      },
+      "resistance": {
+        "price": 212.76,
+        "label": "5日POC",
+        "layer": "L1",
+        "distance_pct": 2.78,
+        "indicators": [
+          {
+            "name": "上關",
+            "value": 221.58,
+            "distance_pct": 7.04,
+            "hitrate": 73.9
+          },
+          {
+            "name": "下關",
+            "value": 200.42,
+            "distance_pct": -3.18,
+            "hitrate": 70.0
+          },
+          {
+            "name": "CDP賣出點",
+            "value": 216.0,
+            "distance_pct": 4.35,
+            "hitrate": 74.3
+          },
+          {
+            "name": "CDP買進點",
+            "value": 204.0,
+            "distance_pct": -1.45,
+            "hitrate": 74.3
+          },
+          {
+            "name": "5日高點",
+            "value": 240.0,
+            "distance_pct": 15.94,
+            "hitrate": null
+          },
+          {
+            "name": "5日低點",
+            "value": 202.0,
+            "distance_pct": -2.42,
+            "hitrate": null
+          },
+          {
+            "name": "10日高點",
+            "value": 240.0,
+            "distance_pct": 15.94,
+            "hitrate": null
+          },
+          {
+            "name": "10日低點",
+            "value": 202.0,
+            "distance_pct": -2.42,
+            "hitrate": null
+          },
+          {
+            "name": "MA5",
+            "value": 212.4,
+            "distance_pct": 2.61,
+            "hitrate": null
+          },
+          {
+            "name": "MA10",
+            "value": 213.65,
+            "distance_pct": 3.21,
+            "hitrate": null
+          },
+          {
+            "name": "5日VAH",
+            "value": 225.43,
+            "distance_pct": 8.9,
+            "hitrate": null
+          },
+          {
+            "name": "5日POC",
+            "value": 212.76,
+            "distance_pct": 2.78,
+            "hitrate": null
+          },
+          {
+            "name": "5日VAL",
+            "value": 202.63,
+            "distance_pct": -2.11,
+            "hitrate": null
+          }
+        ]
+      }
+    },
+    "medium": {
+      "support": {
+        "price": 204.0,
+        "label": "20日VAL",
+        "layer": "L1",
+        "distance_pct": -1.45,
+        "indicators": [
+          {
+            "name": "BBands上軌",
+            "value": 234.01,
+            "distance_pct": 13.05,
+            "hitrate": null
+          },
+          {
+            "name": "BBands下軌",
+            "value": 197.19,
+            "distance_pct": -4.74,
+            "hitrate": null
+          },
+          {
+            "name": "20日高點",
+            "value": 264.5,
+            "distance_pct": 27.78,
+            "hitrate": null
+          },
+          {
+            "name": "20日低點",
+            "value": 198.5,
+            "distance_pct": -4.11,
+            "hitrate": null
+          },
+          {
+            "name": "上檔量",
+            "value": 226.0,
+            "distance_pct": 9.18,
+            "hitrate": 76.0
+          },
+          {
+            "name": "下檔量",
+            "value": 204.0,
+            "distance_pct": -1.45,
+            "hitrate": 69.0
+          },
+          {
+            "name": "MA20",
+            "value": 215.6,
+            "distance_pct": 4.15,
+            "hitrate": null
+          },
+          {
+            "name": "20日VAH",
+            "value": 226.0,
+            "distance_pct": 9.18,
+            "hitrate": null
+          },
+          {
+            "name": "20日POC",
+            "value": 210.6,
+            "distance_pct": 1.74,
+            "hitrate": null
+          },
+          {
+            "name": "20日VAL",
+            "value": 204.0,
+            "distance_pct": -1.45,
+            "hitrate": null
+          }
+        ]
+      },
+      "resistance": {
+        "price": 210.6,
+        "label": "20日POC",
+        "layer": "L1",
+        "distance_pct": 1.74,
+        "indicators": [
+          {
+            "name": "BBands上軌",
+            "value": 234.01,
+            "distance_pct": 13.05,
+            "hitrate": null
+          },
+          {
+            "name": "BBands下軌",
+            "value": 197.19,
+            "distance_pct": -4.74,
+            "hitrate": null
+          },
+          {
+            "name": "20日高點",
+            "value": 264.5,
+            "distance_pct": 27.78,
+            "hitrate": null
+          },
+          {
+            "name": "20日低點",
+            "value": 198.5,
+            "distance_pct": -4.11,
+            "hitrate": null
+          },
+          {
+            "name": "上檔量",
+            "value": 226.0,
+            "distance_pct": 9.18,
+            "hitrate": 76.0
+          },
+          {
+            "name": "下檔量",
+            "value": 204.0,
+            "distance_pct": -1.45,
+            "hitrate": 69.0
+          },
+          {
+            "name": "MA20",
+            "value": 215.6,
+            "distance_pct": 4.15,
+            "hitrate": null
+          },
+          {
+            "name": "20日VAH",
+            "value": 226.0,
+            "distance_pct": 9.18,
+            "hitrate": null
+          },
+          {
+            "name": "20日POC",
+            "value": 210.6,
+            "distance_pct": 1.74,
+            "hitrate": null
+          },
+          {
+            "name": "20日VAL",
+            "value": 204.0,
+            "distance_pct": -1.45,
+            "hitrate": null
+          }
+        ]
+      }
+    },
+    "long": {
+      "support": {
+        "price": 198.5,
+        "label": "60日Fractal",
+        "layer": "L2",
+        "distance_pct": -4.11,
+        "indicators": [
+          {
+            "name": "250日高點",
+            "value": 326.5,
+            "distance_pct": 57.73,
+            "hitrate": null
+          },
+          {
+            "name": "250日低點",
+            "value": 30.0,
+            "distance_pct": -85.51,
+            "hitrate": null
+          },
+          {
+            "name": "MA60",
+            "value": 249.72,
+            "distance_pct": 20.64,
+            "hitrate": null
+          },
+          {
+            "name": "MA120",
+            "value": 204.58,
+            "distance_pct": -1.17,
+            "hitrate": null
+          },
+          {
+            "name": "MA240",
+            "value": 128.31,
+            "distance_pct": -38.01,
+            "hitrate": null
+          },
+          {
+            "name": "60日VAH",
+            "value": 298.76,
+            "distance_pct": 44.33,
+            "hitrate": null
+          },
+          {
+            "name": "60日POC",
+            "value": 277.43,
+            "distance_pct": 34.02,
+            "hitrate": null
+          },
+          {
+            "name": "60日VAL",
+            "value": 221.96,
+            "distance_pct": 7.23,
+            "hitrate": null
+          },
+          {
+            "name": "整數關卡",
+            "value": 50.0,
+            "distance_pct": -75.85,
+            "hitrate": null
+          }
+        ]
+      },
+      "resistance": {
+        "price": 221.96,
+        "label": "60日VAL",
+        "layer": "L1",
+        "distance_pct": 7.23,
+        "indicators": [
+          {
+            "name": "250日高點",
+            "value": 326.5,
+            "distance_pct": 57.73,
+            "hitrate": null
+          },
+          {
+            "name": "250日低點",
+            "value": 30.0,
+            "distance_pct": -85.51,
+            "hitrate": null
+          },
+          {
+            "name": "MA60",
+            "value": 249.72,
+            "distance_pct": 20.64,
+            "hitrate": null
+          },
+          {
+            "name": "MA120",
+            "value": 204.58,
+            "distance_pct": -1.17,
+            "hitrate": null
+          },
+          {
+            "name": "MA240",
+            "value": 128.31,
+            "distance_pct": -38.01,
+            "hitrate": null
+          },
+          {
+            "name": "60日VAH",
+            "value": 298.76,
+            "distance_pct": 44.33,
+            "hitrate": null
+          },
+          {
+            "name": "60日POC",
+            "value": 277.43,
+            "distance_pct": 34.02,
+            "hitrate": null
+          },
+          {
+            "name": "60日VAL",
+            "value": 221.96,
+            "distance_pct": 7.23,
+            "hitrate": null
+          },
+          {
+            "name": "整數關卡",
+            "value": 50.0,
+            "distance_pct": -75.85,
+            "hitrate": null
+          }
+        ]
+      }
+    }
+  }
+}

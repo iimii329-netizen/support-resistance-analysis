@@ -9,6 +9,7 @@ export interface SRLevel {
   id: string;
   name: string;
   price: number;
+  rawValue?: number;
   period: PeriodName;
 }
 
@@ -111,6 +112,12 @@ function drawHatchedZone(
 }
 
 const PERIOD_DAY_MAP: Record<PeriodName, number> = { short: 20, medium: 40, long: 80 };
+
+function fmtPrice(p: number): string {
+  if (p < 10)  return p.toFixed(2);
+  if (p < 100) return p.toFixed(1);
+  return p.toFixed(0);
+}
 
 export default function KLineChart({
   bars,
@@ -318,6 +325,30 @@ export default function KLineChart({
       ctx.setLineDash([5, 4]);
       ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w - PRICE_SCALE_WIDTH + 2, y); ctx.stroke();
       ctx.setLineDash([]);
+
+      // price label on left edge
+      ctx.save();
+      const priceText = fmtPrice(group.price);
+      const fontSize = 10;
+      ctx.font = `bold ${fontSize}px sans-serif`;
+      const textW = ctx.measureText(priceText).width;
+      const padX = 4, padY = 2;
+      const boxW = textW + padX * 2;
+      const boxH = fontSize + padY * 2;
+      const boxX = 4;
+      const boxY = y - boxH / 2;
+      ctx.fillStyle = colors.labelBg;
+      ctx.strokeStyle = colors.line;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.rect(boxX, boxY, boxW, boxH);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = colors.label;
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(priceText, boxX + padX, y);
+      ctx.restore();
     });
 
     // Update label group Y positions (trigger state update on next tick)
@@ -471,9 +502,6 @@ export default function KLineChart({
       });
     } catch (_) {}
   }, [showPeriods, bars]);
-
-  const fmtPrice = (p: number) =>
-    p < 100 ? p.toFixed(2) : p >= 1000 ? p.toFixed(0) : p.toFixed(1);
 
   return (
     <div className="flex flex-col w-full h-full bg-white">

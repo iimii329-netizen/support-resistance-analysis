@@ -12,8 +12,8 @@ interface Props { onBack: () => void; }
 const IND: Record<string, string> = {
   low_5d:'5日最低', high_5d:'5日最高', low_10d:'10日最低', high_10d:'10日最高',
   low_20d:'20日最低', high_20d:'20日最高', low_240d:'240日最低', high_240d:'240日最高',
-  ma5:'MA5', ma10:'MA10', ma20:'MA20', ma30:'MA30',
-  ma60:'MA60', ma120:'MA120', ma240:'MA240',
+  ma5:'5日均線', ma10:'10日均線', ma20:'20日均線', ma30:'30日均線',
+  ma60:'60日均線', ma120:'120日均線', ma240:'240日均線',
   vp5_val:'5日VAL', vp5_vah:'5日VAH', vp5_poc:'5日POC',
   vp20_val:'20日VAL', vp20_vah:'20日VAH', vp20_poc:'20日POC',
   vp60_val:'60日VAL', vp60_vah:'60日VAH', vp60_poc:'60日POC',
@@ -31,7 +31,7 @@ const PERIOD_DEFS = {
     borderCls: 'border-l-amber-400',
     indicators: [
       '上關','下關','5日最高價','5日最低價',
-      '10日最高價','10日最低價','MA5','MA10',
+      '10日最高價','10日最低價','5日均線','10日均線',
       '5日POC','5日VAH','5日VAL',
     ],
   },
@@ -41,7 +41,7 @@ const PERIOD_DEFS = {
     borderCls: 'border-l-violet-400',
     indicators: [
       '布林通道上緣(2σ)','布林通道下緣(2σ)',
-      '20日最高價','20日最低價','MA20','MA30',
+      '20日最高價','20日最低價','20日均線','30日均線',
       '20日POC','20日VAH','20日VAL',
       'MA軌道上限','MA軌道下限',
       '上檔量密集成交區','下檔量密集成交區',
@@ -53,7 +53,7 @@ const PERIOD_DEFS = {
     borderCls: 'border-l-sky-400',
     indicators: [
       '240日最高價','240日最低價',
-      'MA60','MA120','MA240',
+      '60日均線','120日均線','240日均線',
       '60日POC','60日VAH','60日VAL',
     ],
   },
@@ -68,63 +68,63 @@ type Candidate = {
 const CANDIDATES: Record<string, Record<string, Candidate[]>> = {
   short: {
     all: [
-      { sup:'vp5_val', res:'high_5d',  cont:'77–84%', width:'~5–6%' },
-      { sup:'low_5d',  res:'vp5_vah',  cont:'73–79%', width:'~4–5%' },
-      { sup:'low_5d',  res:'high_5d',  cont:'~90%',   width:'~7.5%' },
-      { sup:'low_10d', res:'high_10d', cont:'~93%',   width:'~11%',  isLast:true },
+      { sup:'vp5_val', res:'high_5d',  cont:'77–84%', width:'5–6%' },
+      { sup:'low_5d',  res:'vp5_vah',  cont:'73–79%', width:'4–5%' },
+      { sup:'low_5d',  res:'high_5d',  cont:'90%',   width:'7.5%' },
+      { sup:'low_10d', res:'high_10d', cont:'93%',   width:'11%',  isLast:true },
     ],
   },
   mid: {
     bull: [
-      { sup:'ma20',           res:'vol_dense_upper',  cont:'98.38%', width:'~4.9%' },
-      { sup:'vol_dense_lower',res:'vol_dense_upper',  cont:'98.35%', width:'~5.7%' },
-      { sup:'ma_track_lower', res:'vol_dense_upper',  cont:'96.58%', width:'~5.8%' },
-      { sup:'ma30',           res:'vol_dense_upper',  cont:'96.32%', width:'~6.4%' },
-      { sup:'vp20_val',       res:'vol_dense_upper',  cont:'96.23%', width:'~6.9%' },
-      { sup:'ma20',           res:'high_20d',         cont:'96.04%', width:'~8.6%' },
-      { sup:'vol_dense_lower',res:'high_20d',         cont:'96.01%', width:'~9.4%' },
-      { sup:'low_20d',        res:'high_20d',         cont:'96.04%', width:'~15.1%' },
+      { sup:'ma20',           res:'vol_dense_upper',  cont:'98.38%', width:'4.9%' },
+      { sup:'vol_dense_lower',res:'vol_dense_upper',  cont:'98.35%', width:'5.7%' },
+      { sup:'ma_track_lower', res:'vol_dense_upper',  cont:'96.58%', width:'5.8%' },
+      { sup:'ma30',           res:'vol_dense_upper',  cont:'96.32%', width:'6.4%' },
+      { sup:'vp20_val',       res:'vol_dense_upper',  cont:'96.23%', width:'6.9%' },
+      { sup:'ma20',           res:'high_20d',         cont:'96.04%', width:'8.6%' },
+      { sup:'vol_dense_lower',res:'high_20d',         cont:'96.01%', width:'9.4%' },
+      { sup:'low_20d',        res:'high_20d',         cont:'96.04%', width:'15.1%' },
     ],
     bear: [
-      { sup:'vol_dense_lower',res:'ma20',             cont:'99.66%', width:'~4.3%' },
-      { sup:'vol_dense_lower',res:'vp20_vah',         cont:'99.28%', width:'~8.2%' },
-      { sup:'vol_dense_lower',res:'vol_dense_upper',  cont:'99.05%', width:'~6.9%' },
-      { sup:'vol_dense_lower',res:'ma_track_upper',   cont:'98.91%', width:'~5.5%' },
-      { sup:'vol_dense_lower',res:'ma30',             cont:'97.81%', width:'~5.9%' },
-      { sup:'low_20d',        res:'ma20',             cont:'95.16%', width:'~6.6%' },
-      { sup:'vol_dense_lower',res:'high_20d',         cont:'99.66%', width:'~11.5%' },
-      { sup:'low_20d',        res:'high_20d',         cont:'95.23%', width:'~15.1%' },
+      { sup:'vol_dense_lower',res:'ma20',             cont:'99.66%', width:'4.3%' },
+      { sup:'vol_dense_lower',res:'vp20_vah',         cont:'99.28%', width:'8.2%' },
+      { sup:'vol_dense_lower',res:'vol_dense_upper',  cont:'99.05%', width:'6.9%' },
+      { sup:'vol_dense_lower',res:'ma_track_upper',   cont:'98.91%', width:'5.5%' },
+      { sup:'vol_dense_lower',res:'ma30',             cont:'97.81%', width:'5.9%' },
+      { sup:'low_20d',        res:'ma20',             cont:'95.16%', width:'6.6%' },
+      { sup:'vol_dense_lower',res:'high_20d',         cont:'99.66%', width:'11.5%' },
+      { sup:'low_20d',        res:'high_20d',         cont:'95.23%', width:'15.1%' },
     ],
     sideways: [
-      { sup:'vol_dense_lower',res:'vol_dense_upper',  cont:'97.64%', width:'~5.0%' },
-      { sup:'vol_dense_lower',res:'high_20d',         cont:'98.03%', width:'~9.1%' },
-      { sup:'low_20d',        res:'vol_dense_upper',  cont:'95.70%', width:'~8.4%' },
-      { sup:'low_20d',        res:'high_20d',         cont:'96.04%', width:'~12.5%' },
+      { sup:'vol_dense_lower',res:'vol_dense_upper',  cont:'97.64%', width:'5.0%' },
+      { sup:'vol_dense_lower',res:'high_20d',         cont:'98.03%', width:'9.1%' },
+      { sup:'low_20d',        res:'vol_dense_upper',  cont:'95.70%', width:'8.4%' },
+      { sup:'low_20d',        res:'high_20d',         cont:'96.04%', width:'12.5%' },
     ],
   },
   long: {
     bull: [
-      { sup:'ma60',    res:'high_240d', cont:'98.10%', width:'~27.5%' },
-      { sup:'vp60_val',res:'high_240d', cont:'98.08%', width:'~34.9%' },
-      { sup:'ma120',   res:'high_240d', cont:'88.03%', width:'~28.9%' },
-      { sup:'vp60_poc',res:'high_240d', cont:'80.48%', width:'~29.0%' },
-      { sup:'ma240',   res:'high_240d', cont:'74.84%', width:'~28.4%' },
-      { sup:'low_240d',res:'high_240d', cont:'98.10%', width:'~44.8%' },
+      { sup:'ma60',    res:'high_240d', cont:'98.10%', width:'27.5%' },
+      { sup:'vp60_val',res:'high_240d', cont:'98.08%', width:'34.9%' },
+      { sup:'ma120',   res:'high_240d', cont:'88.03%', width:'28.9%' },
+      { sup:'vp60_poc',res:'high_240d', cont:'80.48%', width:'29.0%' },
+      { sup:'ma240',   res:'high_240d', cont:'74.84%', width:'28.4%' },
+      { sup:'low_240d',res:'high_240d', cont:'98.10%', width:'44.8%' },
     ],
     bear: [
-      { sup:'low_240d',res:'ma60',      cont:'98.22%', width:'~19.7%' },
-      { sup:'low_240d',res:'vp60_vah',  cont:'98.21%', width:'~28.3%' },
-      { sup:'low_240d',res:'ma120',     cont:'91.97%', width:'~22.4%' },
-      { sup:'low_240d',res:'vp60_poc',  cont:'91.54%', width:'~22.2%' },
-      { sup:'low_240d',res:'ma240',     cont:'83.56%', width:'~24.4%' },
-      { sup:'low_240d',res:'high_240d', cont:'98.22%', width:'~58.2%' },
+      { sup:'low_240d',res:'ma60',      cont:'98.22%', width:'19.7%' },
+      { sup:'low_240d',res:'vp60_vah',  cont:'98.21%', width:'28.3%' },
+      { sup:'low_240d',res:'ma120',     cont:'91.97%', width:'22.4%' },
+      { sup:'low_240d',res:'vp60_poc',  cont:'91.54%', width:'22.2%' },
+      { sup:'low_240d',res:'ma240',     cont:'83.56%', width:'24.4%' },
+      { sup:'low_240d',res:'high_240d', cont:'98.22%', width:'58.2%' },
     ],
     sideways: [
-      { sup:'low_240d', res:'vp60_vah',  cont:'93.77%', width:'~27.0%' },
-      { sup:'vp60_val', res:'vp60_vah',  cont:'74.70%', width:'~11.9%' },
-      { sup:'vp60_val', res:'ma240',     cont:'70.73%', width:'~14.9%' },
-      { sup:'vp60_val', res:'high_240d', cont:'80.64%', width:'~41.7%' },
-      { sup:'low_240d', res:'high_240d', cont:'99.37%', width:'~48.9%' },
+      { sup:'low_240d', res:'vp60_vah',  cont:'93.77%', width:'27.0%' },
+      { sup:'vp60_val', res:'vp60_vah',  cont:'74.70%', width:'11.9%' },
+      { sup:'vp60_val', res:'ma240',     cont:'70.73%', width:'14.9%' },
+      { sup:'vp60_val', res:'high_240d', cont:'80.64%', width:'41.7%' },
+      { sup:'low_240d', res:'high_240d', cont:'99.37%', width:'48.9%' },
     ],
   },
 };
@@ -209,7 +209,7 @@ function SRTab() {
       {/* ── § 1 系統概覽 ── */}
       <section>
         <SectionHeader num="1" title="系統概覽"
-          sub="系統以日 K 線 + Volume Profile 為輸入，對每支股票每個交易日自動產出短 / 中 / 長期支撐壓力位，並生成一句話 AI 判讀。" />
+          sub="系統以日 K 線 + Volume Profile 為輸入，對每支股票每個交易日自動產出短 / 中 / 長期支撐壓力位，並生成一句話。" />
 
         <div className="grid grid-cols-4 gap-2">
           {[
